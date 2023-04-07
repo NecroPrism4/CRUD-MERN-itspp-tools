@@ -1,21 +1,16 @@
 import { useContext, useState } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
+import DarkLightButton from '../components/MainPage/ButtonLightDark/DarkLightButton';
 
 function Login() {
-	const [showRegisterForm, setShowRegisterForm] = useState(false);
-
-	const handleRegisterClick = () => {
-		setShowRegisterForm(true);
-	};
-
-	const handleBackClick = () => {
-		setShowRegisterForm(false);
-	};
+	const { theme } = useContext(ThemeContext);
 
 	return (
 		<>
-			<div className='container'>
+			<div className='container' data-theme={theme}>
 				<div className='design'>
 					Design Area
+					<DarkLightButton></DarkLightButton>
 					<div className='svg-container'>
 						<object
 							type='image/svg+xml'

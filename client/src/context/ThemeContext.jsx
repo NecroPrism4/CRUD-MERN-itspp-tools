@@ -1,7 +1,6 @@
-import { createContext } from 'react';
-import { useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-const ThemeContext = createContext();
+export const ThemeContext = createContext();
 
 //Get the theme from the local storage
 const currentTheme = localStorage.getItem('theme')
@@ -11,12 +10,16 @@ const currentTheme = localStorage.getItem('theme')
 const ThemeContextProvider = ({ children }) => {
 	const [theme, setTheme] = useState(currentTheme);
 
-	const handleTheme = (e) => {
-		setTheme(e.target.value === 'dark' ? 'light' : 'dark');
-		document.documentElement.setAttribute('data-theme', currentTheme);
+	const handleTheme = () => {
+		const updateTheme = theme === 'light' ? 'dark' : 'light';
+		setTheme(updateTheme);
+		localStorage.setItem('theme', updateTheme);
 	};
 
-	const data = { theme, handleTheme };
+	const data = {
+		theme,
+		handleTheme,
+	};
 
 	return <ThemeContext.Provider value={data}>{children}</ThemeContext.Provider>;
 };

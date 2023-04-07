@@ -1,21 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&display=swap');
+@import 'components/MainPage/ButtonLightDark/theme-toggle.css';
 
-:root {
-	--primary-color: #1e1e1e;
-	--secondary-color: #353840;
-	--tertiary-color: #a6a9ae;
-	--quaternary-color: #fff;
-	--quinary-color: #000;
-	--senary-color: lightskyblue;
+root {
+	--gradient-accent: #eeeefb;
+	--inactive-fg: #5b5f6a;
+	--active-fg: #292d32;
+	--primary-bg: #d0d1da;
+	--secundary-bg: #eeeefb;
+	--tertiary-bg: #bdc1c7;
 }
 
-[data-theme='dark'] {
-	--primary-color: #1e1e1e;
-	--secondary-color: #353840;
-	--tertiary-color: #a6a9ae;
-	--quaternary-color: #fff;
-	--quinary-color: #000;
-	--senary-color: lightskyblue;
+html[data-theme='dark'] {
+	--gradient-accent: linear-gradient(226.32deg, #337ff6 31%, #739bd9 78.06%);
+	--inactive-fg: #a3a3a3;
+	--active-fg: #ffffff;
+	--primary-bg: #292d32;
+	--secundary-bg: #353840;
+	--tertiary-bg: #5b5f6a;
+}
+
+html[data-theme='light'] {
+	--gradient-accent: #eeeefb;
+	--inactive-fg: #5b5f6a;
+	--active-fg: #292d32;
+	--primary-bg: #d0d1da;
+	--secundary-bg: #eeeefb;
+	--tertiary-bg: #bdc1c7;
 }
 
 *,
@@ -23,18 +33,9 @@ html,
 body {
 	margin: 0;
 	padding: 0;
+	background: var(--primary-bg);
 	box-sizing: border-box;
 	font-family: 'Baloo Thambi 2', sans-serif;
-}
-
-.dark-theme {
-	background: #1e1e1e;
-	color: #fff;
-}
-
-.light-theme {
-	background: #fff;
-	color: #000;
 }
 
 .container {
@@ -72,24 +73,32 @@ body {
 	}
 }
 
-/*
-.svg-container {
-	display: inline-block;
-	position: relative;
-	width: 100%;
-	padding-bottom: 100%;
-	vertical-align: middle;
-	overflow: hidden;
+/* THEME TOGGLE BUTTON STYLES */
+@custom-media --motionOK (prefers-reduced-motion: no-preference);
+.github-corner {
+	fill: hotpink;
+	color: Canvas;
+
+	&:hover .octo-arm {
+		animation: octocat-wave 560ms ease-in-out;
+	}
+
+	@nest [data-theme='dark'] & {
+		fill: indigo;
+	}
 }
 
-.svg-content {
-	display: inline-block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	filter: invert(65%) sepia(83%) saturate(15%) hue-rotate(201deg)
-		brightness(90%) contrast(87%);
-	filter: invert(17%) sepia(12%) saturate(724%) hue-rotate(186deg)
-		brightness(92%) contrast(83%);
+@keyframes octocat-wave {
+	0%,
+	100% {
+		transform: rotate(0);
+	}
+	20%,
+	60% {
+		transform: rotate(-25deg);
+	}
+	40%,
+	80% {
+		transform: rotate(10deg);
+	}
 }
-*/
