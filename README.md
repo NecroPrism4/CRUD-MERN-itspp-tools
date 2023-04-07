@@ -1,2 +1,2 @@
 # CRUD-MERN-itspp-tools
-Proyecto escolar para la gestión de prestamos de herramientas e inventario de los diferentes laboratorios del Instituto Tecnlógico Superior de Puerto Peñasco
+School project for the management of tool loans and inventory of the different laboratories of the Instituto Tecnlógico Superior de Puerto Peñasco (ITSPP / TecNM Puerto Penasco Campus)
