@@ -1,0 +1,51 @@
+* {
+	pading: 0;
+	margin: 0;
+}
+
+.LoginPrimaryContainer {
+	background: var(--logo-color);
+}
+
+.LoginDesignContainer {
+	width: 50vw;
+	height: 100vh;
+	background: var(--gradient-accent);
+}
+
+.SvgContainer svg {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+}
+
+.SvgContent svg path {
+	fill: var(--logo-color);
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+svg {
+	width: 100%;
+	height: 100%;
+}
+.LoginLine1 {
+	margin: 0;
+}
+
+.LoginLogoContainer {
+	width: 100%;
+	display: flex;
+	margin: 50px;
+}
+
+mark {
+	color: var(--logo-color);
+	background: transparent;
+}
+
+h1 {
+	color: var(--active-fg);
+	fontsize: 50px;
+}

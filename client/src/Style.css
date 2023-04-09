@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&display=swap');
-@import 'components/MainPage/ButtonLightDark/theme-toggle.css';
-
 root {
 	--gradient-accent: #eeeefb;
 	--inactive-fg: #5b5f6a;
@@ -11,7 +8,7 @@ root {
 	--logo-color: #bdc1c7;
 }
 
-html[data-theme='dark'] {
+[data-theme='dark'] {
 	--gradient-accent: linear-gradient(226.32deg, #337ff6 31%, #739bd9 78.06%);
 	--inactive-fg: #a3a3a3;
 	--active-fg: #ffffff;
@@ -21,7 +18,7 @@ html[data-theme='dark'] {
 	--logo-color: #353840;
 }
 
-html[data-theme='light'] {
+[data-theme='light'] {
 	--gradient-accent: #eeeefb;
 	--inactive-fg: #5b5f6a;
 	--active-fg: #292d32;
