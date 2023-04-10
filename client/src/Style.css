@@ -1,4 +1,4 @@
-root {
+/* root {
 	--gradient-accent: #eeeefb;
 	--inactive-fg: #5b5f6a;
 	--active-fg: #292d32;
@@ -6,7 +6,7 @@ root {
 	--secundary-bg: #d0d1da;
 	--tertiary-bg: #eeeefb;
 	--logo-color: #bdc1c7;
-}
+} */
 
 [data-theme='dark'] {
 	--gradient-accent: linear-gradient(226.32deg, #337ff6 31%, #739bd9 78.06%);
@@ -16,6 +16,7 @@ root {
 	--secundary-bg: #353840;
 	--tertiary-bg: #5b5f6a;
 	--logo-color: #353840;
+	transition: all 1s ease-in-out;
 }
 
 [data-theme='light'] {
@@ -26,4 +27,11 @@ root {
 	--secundary-bg: #d0d1da;
 	--tertiary-bg: #eeeefb;
 	--logo-color: #bdc1c7;
+	transition: all 1s ease-in-out;
+}
+
+body {
+	font-family: 'Baloo Thambi 2', roboto, sans-serif;
+	padding: 0;
+	margin: 0;
 }

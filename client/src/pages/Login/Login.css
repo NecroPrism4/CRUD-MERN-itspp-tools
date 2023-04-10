@@ -1,51 +1,97 @@
-* {
-	pading: 0;
-	margin: 0;
-}
-
 .LoginPrimaryContainer {
+	display: flex;
 	background: var(--logo-color);
 }
 
+.LoginContainer {
+	display: none;
+}
+
+/*AREA DESIGN*/
+
 .LoginDesignContainer {
-	width: 50vw;
+	width: 100vw;
 	height: 100vh;
 	background: var(--gradient-accent);
-}
-
-.SvgContainer svg {
-	display: inline-block;
-	position: relative;
-	overflow: hidden;
-}
-
-.SvgContent svg path {
-	fill: var(--logo-color);
-	display: inline-block;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-svg {
-	width: 100%;
-	height: 100%;
-}
-.LoginLine1 {
-	margin: 0;
+	transition: all 0.5s ease-in;
 }
 
 .LoginLogoContainer {
 	width: 100%;
 	display: flex;
-	margin: 50px;
+	position: relative;
+}
+.LoginLogoContainer svg path,
+#o {
+	fill: var(--logo-color);
+	transition: all 0.5s ease-in-out;
+}
+#logo-lines {
+	transform-origin: 46.7% 54.5%;
+	animation: LinesRotate 10s linear infinite;
+}
+/* #line1 {
+	transform-origin: 50% 50%;
+}
+#line2 {
+	fill: transparent;
+	transform-origin: 50% 50%;
+}
+#line3 {
+	fill: transparent;
+	transform-origin: 50% 50%;
+} */
+.LoginLogoContainer svg {
+	margin: 20%;
+}
+.LoginLogoContainer text {
+	fill: var(--active-fg);
 }
 
-mark {
-	color: var(--logo-color);
-	background: transparent;
+/*SVG AREA DESIGN*/
+
+@media only screen and (min-width: 768px) {
+	.LoginDesignContainer {
+		width: 55vw;
+		height: 100vh;
+	}
+	.LoginLogoContainer {
+		height: 100%;
+		position: relative;
+		justify-content: center;
+	}
+	.LoginLogoContainer svg {
+		height: 100%;
+		padding: 0% 20% 0% 20%;
+	}
+	.LoginContainer {
+		display: flex;
+		height: 100vh;
+	}
 }
 
-h1 {
-	color: var(--active-fg);
-	fontsize: 50px;
+@keyframes LinesRotate {
+	0% {
+		transform: rotate(358deg);
+	}
+	100% {
+		transform: rotate(2deg);
+	}
+}
+
+@keyframes ShrinkLogoMobile {
+	0% {
+		transform: scale(1);
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform-origin: center center;
+	}
+	100% {
+		transform: scale(0.5);
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform-origin: center top;
+	}
 }
