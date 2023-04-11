@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import DarkLightButton from '../../components/MainPage/ButtonLightDark/DarkLightButton';
 import './Login.css';
+import tecnmLogo from '../../assets/logoTecNM 1.png';
+import itsppLogo from '../../assets/logo itspp.png';
 
 function Login() {
 	const { theme } = useContext(ThemeContext);
@@ -10,47 +12,98 @@ function Login() {
 		<>
 			<div className='LoginPrimaryContainer' data-theme={theme}>
 				<div className='LoginDesignContainer'>
-					<div className='LoginLogoContainer'>
+					<div className='WaveBackgroundContainer'>
 						<svg
-							width='629'
-							height='537'
-							viewBox='0 0 629 537'
+							className='WaveBackground'
+							preserveAspectRatio='none'
+							width='1113'
+							height='2160'
+							viewBox='0 0 1113 2160'
 							xmlns='http://www.w3.org/2000/svg'
 						>
-							<g id='LogoApp '>
+							<path
+								id='WaveBackgroundPath'
+								d='M0 4.99208e-06C0 4.99208e-06 1056.71 -6.24009e-06 1044.06 4.99208e-06C1037.4 1.09006e-05 943.864 285 1032.78 467C1145.87 656.5 1086.38 823.153 1051.06 1046.5C1002.81 1351.5 1151.94 1420.5 1101.5 1670C1051.06 1919.5 1015.61 1990.5 1051.06 2160H0V4.99208e-06Z'
+								fill='url(#paintSvg)'
+							/>
+							{theme === 'dark' ? (
+								<defs>
+									<linearGradient
+										id='paintSvg'
+										x1='722.846'
+										y1='579.223'
+										x2='-101.04'
+										y2='984.272'
+										gradientUnits='userSpaceOnUse'
+									>
+										<stop stopColor='#337FF6' />
+										<stop offset='1' stopColor='#739BD9' />
+									</linearGradient>
+								</defs>
+							) : (
+								<defs>
+									<linearGradient
+										id='paintSvg'
+										x1='722.846'
+										y1='579.223'
+										x2='-101.04'
+										y2='984.272'
+										gradientUnits='userSpaceOnUse'
+									>
+										<stop stopColor='#eeeefb' />
+										<stop offset='1' stopColor='#eeeefb' />
+									</linearGradient>
+								</defs>
+							)}
+						</svg>
+					</div>
+					<div className='LoginLogoContainer'>
+						<svg
+							width='778'
+							height='769'
+							viewBox='0 0 778 769'
+							preserveAspectRatio='xMidYMid meet'
+							xmlns='http://www.w3.org/2000/svg'
+						>
+							<g id='LogoApp'>
 								<g id='logo-lines'>
 									<path
 										id='line1'
-										d='M80.5708 354.437C75.3479 337.554 57.4269 328.101 40.5432 333.324C23.6594 338.547 14.2065 356.468 19.4294 373.351C24.6523 390.235 42.5733 399.688 59.457 394.465C76.3408 389.242 85.7937 371.321 80.5708 354.437ZM263.616 291.532L48.2269 358.162L51.7733 369.626L267.162 302.996L263.616 291.532Z'
+										d='M177.86 452.773C171.579 436.254 153.095 427.954 136.576 434.235C120.057 440.516 111.757 458.999 118.038 475.519C124.319 492.038 142.802 500.338 159.322 494.057C175.841 487.776 184.141 469.293 177.86 452.773ZM356.557 378.41L145.816 458.538L150.081 469.754L360.822 389.627L356.557 378.41Z'
 									/>
 									<path
 										id='line2'
-										d='M539.202 7.31885C525.571 -3.92989 505.402 -1.99867 494.154 11.6324C482.905 25.2634 484.836 45.4324 498.467 56.6811C512.098 67.9299 532.267 65.9987 543.516 52.3676C554.765 38.7366 552.834 18.5676 539.202 7.31885ZM514.207 28.1811L310.146 275.459L319.401 283.097L523.463 35.8189L514.207 28.1811Z'
+										d='M613.604 77.3253C599.288 66.9618 579.282 70.1656 568.918 84.4812C558.555 98.7968 561.759 118.803 576.074 129.167C590.39 139.53 610.396 136.326 620.76 122.011C631.123 107.695 627.92 87.6888 613.604 77.3253ZM589.979 99.7276L401.976 359.424L411.697 366.461L599.699 106.764L589.979 99.7276Z'
 									/>
 									<path
 										id='line3'
-										d='M535.946 526.624C548.024 513.721 547.355 493.471 534.452 481.394C521.55 469.316 501.3 469.985 489.222 482.887C477.145 495.79 477.813 516.04 490.716 528.117C503.618 540.195 523.869 539.526 535.946 526.624ZM516.684 500.375L313.507 310.188L305.307 318.949L508.484 509.136L516.684 500.375Z'
+										d='M643.219 595.795C654.456 582.154 652.507 561.987 638.866 550.75C625.225 539.513 605.058 541.462 593.821 555.103C582.584 568.744 584.533 588.912 598.174 600.148C611.815 611.385 631.983 609.436 643.219 595.795ZM622.335 570.818L407.529 393.871L399.899 403.133L614.705 580.08L622.335 570.818Z'
 									/>
 								</g>
 								<g id='Text-Logo'>
-									<text fontSize='128' fontWeight='500' letterSpacing='0em'>
-										<tspan x='0' y='321.888'>
-											Gest
-										</tspan>
-										<tspan x='330.375' y='321.888'>
-											r de{' '}
-										</tspan>
-										<tspan x='0' y='421.888'>
-											laboratorio
-										</tspan>
-									</text>
 									<text
-										id='o'
+										transform='translate(91.9153 324.78)'
 										fontSize='128'
 										fontWeight='500'
 										letterSpacing='0em'
 									>
-										<tspan x='258.5' y='321.888'>
+										<tspan x='0' y='87.888'>
+											Gest
+										</tspan>
+										<tspan x='330.375' y='87.888'>
+											r de{' '}
+										</tspan>
+										<tspan x='0' y='187.888'>
+											laboratorio
+										</tspan>
+									</text>
+									<text
+										transform='translate(91.9153 324.78)'
+										fontSize='128'
+										fontWeight='500'
+										letterSpacing='0em'
+									>
+										<tspan x='258.5' y='87.888'>
 											o
 										</tspan>
 									</text>
@@ -63,6 +116,13 @@ function Login() {
 					login area
 					<DarkLightButton></DarkLightButton>
 				</div>
+				<footer className='LoginFooter'>
+					<img src={tecnmLogo}></img>
+					<p className='p1'>Tecnológico Nacional de Mexico</p>
+					<hr className='solidBorder'></hr>
+					<img src={itsppLogo}></img>
+					<p>Instituto Tecnológico Superior de Puerto Peñasco</p>
+				</footer>
 			</div>
 		</>
 	);
