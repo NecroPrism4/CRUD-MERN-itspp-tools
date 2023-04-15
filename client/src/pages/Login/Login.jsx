@@ -1,20 +1,31 @@
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import DarkLightButton from '../../components/MainPage/ButtonLightDark/DarkLightButton';
+import ButtonLogin from '../../components/Login/ButtonLogin/ButtonLogin.jsx';
+import RegisterUserForm from '../../components/Login/RegisterUserForm/RegisterUserForm.jsx';
+import LoginUserForm from '../../components/Login/LoginUserForm/LoginUserForm.jsx';
 import './Login.css';
 import tecnmLogo from '../../assets/logoTecNM 1.png';
 import itsppLogo from '../../assets/logo itspp.png';
 
 function Login() {
 	const { theme } = useContext(ThemeContext);
+	const [showLogin, setShowLogin] = useState('ShowLogin');
+
+	const handleShow = () => {
+		showLogin === 'ShowLogin'
+			? setShowLogin('HideLogin')
+			: setShowLogin('ShowLogin');
+	};
 
 	return (
 		<>
 			<div className='LoginPrimaryContainer' data-theme={theme}>
-				<div className='LoginDesignContainer'>
-					<div className='WaveBackgroundContainer'>
+				<div className={`${showLogin} LoginDesignContainer`}>
+					{/* #Region LeftSide/Logo/Register */}
+					<div className={`${showLogin} WaveBackgroundContainer`}>
 						<svg
-							className='WaveBackground'
+							className={`WaveBackground`}
 							preserveAspectRatio='none'
 							width='1113'
 							height='2160'
@@ -57,7 +68,15 @@ function Login() {
 							)}
 						</svg>
 					</div>
-					<div className='LoginLogoContainer'>
+					<div className={`${showLogin} RegisterContainer`}>
+						<h1 className='RegisterText'>Cree una cuenta</h1>
+						<RegisterUserForm btnValue='Registrar'></RegisterUserForm>
+						<button className='BackButton' onClick={handleShow}>
+							Volver
+						</button>
+					</div>
+					<hr className={`${showLogin} solidBorder`}></hr>
+					<div className={`${showLogin} LoginLogoContainer`}>
 						<svg
 							width='778'
 							height='769'
@@ -111,19 +130,24 @@ function Login() {
 							</g>
 						</svg>
 					</div>
+					{/* #Endregion LeftSide/Logo/Register */}
 				</div>
-				<div className='LoginContainer'>
-					login area
-					<DarkLightButton></DarkLightButton>
+				<div className={`${showLogin} LoginContainer`}>
+					<h1 className='RegisterText'>¡Bienvenido!</h1>
+					<LoginUserForm btnValue='Iniciar Sesión'></LoginUserForm>
+					<button className='BackButton' onClick={handleShow}>
+						¿No tiene cuenta?
+					</button>
 				</div>
-				<footer className='LoginFooter'>
-					<img src={tecnmLogo}></img>
-					<p className='p1'>Tecnológico Nacional de Mexico</p>
-					<hr className='solidBorder'></hr>
-					<img src={itsppLogo}></img>
-					<p>Instituto Tecnológico Superior de Puerto Peñasco</p>
-				</footer>
 			</div>
+			<footer className='LoginFooter'>
+				<img src={tecnmLogo}></img>
+				<p className='p1'>Tecnológico Nacional de México</p>
+				<hr className='solidBorder'></hr>
+				<img src={itsppLogo}></img>
+				<p>Instituto Tecnológico Superior de Puerto Peñasco</p>
+				<DarkLightButton></DarkLightButton>
+			</footer>
 		</>
 	);
 }
