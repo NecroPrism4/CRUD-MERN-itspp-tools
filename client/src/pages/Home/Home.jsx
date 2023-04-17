@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { ThemeContext } from '../context/ThemeContext.jsx';
-import DarkLightButton from '../components/MainPage/ButtonLightDark/DarkLightButton.jsx';
+import { ThemeContext } from '../../context/ThemeContext.jsx';
+import DarkLightButton from '../../components/MainPage/ButtonLightDark/DarkLightButton.jsx';
 
 function Home() {
 	const { theme } = useContext(ThemeContext);

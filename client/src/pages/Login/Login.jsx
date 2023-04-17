@@ -1,15 +1,16 @@
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
-import DarkLightButton from '../../components/MainPage/ButtonLightDark/DarkLightButton';
-import ButtonLogin from '../../components/Login/ButtonLogin/ButtonLogin.jsx';
+
+import './Login.css';
+
 import RegisterUserForm from '../../components/Login/RegisterUserForm/RegisterUserForm.jsx';
 import LoginUserForm from '../../components/Login/LoginUserForm/LoginUserForm.jsx';
-import './Login.css';
+
 import tecnmLogo from '../../assets/logoTecNM 1.png';
 import itsppLogo from '../../assets/logo itspp.png';
 
 function Login() {
-	const { theme } = useContext(ThemeContext);
+	const { theme, handleTheme } = useContext(ThemeContext);
 	const [showLogin, setShowLogin] = useState('ShowLogin');
 
 	const handleShow = () => {
@@ -83,6 +84,8 @@ function Login() {
 							viewBox='0 0 778 769'
 							preserveAspectRatio='xMidYMid meet'
 							xmlns='http://www.w3.org/2000/svg'
+							onClick={handleTheme}
+							style={{ cursor: 'pointer' }}
 						>
 							<g id='LogoApp'>
 								<g id='logo-lines'>
@@ -146,7 +149,6 @@ function Login() {
 				<hr className='solidBorder'></hr>
 				<img src={itsppLogo}></img>
 				<p>Instituto Tecnológico Superior de Puerto Peñasco</p>
-				<DarkLightButton></DarkLightButton>
 			</footer>
 		</>
 	);

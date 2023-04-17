@@ -3,7 +3,6 @@ import { ThemeContext } from '../../../context/ThemeContext.jsx';
 
 function DarkLightButton() {
 	const { theme, handleTheme } = useContext(ThemeContext);
-	const [value, setValue] = useState();
 
 	return (
 		<div>

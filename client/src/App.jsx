@@ -1,7 +1,8 @@
 import { ThemeContextProvider } from './context/ThemeContext';
 import '../src/Style.css';
 import Login from './pages/Login/Login.jsx';
-import Home from '../src/pages/Home.jsx';
+import Home from '../src/pages/Home/Home.jsx';
+import Nopage from '../src/pages/Nopage.jsx';
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ function App() {
 				<Routes>
 					<Route path='/login' Component={Login} />
 					<Route exact path='/home' Component={Home} />
-					<Route path='*' Component={'Nothing  here'} />
+					<Route path='*' Component={Nopage} />
 				</Routes>
 			</div>
 		</ThemeContextProvider>
