@@ -5,6 +5,8 @@ import Home from '../src/pages/Home/Home.jsx';
 import Nopage from '../src/pages/Nopage.jsx';
 
 import { Route, Routes } from 'react-router-dom';
+import Dashboard from './pages/Home/Dashboard/Dashboard';
+import bb from './pages/Home/Dashboard/bb';
 
 function App() {
 	return (
@@ -12,7 +14,10 @@ function App() {
 			<div>
 				<Routes>
 					<Route path='/login' Component={Login} />
-					<Route exact path='/home' Component={Home} />
+					<Route path='/home' Component={Home} exact>
+						<Route path='dashboard' Component={Dashboard} />
+						<Route path='bb' Component={bb} />
+					</Route>
 					<Route path='*' Component={Nopage} />
 				</Routes>
 			</div>
