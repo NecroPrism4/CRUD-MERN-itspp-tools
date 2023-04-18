@@ -1,4 +1,5 @@
 import './ButtonLogin.css';
+import { Link } from 'react-router-dom';
 
 function ButtonLogin(props) {
 	return (
