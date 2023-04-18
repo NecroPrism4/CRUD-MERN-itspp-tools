@@ -6,12 +6,13 @@ import DarkLightButton from '../../components/MainPage/ButtonLightDark/DarkLight
 function Home() {
 	const { theme } = useContext(ThemeContext);
 	return (
-		<div data-theme={theme}>
-			<Link to='/home/dashboard'>Dashboard</Link>
-			<div></div>
-			<Link to='/home/bb'>BB</Link>
-			<Outlet />
-		</div>
+		<>
+			<div className='HomePrimaryContainer' data-theme={theme}>
+				<div className='HomeLeftSideContainer'></div>
+				<div className='HomeMainContainer'></div>
+				<div className='HomeRighSideContainer'></div>
+			</div>
+		</>
 	);
 }
 
