@@ -1,97 +1,49 @@
 import React from 'react';
 import './SideMenu.css';
 
-function SideMenu() {
+import ButtonMenu from './SideMenuButton/ButtonMenu.jsx';
+
+function SideMenu(props) {
 	return (
-		<aside className='SideMenuContainer'>
-			<aside
-				id='layout-menu'
-				className='layout-menu menu-vertical menu bg-menu-theme'
-			>
-				<div className='app-brand demo'>
-					<a href='home/dashboard' className='app-brand-link'>
-						<span className='app-brand-logo demo'>
-							<img width='25' viewBox='0 0 25 42' />
-						</span>
-						<span className='app-brand-text menu-text fw-bolder ms-2 '></span>
-					</a>
-					<a className='layout-menu-toggle menu-link text-large ms-auto'>
-						<i className='bx bx-chevron-left bx-sm align-middle'></i>
-					</a>
+		<>
+			<ul className='SideMenu'>
+				<li className='menuHeader'>
+					<span>Menú</span>
+				</li>
+				<li className='menuItem'>
+					<ButtonMenu route='dashboard' title='Dashboard'></ButtonMenu>
+				</li>
+				<li className='menuItem'>
+					<ButtonMenu route='tools' title='Materiales'></ButtonMenu>
+				</li>
+				<li className='menuItem'>
+					<ButtonMenu route='lendings' title='Prestamos'></ButtonMenu>
+				</li>
+				<li className='menuItem'>
+					<ButtonMenu route='reports' title='Reportes'></ButtonMenu>
+				</li>
+
+				{/* 
+			user.admin === true && (
+				<li className='menuHeader'>
+					<span>Otros</span>
+				</li>
+				<li className='menuItem'>Manejo de usuarios</li>
+			)
+			
+			*/}
+			</ul>
+			<div className='menuUserSection'>
+				<div>
+					<img
+						src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'
+						alt='user'
+					/>
+					<p>NombreUsuario</p>
+					<span>Puesto Usaurio </span>
 				</div>
-				<div className='menu-inner-shadow'></div>
-				<ul className='menu-inner py-1'>
-					<li className='menu-item'>
-						<a href='home/dashboard' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-home-circle'></i>
-							<div data-i18n='Analytics'>Dashboard</div>
-						</a>
-					</li>
-					<li className='menu-item'>
-						<a href='/servers' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-server'></i>
-							<div data-i18n='Layouts'>Servers</div>
-						</a>
-					</li>
-					<li className='menu-item'>
-						<a href='/create' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-plus-medical'></i>
-							<div data-i18n='Layouts'>Create a Server</div>
-						</a>
-					</li>
-					<li className='menu-header small text-uppercase'>
-						<span className='menu-header-text'>Pages</span>
-					</li>
-					<li className='menu-item'>
-						<a href='/gift' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-gift'></i>
-							<div data-i18n='Layouts'>Gift</div>
-						</a>
-					</li>
-
-					<li className='menu-item'>
-						<a href='/status' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-stats'></i>
-							<div data-i18n='Layouts'>Status</div>
-						</a>
-					</li>
-
-					<li className='menu-item'>
-						<a href='/redeem' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-book-reader'></i>
-							<div data-i18n='Layouts'>Redeem</div>
-						</a>
-					</li>
-					<li className='menu-item'>
-						<a href='/j4r' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-diamond'></i>
-							<div data-i18n='Layouts'>Join for Reward</div>
-						</a>
-					</li>
-					<li className='menu-item'>
-						<a href='/lv' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-link-external'></i>
-							<div data-i18n='Layouts'>Linkvertise Earning</div>
-						</a>
-					</li>
-					<li className='menu-header small text-uppercase'>
-						<span className='menu-header-text'>Store</span>
-					</li>
-					<li className='menu-item'>
-						<a href='/store' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-store'></i>
-							<div data-i18n='Layouts'>Store</div>
-						</a>
-					</li>
-					<li className='menu-item'>
-						<a href='/buy' className='menu-link'>
-							<i className='menu-icon tf-icons bx bx-cart'></i>
-							<div data-i18n='Layouts'>Buy Coins</div>
-						</a>
-					</li>
-				</ul>
-			</aside>
-		</aside>
+			</div>
+		</>
 	);
 }
 

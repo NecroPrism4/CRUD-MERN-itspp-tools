@@ -1,0 +1,18 @@
+.HomeLogoContainer {
+	/* background: var(--gradient-accent); */
+	position: relative;
+}
+
+.HomeLogoContainer text {
+	fill: var(--active-fg);
+}
+
+.HomeLogoContainer svg {
+	fill: var(--logo-color);
+	transition: all 0.5s ease-in-out;
+	position: relative;
+	width: 20vw;
+	background: var(--gradient-accent);
+	border-radius: 25px;
+	height: fit-content;
+}

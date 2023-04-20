@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext.jsx';
 import { Link, Outlet } from 'react-router-dom';
 
+import LogoSideMenu from '../../components/HomePage/Sidemenu/LogoSideMenu/LogoSideMenu.jsx';
 import SideMenu from '../../components/HomePage/Sidemenu/SideMenu.jsx';
 
 function Home() {
@@ -9,7 +10,12 @@ function Home() {
 	return (
 		<>
 			<div className='HomePrimaryContainer' data-theme={theme}>
-				<SideMenu></SideMenu>
+				<aside>
+					<div className='RightSide'>
+						<LogoSideMenu />
+					</div>
+					<SideMenu></SideMenu>
+				</aside>
 				<div className='HomeMainContainer'>
 					<Outlet />
 				</div>

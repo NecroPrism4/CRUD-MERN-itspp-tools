@@ -125,7 +125,7 @@ function Login() {
 										fontWeight='500'
 										letterSpacing='0em'
 									>
-										<tspan x='258.5' y='87.888'>
+										<tspan x='258.5' y='87.888' id='o'>
 											o
 										</tspan>
 									</text>

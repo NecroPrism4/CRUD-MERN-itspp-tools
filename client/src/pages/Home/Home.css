@@ -1,0 +1,10 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+.SideMenu {
+	width: fit-content;
+	position: absolute;
+}
