@@ -1,14 +1,17 @@
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
+.HomePrimaryContainer {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
 .SideMenu {
-	width: fit-content;
-	position: absolute;
+	flex: 1;
 }
 
-.DivLogo {
-	height: fit-content;
+.HomeMainContainer {
+	flex: 3;
+}
+
+.HomeRighSideContainer {
+	flex: 1;
 }

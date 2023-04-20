@@ -1,37 +1,62 @@
 import React from 'react';
 import './SideMenu.css';
 
+import {
+	faBoxOpen,
+	faClipboardList,
+	faHandHolding,
+	faHouse,
+} from '@fortawesome/free-solid-svg-icons';
+
 import ButtonMenu from './SideMenuButton/ButtonMenu.jsx';
 
 function SideMenu(props) {
 	return (
-		<>
-			<ul className='SideMenu'>
+		<div className='menuVertical'>
+			<ul className=''>
 				<li className='menuHeader'>
 					<span>Menú</span>
 				</li>
 				<li className='menuItem'>
-					<ButtonMenu route='dashboard' title='Dashboard'></ButtonMenu>
+					<ButtonMenu
+						route='dashboard'
+						title='Dashboard'
+						icon={faHouse}
+					></ButtonMenu>
 				</li>
 				<li className='menuItem'>
-					<ButtonMenu route='tools' title='Materiales'></ButtonMenu>
+					<ButtonMenu
+						route='tools'
+						title='Materiales'
+						icon={faBoxOpen}
+					></ButtonMenu>
 				</li>
 				<li className='menuItem'>
-					<ButtonMenu route='lendings' title='Prestamos'></ButtonMenu>
+					<ButtonMenu
+						route='lendings'
+						title='Prestamos'
+						icon={faHandHolding}
+					></ButtonMenu>
 				</li>
-				<li className='menuItem'>
-					<ButtonMenu route='reports' title='Reportes'></ButtonMenu>
-				</li>
-
 				{/* 
 			user.admin === true && (
 				<li className='menuHeader'>
-					<span>Otros</span>
+					<span>Usuarios</span>
 				</li>
 				<li className='menuItem'>Manejo de usuarios</li>
 			)
 			
 			*/}
+				<li className='menuHeader'>
+					<span>Otros</span>
+				</li>
+				<li className='menuItem'>
+					<ButtonMenu
+						route='reports'
+						title='Reportes'
+						icon={faClipboardList}
+					></ButtonMenu>
+				</li>
 			</ul>
 			<div className='menuUserSection'>
 				<div>
@@ -43,7 +68,7 @@ function SideMenu(props) {
 					<span>Puesto Usaurio </span>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

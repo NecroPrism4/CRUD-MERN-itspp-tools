@@ -1,6 +1,10 @@
-.SideMenu {
+* {
 	width: fit-content;
 }
 
-.SideMenu .menuHeader {
+.menuVertical,
+.menuVertical .menublock,
+.menuVertical .menuinner > .menuItem,
+.menuVertical .menuinner > .menuHeader {
+	width: 16.25rem;
 }
