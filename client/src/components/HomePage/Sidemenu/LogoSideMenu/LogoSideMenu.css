@@ -1,8 +1,15 @@
 .HomeLogoContainer {
-	/* background: var(--gradient-accent); */
 	position: relative;
+	display: flex;
+	width: 300px;
+	height: 80px;
+	overflow: hidden;
+	border-radius: 50px;
+	align-items: center;
+	justify-items: center;
+	margin: 20px;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
 }
-
 .HomeLogoContainer text {
 	fill: var(--active-fg);
 }
@@ -10,9 +17,8 @@
 .HomeLogoContainer svg {
 	fill: var(--logo-color);
 	transition: all 0.5s ease-in-out;
-	position: relative;
-	width: 20vw;
 	background: var(--gradient-accent);
-	border-radius: 25px;
-	height: fit-content;
+	width: 100%;
+	height: 300%;
+	transform: translateY(-5%);
 }

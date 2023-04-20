@@ -1,3 +1,6 @@
 .SideMenu {
 	width: fit-content;
 }
+
+.SideMenu .menuHeader {
+}

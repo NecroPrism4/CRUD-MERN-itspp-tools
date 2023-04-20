@@ -11,7 +11,7 @@ function Home() {
 		<>
 			<div className='HomePrimaryContainer' data-theme={theme}>
 				<aside>
-					<div className='RightSide'>
+					<div className='DivLogo'>
 						<LogoSideMenu />
 					</div>
 					<SideMenu></SideMenu>
