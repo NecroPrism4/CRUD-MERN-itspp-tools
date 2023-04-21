@@ -5,6 +5,7 @@
 	width: 16.25rem;
 } */
 .MenuContainer {
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	border-radius: 0 50px 0 0;
@@ -106,11 +107,11 @@ li {
 
 @media screen and (max-width: 768px) {
 	.menuUserSection p {
-		font-size: 0.8em;
+		font-size: 1em;
 	}
 
 	.menuUserSection span {
-		font-size: 0.6em;
+		font-size: 1em;
 	}
 
 	img {
