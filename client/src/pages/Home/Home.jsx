@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../../context/ThemeContext.jsx';
 import { Link, Outlet } from 'react-router-dom';
 import { faBars, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ import DarkLightButton from '../../components/HomePage/ButtonLightDark/DarkLight
 
 function Home() {
 	const { theme } = useContext(ThemeContext);
+
 	return (
 		<>
 			<div className='HomePrimaryContainer' data-theme={theme}>
@@ -19,7 +20,7 @@ function Home() {
 					<SideMenu></SideMenu>
 				</aside>
 				<div className='HomeMainContainer'>
-					<nav>
+					<nav className='UpperNav'>
 						<div className='ShowMenu'>
 							<FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
 						</div>

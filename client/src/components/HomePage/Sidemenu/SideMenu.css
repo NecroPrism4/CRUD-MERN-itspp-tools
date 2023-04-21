@@ -15,7 +15,7 @@
 
 .menuVertical {
 	position: relative;
-	margin-top: 30px;
+	margin-top: 20px;
 }
 
 .hideMenuButton {
@@ -66,9 +66,8 @@ li span::before {
 }
 
 .divGap {
-	flex-grow: 1;
 	width: 80%;
-	align-self: center;
+	align-self: flex-end;
 	border-bottom: 2px solid var(--inactive-fg);
 	opacity: 0.5;
 }
