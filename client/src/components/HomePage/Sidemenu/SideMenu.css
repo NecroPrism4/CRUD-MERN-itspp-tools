@@ -93,7 +93,7 @@ li span::before {
 	font-size: 0.8em;
 }
 
-img {
+.menuUserSection img {
 	justify-self: center;
 	grid-area: img;
 	width: 4em;
@@ -102,7 +102,7 @@ img {
 	clip-path: circle(50% at center);
 }
 
-li {
+.menuUserSection li {
 	list-style: none;
 }
 
