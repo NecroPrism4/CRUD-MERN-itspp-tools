@@ -1,4 +1,4 @@
-import React from 'react';
+import './DashBoard.css';
 
 function Dashboard() {
 	return <h1>DashBoard</h1>;

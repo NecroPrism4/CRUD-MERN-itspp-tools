@@ -7,6 +7,7 @@ import {
 	faClipboardList,
 	faHandHolding,
 	faHouse,
+	faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -35,7 +36,7 @@ function SideMenu(props) {
 				</li>
 				<li className='menuItem'>
 					<ButtonMenu
-						route='tools'
+						route='inventory'
 						title='Materiales'
 						icon={faBoxOpen}
 					></ButtonMenu>
@@ -47,15 +48,28 @@ function SideMenu(props) {
 						icon={faHandHolding}
 					></ButtonMenu>
 				</li>
-				{/* 
-			user.admin === true && (
 				<li className='menuHeader'>
 					<span>Usuarios</span>
 				</li>
+				<li className='menuItem'>
+					<ButtonMenu
+						route='personas'
+						title='Personas'
+						icon={faUsers}
+					></ButtonMenu>
+				</li>
+				{/* 
+			user.admin === true && (
 				<li className='menuItem'>Manejo de usuarios</li>
-			)
-			
+			)	
 			*/}
+				<li className='menuItem'>
+					<ButtonMenu
+						route='usersmanagement'
+						title='Manejo de usuarios'
+						icon={faClipboardList}
+					></ButtonMenu>
+				</li>
 				<li className='menuHeader'>
 					<span>Otros</span>
 				</li>
@@ -67,7 +81,7 @@ function SideMenu(props) {
 					></ButtonMenu>
 				</li>
 			</ul>
-			<div className='divGap'></div>
+			{/* <div className='divGap'></div> */}
 			<div className='menuUserSection'>
 				<img
 					src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'
@@ -75,7 +89,7 @@ function SideMenu(props) {
 				/>
 				<div>
 					<p>NombreUsuario</p>
-					<span>Puesto Usaurio </span>
+					<span>Puesto Usuario </span>
 				</div>
 			</div>
 		</div>

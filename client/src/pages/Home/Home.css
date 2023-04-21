@@ -10,7 +10,7 @@
 	backdrop-filter: blur(5px);
 	grid-template-rows: auto 1fr;
 	width: 50%;
-	height: 100%;
+	height: 100vh;
 	/* transform: translateX(-120%); */
 }
 
@@ -40,6 +40,12 @@
 	.HomeMainContainer {
 		grid-area: main;
 	}
+
+	.UpperNav {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
 	.HomeRighSideContainer {
 		transform: translateX(100%);
 	}
