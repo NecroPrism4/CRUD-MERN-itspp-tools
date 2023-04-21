@@ -1,10 +1,122 @@
-* {
-	width: fit-content;
-}
-
-.menuVertical,
+/* .menuVertical,
 .menuVertical .menublock,
 .menuVertical .menuinner > .menuItem,
 .menuVertical .menuinner > .menuHeader {
 	width: 16.25rem;
+} */
+.MenuContainer {
+	display: flex;
+	flex-direction: column;
+	border-radius: 0 50px 0 0;
+	background: var(--secundary-bg);
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+}
+
+.menuVertical {
+	position: relative;
+	margin-top: 30px;
+}
+
+.hideMenuButton {
+	position: absolute;
+	right: -18px;
+	top: 2%;
+	background: var(--primary-bg);
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.hideMenuButton:active {
+	background: transparent;
+}
+
+.hideMenuButton .ico {
+	background: var(--gradient-accent);
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1em;
+	margin: 0.25em;
+	font-size: 2em;
+	color: var(--primary-bg);
+}
+
+.menuHeader {
+	position: relative;
+	padding-left: 35px;
+	color: var(--active-fg);
+	opacity: 50%;
+	margin-bottom: 20px;
+	font-size: 0.7em;
+}
+
+li span::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1.2rem;
+	height: 1px;
+	transition: all 0.3s ease-in-out;
+	background: var(--active-fg);
+	opacity: 50%;
+}
+
+.divGap {
+	flex-grow: 1;
+	width: 80%;
+	align-self: center;
+	border-bottom: 2px solid var(--inactive-fg);
+	opacity: 0.5;
+}
+
+.menuUserSection {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-areas: 'img User';
+	gap: 5px;
+	margin: 30px 0px 20px 0px;
+	align-items: end;
+}
+
+.menuUserSection p {
+	height: fit-content;
+	grid-area: UserName;
+}
+
+.menuUserSection span {
+	height: fit-content;
+	grid-area: UserJob;
+	font-size: 0.8em;
+}
+
+img {
+	justify-self: center;
+	grid-area: img;
+	width: 4em;
+	height: 4em;
+	object-fit: cover;
+	clip-path: circle(50% at center);
+}
+
+li {
+	list-style: none;
+}
+
+@media screen and (max-width: 768px) {
+	.menuUserSection p {
+		font-size: 0.8em;
+	}
+
+	.menuUserSection span {
+		font-size: 0.6em;
+	}
+
+	img {
+		width: 3em;
+		height: 3em;
+	}
 }

@@ -8,7 +8,11 @@ function DarkLightButton() {
 
 	return (
 		<div>
-			<button className='theme-toggle-button' onClick={handleTheme}>
+			<button
+				className='theme-toggle-button'
+				onClick={handleTheme}
+				style={{ background: 'transparent', border: 'transparent' }}
+			>
 				<FontAwesomeIcon
 					className='theme-toggle-icon'
 					icon={theme == 'light' ? faSun : faMoon}

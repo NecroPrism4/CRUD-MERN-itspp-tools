@@ -1,3 +1,31 @@
+.MenuButton {
+	display: flex;
+	margin: 10px 20px 25px 20px;
+	background: var(--gradient-accent);
+	height: 60px;
+	align-items: center;
+	border-radius: 30px;
+	color: var(--inactive-fg);
+	font-size: 1.2em;
+}
+
+.menuButtonIcon {
+	order: -1;
+	margin: 0 15px 0 15px;
+	color: var(--inactive-fg);
+}
+
 .menuButtonText {
-	width: fit-content;
+	text-decoration: solid;
+}
+
+a {
+	text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+	.MenuButton {
+		font-size: 1em;
+		height: 40px;
+	}
 }

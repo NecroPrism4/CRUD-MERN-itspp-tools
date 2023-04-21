@@ -7,10 +7,12 @@ function ButtonMenu(props) {
 	return (
 		<>
 			<Link to={props.route}>
-				<i className='menuButtonIcon'>
-					<FontAwesomeIcon icon={props.icon} />
-				</i>
-				<div className='menuButtonText'>{props.title}</div>
+				<div className='MenuButton'>
+					<i className='menuButtonIcon'>
+						<FontAwesomeIcon icon={props.icon} />
+					</i>
+					<div className='menuButtonText'>{props.title}</div>
+				</div>
 			</Link>
 		</>
 	);
