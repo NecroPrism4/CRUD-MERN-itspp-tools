@@ -1,21 +1,24 @@
-/* .menuVertical,
-.menuVertical .menublock,
-.menuVertical .menuinner > .menuItem,
-.menuVertical .menuinner > .menuHeader {
-	width: 16.25rem;
-} */
-.MenuContainer {
-	box-sizing: border-box;
+.MenuandUser {
 	display: flex;
 	flex-direction: column;
+	height: 100%;
 	border-radius: 0 50px 0 0;
-	background: var(--secundary-bg);
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+	background: var(--secundary-bg);
+}
+
+.MenuContainer {
+	display: flex;
+	flex-direction: column;
+	padding: 0 4px 0 0;
 }
 
 .menuVertical {
 	position: relative;
-	margin-top: 20px;
+	margin-top: 30px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 65vh;
 }
 
 .hideMenuButton {
@@ -49,7 +52,8 @@
 	padding-left: 35px;
 	color: var(--active-fg);
 	opacity: 50%;
-	margin-bottom: 20px;
+	margin: 20px 0 10px 0;
+	font-size: 0.8em;
 }
 
 li span::before {
@@ -67,7 +71,8 @@ li span::before {
 
 .divGap {
 	width: 80%;
-	align-self: flex-end;
+	height: 100%;
+	align-self: center;
 	border-bottom: 2px solid var(--inactive-fg);
 	opacity: 0.5;
 }
@@ -76,8 +81,7 @@ li span::before {
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-template-areas: 'img User';
-	gap: 5px;
-	margin: 30px 0px 20px 0px;
+	padding: 20px 0 15px 0;
 	align-items: end;
 }
 
@@ -92,7 +96,7 @@ li span::before {
 	font-size: 0.8em;
 }
 
-.menuUserSection img {
+img {
 	justify-self: center;
 	grid-area: img;
 	width: 4em;
@@ -101,21 +105,24 @@ li span::before {
 	clip-path: circle(50% at center);
 }
 
-.menuUserSection li {
+li {
 	list-style: none;
 }
 
-@media screen and (max-width: 768px) {
-	.menuUserSection p {
-		font-size: 1em;
-	}
+/* personalización de la barra de desplazamiento */
+::-webkit-scrollbar {
+	width: 5px; /* ancho de la barra */
+}
 
-	.menuUserSection span {
-		font-size: 1em;
-	}
+::-webkit-scrollbar-track {
+	background: transparent; /* color del fondo */
+}
 
-	img {
-		width: 3em;
-		height: 3em;
-	}
+::-webkit-scrollbar-thumb {
+	background-color: var(--primary-bg); /* color del thumb */
+	border-radius: 20px; /* borde redondeado */
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--inactive-fg); /* color del thumb en hover */
 }

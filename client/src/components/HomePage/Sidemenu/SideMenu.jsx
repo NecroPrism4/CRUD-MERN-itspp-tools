@@ -17,71 +17,73 @@ function SideMenu(props) {
 	const [ShowMenu, setShowMenu] = useState(false);
 
 	return (
-		<div className='MenuContainer'>
-			<ul className='menuVertical'>
-				<button className='hideMenuButton'>
-					<div className='ico'>
-						<FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
-					</div>
-				</button>
-				<li className='menuHeader'>
-					<span>Menú</span>
-				</li>
-				<li className='menuItem'>
-					<ButtonMenu
-						route='dashboard'
-						title='Dashboard'
-						icon={faHouse}
-					></ButtonMenu>
-				</li>
-				<li className='menuItem'>
-					<ButtonMenu
-						route='inventory'
-						title='Materiales'
-						icon={faBoxOpen}
-					></ButtonMenu>
-				</li>
-				<li className='menuItem'>
-					<ButtonMenu
-						route='lendings'
-						title='Prestamos'
-						icon={faHandHolding}
-					></ButtonMenu>
-				</li>
-				<li className='menuHeader'>
-					<span>Usuarios</span>
-				</li>
-				<li className='menuItem'>
-					<ButtonMenu
-						route='personas'
-						title='Personas'
-						icon={faUsers}
-					></ButtonMenu>
-				</li>
-				{/* 
+		<div className='MenuandUser'>
+			<button className='hideMenuButton'>
+				<div className='ico'>
+					<FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
+				</div>
+			</button>
+			<div className='MenuContainer'>
+				<ul className='menuVertical'>
+					<li className='menuHeader menuHeader1'>
+						<span>Menú</span>
+					</li>
+					<li className='menuItem'>
+						<ButtonMenu
+							route='dashboard'
+							title='Dashboard'
+							icon={faHouse}
+						></ButtonMenu>
+					</li>
+					<li className='menuItem'>
+						<ButtonMenu
+							route='inventory'
+							title='Materiales'
+							icon={faBoxOpen}
+						></ButtonMenu>
+					</li>
+					<li className='menuItem'>
+						<ButtonMenu
+							route='lendings'
+							title='Prestamos'
+							icon={faHandHolding}
+						></ButtonMenu>
+					</li>
+					<li className='menuHeader'>
+						<span>Usuarios</span>
+					</li>
+					<li className='menuItem'>
+						<ButtonMenu
+							route='personas'
+							title='Personas'
+							icon={faUsers}
+						></ButtonMenu>
+					</li>
+					{/* 
 			user.admin === true && (
 				<li className='menuItem'>Manejo de usuarios</li>
 			)	
 			*/}
-				<li className='menuItem'>
-					<ButtonMenu
-						route='usersmanagement'
-						title='Manejo de usuarios'
-						icon={faClipboardList}
-					></ButtonMenu>
-				</li>
-				<li className='menuHeader'>
-					<span>Otros</span>
-				</li>
-				<li className='menuItem'>
-					<ButtonMenu
-						route='reports'
-						title='Reportes'
-						icon={faClipboardList}
-					></ButtonMenu>
-				</li>
-			</ul>
-			{/* <div className='divGap'></div> */}
+					<li className='menuItem'>
+						<ButtonMenu
+							route='usersmanagement'
+							title='Manejo de usuarios'
+							icon={faClipboardList}
+						></ButtonMenu>
+					</li>
+					<li className='menuHeader'>
+						<span>Otros</span>
+					</li>
+					<li className='menuItem'>
+						<ButtonMenu
+							route='reports'
+							title='Reportes'
+							icon={faClipboardList}
+						></ButtonMenu>
+					</li>
+				</ul>
+			</div>
+			<div className='divGap'></div>
 			<div className='menuUserSection'>
 				<img
 					src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'

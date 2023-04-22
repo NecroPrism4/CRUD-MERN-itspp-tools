@@ -1,7 +1,7 @@
 .HomePrimaryContainer {
 	background: var(--primary-bg);
 	display: flex;
-	overflow-x: hidden;
+	height: 100vh;
 }
 
 .SideMenuContainer {
@@ -11,18 +11,13 @@
 	backdrop-filter: blur(5px);
 	grid-template-rows: auto 1fr;
 	width: 50%;
-	height: 100vh;
+	height: 100%;
 	/* transform: translateX(-120%); */
 }
 
 .HomeMainContainer {
-	height: 100vh;
-	width: 100%;
 	padding: 0 25px 0 30px;
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-	overflow: auto; /* Permite el scroll vertical */
-	scrollbar-width: thin; /* Ancho de la barra de desplazamiento */
-	scrollbar-color: #999999 #f2f2f2; /* Color de la barra */
 }
 
 .HomeRighSideContainer {
@@ -44,12 +39,6 @@
 	.HomeMainContainer {
 		grid-area: main;
 	}
-
-	.UpperNav {
-		display: flex;
-		flex-wrap: wrap;
-	}
-
 	.HomeRighSideContainer {
 		transform: translateX(100%);
 	}
@@ -57,6 +46,7 @@
 
 @media only screen and (min-width: 768px) {
 	.HomePrimaryContainer {
+		font-size: 18px;
 		display: grid;
 		grid-template-columns: auto 1fr;
 		grid-template-areas: 'left main ';
@@ -76,7 +66,7 @@
 
 @media only screen and (min-width: 1280px) {
 	.HomePrimaryContainer {
-		font-size: 18px;
+		font-size: 22px;
 		background: var(--primary-bg);
 		grid-template-columns: auto 1fr auto;
 		grid-template-areas: 'left main right';
