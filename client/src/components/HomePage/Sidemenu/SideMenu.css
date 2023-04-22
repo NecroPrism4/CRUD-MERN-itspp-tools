@@ -1,4 +1,5 @@
 .MenuandUser {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -24,7 +25,7 @@
 .hideMenuButton {
 	position: absolute;
 	right: -18px;
-	top: 2%;
+	top: 5%;
 	background: var(--primary-bg);
 	border: none;
 	border-radius: 50%;
@@ -36,7 +37,6 @@
 }
 
 .hideMenuButton .ico {
-	background: var(--gradient-accent);
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
@@ -45,6 +45,10 @@
 	margin: 0.25em;
 	font-size: 2em;
 	color: var(--primary-bg);
+	background: var(--gradient-accent);
+}
+.hideMenuButton:hover {
+	background: var(--gradient-accent);
 }
 
 .menuHeader {
@@ -82,16 +86,25 @@ li span::before {
 	grid-template-columns: auto auto;
 	grid-template-areas: 'img User';
 	padding: 20px 0 15px 0;
-	align-items: end;
+	align-items: center;
+	color: var(--inactive-fg);
 }
 
 .menuUserSection p {
 	height: fit-content;
+	width: fit-content;
 	grid-area: UserName;
+}
+
+.menuUserSection p:hover {
+	color: var(--active-fg);
+	cursor: pointer;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .menuUserSection span {
 	height: fit-content;
+	width: fit-content;
 	grid-area: UserJob;
 	font-size: 0.8em;
 }
@@ -102,11 +115,28 @@ img {
 	width: 4em;
 	height: 4em;
 	object-fit: cover;
-	clip-path: circle(50% at center);
+	border-radius: 25px;
+	border: solid 2px;
 }
 
 li {
 	list-style: none;
+}
+
+@media screen and (max-width: 768px) {
+	.menuUserSection {
+		font-size: 0.8em;
+	}
+
+	img {
+		justify-self: center;
+		grid-area: img;
+		width: 4em;
+		height: 4em;
+		object-fit: cover;
+		border-radius: 25px;
+		border: solid 2px;
+	}
 }
 
 /* personalización de la barra de desplazamiento */
