@@ -1,0 +1,33 @@
+.table-responsive {
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table tbody {
+	border-top: 1px solid var(--tertiary-bg);
+}
+
+thead {
+}
+
+th,
+td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0.5rem 0 0 0;
+}
+
+th {
+	text-align: start;
+}
+
+tbody tr {
+	text-overflow: ellipsis;
+}
+
+tbody tr:hover {
+	color: var(--active-fg);
+}

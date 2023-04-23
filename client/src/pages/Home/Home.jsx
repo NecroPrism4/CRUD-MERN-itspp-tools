@@ -1,13 +1,11 @@
-import { useContext, useState } from 'react';
-import { ThemeContext } from '../../context/ThemeContext.jsx';
-import { Link, Outlet } from 'react-router-dom';
-import { faBars, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import './Home.css';
+import { useContext, useState, useEffect } from 'react';
+import { ThemeContext } from '../../context/ThemeContext.jsx';
+
+import { Outlet } from 'react-router-dom';
 import LogoSideMenu from '../../components/HomePage/Sidemenu/LogoSideMenu/LogoSideMenu.jsx';
 import SideMenu from '../../components/HomePage/Sidemenu/SideMenu.jsx';
-import DarkLightButton from '../../components/HomePage/ButtonLightDark/DarkLightButton.jsx';
+import UpperNav from '../../components/HomePage/MainContainer/UpperNav/UpperNav.jsx';
 
 function Home() {
 	const { theme } = useContext(ThemeContext);
@@ -17,19 +15,11 @@ function Home() {
 			<div className='HomePrimaryContainer' data-theme={theme}>
 				<aside className='SideMenuContainer'>
 					<LogoSideMenu />
+
 					<SideMenu></SideMenu>
 				</aside>
 				<div className='HomeMainContainer'>
-					<nav className='UpperNav'>
-						<div className='ShowMenu'>
-							<FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
-						</div>
-						<div className='NavRightSide'>
-							<h2></h2>
-							<DarkLightButton />
-							<FontAwesomeIcon icon={faCaretLeft} className='ShowRight' />
-						</div>
-					</nav>
+					<UpperNav />
 					<Outlet />
 				</div>
 				<div className='HomeRighSideContainer'>

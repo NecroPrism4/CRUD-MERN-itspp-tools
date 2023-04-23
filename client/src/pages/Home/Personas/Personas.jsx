@@ -1,11 +1,18 @@
 import './Personas.css';
+import { useEffect, useContext } from 'react';
 
-import React from 'react';
+import { SectionContext } from '../../../context/SectionContext';
 
 function Personas() {
+	const { handleTitle } = useContext(SectionContext);
+
+	useEffect(() => {
+		handleTitle('Personas');
+	}, []);
+
 	return (
-		<div>
-			<h1>Personas</h1>
+		<div className='HomeChildContainer'>
+			<h2>Personas</h2>
 		</div>
 	);
 }

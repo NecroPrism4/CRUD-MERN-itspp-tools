@@ -1,23 +1,35 @@
 .HomePrimaryContainer {
 	background: var(--primary-bg);
-	display: flex;
 	height: 100vh;
 }
 
 .SideMenuContainer {
 	position: fixed;
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 	backdrop-filter: blur(5px);
 	grid-template-rows: auto 1fr;
 	width: 50%;
-	height: 100%;
 	transform: translateX(-120%);
 }
 
 .HomeMainContainer {
-	padding: 0 25px 0 30px;
+	padding: 25px 25px 0 25px;
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.HomeChildContainer {
+	box-sizing: border-box;
+	background: var(--secundary-bg);
+	margin: 20px 0 1px 0;
+	padding: 20px;
+	border-radius: 25px;
+	max-height: 85%;
+	color: var(--inactive-fg);
+	border: 2px solid hsla(0, 0%, 0%, 0.1);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	font-size: 0.5em;
 }
 
 .HomeRighSideContainer {
@@ -57,23 +69,31 @@
 		transform: unset;
 		width: 300px;
 	}
+	.ShowMenu {
+		display: none;
+	}
 	.HomeMainContainer {
 		grid-area: main;
 	}
+
+	.HomeChildContainer {
+		font-size: 0.8em;
+	}
+
 	.HomeRighSideContainer {
 	}
 }
 
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-width: 1375px) {
 	.HomePrimaryContainer {
-		font-size: 22px;
+		font-size: 18px;
 		background: var(--primary-bg);
 		grid-template-columns: auto 1fr auto;
 		grid-template-areas: 'left main right';
 	}
 
 	.SideMenuContainer {
-		width: 400px;
+		width: 300px;
 	}
 	.HomeMainContainer {
 		grid-area: main;

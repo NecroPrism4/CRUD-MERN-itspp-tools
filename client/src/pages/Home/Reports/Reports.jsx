@@ -1,9 +1,18 @@
 import './Reports.css';
+import { useEffect, useContext } from 'react';
+
+import { SectionContext } from '../../../context/SectionContext';
 
 function Reports() {
+	const { handleTitle } = useContext(SectionContext);
+
+	useEffect(() => {
+		handleTitle('Reportes');
+	}, []);
+
 	return (
-		<div>
-			<h1>Reports</h1>
+		<div className='HomeChildContainer'>
+			<h2>Reports</h2>
 		</div>
 	);
 }

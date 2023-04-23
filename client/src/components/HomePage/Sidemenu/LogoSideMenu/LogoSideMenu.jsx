@@ -3,6 +3,7 @@ import './LogoSideMenu.css';
 function LogoSideMenu() {
 	return (
 		<>
+			<div style={{ height: 'auto', flexGrow: '1' }}></div>
 			<div className='HomeLogoContainer'>
 				<svg
 					width='778'
@@ -58,6 +59,7 @@ function LogoSideMenu() {
 					</g>
 				</svg>
 			</div>
+			<div style={{ height: 'auto' }} />
 		</>
 	);
 }

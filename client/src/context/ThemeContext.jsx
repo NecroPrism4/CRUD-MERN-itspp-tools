@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 export const ThemeContext = createContext();
 
@@ -10,7 +10,7 @@ const currentTheme = localStorage.getItem('theme')
 const ThemeContextProvider = ({ children }) => {
 	const [theme, setTheme] = useState(currentTheme);
 
-	const handleTheme = () => {
+	const handleTheme = (value) => {
 		const updateTheme = theme === 'light' ? 'dark' : 'light';
 		setTheme(updateTheme);
 		localStorage.setItem('theme', updateTheme);
@@ -25,4 +25,3 @@ const ThemeContextProvider = ({ children }) => {
 };
 
 export { ThemeContextProvider };
-export default ThemeContext;

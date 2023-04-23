@@ -1,11 +1,20 @@
 import './Lendings.css';
+import { useEffect, useContext, useState } from 'react';
 
-import React from 'react';
+import { SectionContext } from '../../../context/SectionContext';
 
 function Lendings() {
+	const { handleTitle } = useContext(SectionContext);
+
+	useEffect(() => {
+		handleTitle('Prestamos');
+	}, []);
+
+	const [tableTitle, setTableTitle] = useState('Vigentes');
+
 	return (
-		<div>
-			<h1>Prestamos</h1>
+		<div className='HomeChildContainer'>
+			<h2>Prestamos {tableTitle}</h2>
 		</div>
 	);
 }

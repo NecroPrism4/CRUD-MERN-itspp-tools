@@ -7,6 +7,8 @@ import {
 	faClipboardList,
 	faHandHolding,
 	faHouse,
+	faUserGear,
+	faUserGroup,
 	faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,7 +40,7 @@ function SideMenu(props) {
 					<li className='menuItem'>
 						<ButtonMenu
 							route='inventory'
-							title='Materiales'
+							title='Inventario'
 							icon={faBoxOpen}
 						></ButtonMenu>
 					</li>
@@ -56,7 +58,7 @@ function SideMenu(props) {
 						<ButtonMenu
 							route='personas'
 							title='Personas'
-							icon={faUsers}
+							icon={faUserGroup}
 						></ButtonMenu>
 					</li>
 					{/* 
@@ -68,7 +70,7 @@ function SideMenu(props) {
 						<ButtonMenu
 							route='usersmanagement'
 							title='Manejo de usuarios'
-							icon={faClipboardList}
+							icon={faUserGear}
 						></ButtonMenu>
 					</li>
 					<li className='menuHeader'>

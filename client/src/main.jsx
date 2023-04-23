@@ -5,11 +5,14 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './routes/Router';
 
 import { ThemeContextProvider } from './context/ThemeContext';
+import { SectionContextProvider } from './context/SectionContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<ThemeContextProvider>
-			<RouterProvider router={router} />
+			<SectionContextProvider>
+				<RouterProvider router={router} />
+			</SectionContextProvider>
 		</ThemeContextProvider>
 	</React.StrictMode>
 );
