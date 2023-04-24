@@ -50,6 +50,7 @@ body {
 /* personalización de la barra de desplazamiento */
 ::-webkit-scrollbar {
 	width: 5px; /* ancho de la barra */
+	height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -64,4 +65,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
 	background-color: var(--primary-bg);
 	/* color del thumb en hover */
+}
+
+::-webkit-scrollbar-corner {
+	display: none;
 }

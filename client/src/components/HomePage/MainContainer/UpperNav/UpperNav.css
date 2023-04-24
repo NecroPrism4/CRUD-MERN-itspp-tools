@@ -18,10 +18,18 @@
 }
 
 .toggle-button {
+	display: flex;
 	background: transparent;
 	border: transparent;
 	font-size: 2em;
 	color: var(--inactive-fg);
+	align-items: center;
+	padding: 10px 0 10px 0;
+	transition: color 2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.toggle-button:hover {
+	color: var(--active-fg);
 }
 
 .toggle-button.themeicon {

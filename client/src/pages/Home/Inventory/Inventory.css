@@ -1,33 +1,69 @@
-.table-responsive {
+.tableContainer {
+	position: relative;
+	width: 100%;
 }
 
-.table {
+/* .table {
 	width: 100%;
 	border-collapse: collapse;
-}
+	word-break: break-all;
 
-.table tbody {
-	border-top: 1px solid var(--tertiary-bg);
-}
+	table-layout: fixed;
 
+	overflow-x: auto;
+}
 thead {
+	position: relative;
+}
+
+th {
+	min-width: 100px;
+	resize: horizontal;
+	border: 1px solid white;
 }
 
 th,
 td {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding: 0.5rem 0 0 0;
+	resize: horizontal;
+	overflow-x: auto;
 }
 
-th {
-	text-align: start;
-}
+.table td,
+.table th {
+	padding: 12px 15px;
+} */
 
-tbody tr {
-	text-overflow: ellipsis;
-}
-
-tbody tr:hover {
+.table tbody tr:hover {
 	color: var(--active-fg);
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0px;
+	width: 100%;
+}
+td {
+	padding: 0;
+	margin: 0px;
+	overflow: auto;
+}
+
+.table div {
+	box-sizing: border-box;
+	resize: horizontal;
+	overflow-x: auto;
+	width: fit-content;
+	min-height: fit-content;
+	padding: 0 10px 0 10px;
+	display: inline-block;
+}
+
+.table div {
+}
+
+td div {
+	border: 0;
+	width: auto;
+	height: auto;
+	min-height: 20px;
 }
