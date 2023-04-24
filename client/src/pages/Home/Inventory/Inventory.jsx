@@ -2,7 +2,7 @@ import './Inventory.css';
 import { useEffect, useContext, useState } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 
-const api = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/users/get`;
+const api = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/inventory/get`;
 
 function Inventory() {
 	const { handleTitle } = useContext(SectionContext);
@@ -31,7 +31,6 @@ function Inventory() {
 			})
 			.then((data) => {
 				setTableData(data);
-				//setTableTitle(data);
 			})
 			.catch((error) => {
 				console.error('Error fetching data: ', error);
@@ -75,10 +74,21 @@ function Inventory() {
 						</tr>
 					</thead>
 					<tbody>
-						{/* tr*5>td[data-label='Acción']+td[data-label='Material']+td[data-label='Marca']+td[data-label='Modelo']+td[data-label='Descripción']+td[data-label='Disponible']+td[data-label='Notas']+td[data-label='Laboratorio'] */}
-						{/* {tableData.map((object) => {
-							<tr key={object.}></tr>
-						})}; */}
+						{tableData.map((object) => (
+							<tr key={object.item_id}>
+								<td data-label='Acción'>
+									<button></button>
+								</td>
+								<td data-label='ID'>{object.item}</td>
+								<td data-label='Material'>{object.item_type}</td>
+								<td data-label='Marca'>{object.item_brand}</td>
+								<td data-label='Modelo'>{object.item_model}</td>
+								<td data-label='Descripción'>{object.item_description}</td>
+								<td data-label='Disponible'>{object.item_available}</td>
+								<td data-label='Notas'>{object.item_remarks}</td>
+								<td data-label='Laboratorio'>{object.item_lab_id}</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</div>

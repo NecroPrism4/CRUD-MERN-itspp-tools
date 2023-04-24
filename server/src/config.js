@@ -3,7 +3,7 @@ dotenv.config();
 
 export const PORT = process.env.SERVER_PORT;
 
-export const whitelist = ['http://localhost:5173'];
+export const whitelist = ['http://localhost:5173/home/inventory'];
 
 export const corsOptions = {
 	origin: function (origin, callback) {
