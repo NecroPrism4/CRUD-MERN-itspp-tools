@@ -21,7 +21,7 @@
 	display: flex;
 	background: transparent;
 	border: transparent;
-	font-size: 2em;
+	font-size: 1.5em;
 	color: var(--inactive-fg);
 	align-items: center;
 	padding: 10px 0 10px 0;
@@ -33,5 +33,5 @@
 }
 
 .toggle-button.themeicon {
-	font-size: 1.5em;
+	font-size: 1.1em;
 }

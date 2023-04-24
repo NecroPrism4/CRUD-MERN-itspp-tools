@@ -2,14 +2,41 @@ import './Inventory.css';
 import { useEffect, useContext, useState } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 
+const api = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/users/get`;
+
 function Inventory() {
 	const { handleTitle } = useContext(SectionContext);
+	const [tableTitle, setTableTitle] = useState('Materiales');
+	const [tableData, setTableData] = useState([]);
+
+	/*const { data, isLoading, error } = useFetchGet(
+		`${process.env.REACT_APP_API_BASE_URL}/api/inventory`
+	);*/
+
+	/*isLoading && <div className='loading'>Loading...</div>;*/
 
 	useEffect(() => {
 		handleTitle('Inventario');
 	}, []);
 
-	const [tableTitle, setTableTitle] = useState('Materiales');
+	useEffect(() => {
+		console.log(api);
+		fetch(api)
+			.then((response) => {
+				if (response.ok) {
+					console.log('response ok');
+					return response.json();
+				}
+				throw response;
+			})
+			.then((data) => {
+				setTableData(data);
+				//setTableTitle(data);
+			})
+			.catch((error) => {
+				console.error('Error fetching data: ', error);
+			});
+	}, []);
 
 	return (
 		<div className='HomeChildContainer'>
@@ -19,72 +46,39 @@ function Inventory() {
 					<thead>
 						<tr>
 							<th>
-								<div>item_id</div>
+								<div className='tableDivAction'>Acción</div>
 							</th>
 							<th>
-								<div>item_type</div>
+								<div>ID</div>
 							</th>
 							<th>
-								<div>item_brand</div>
+								<div>Material</div>
 							</th>
 							<th>
-								<div>item_model</div>
+								<div>Marca</div>
 							</th>
 							<th>
-								<div>item_description</div>
+								<div>Modelo</div>
 							</th>
 							<th>
-								<div>item_available</div>
+								<div>Descripción</div>
 							</th>
 							<th>
-								<div>item_remarks</div>
+								<div>Disponible</div>
 							</th>
 							<th>
-								<div>item_lab_id</div>
+								<div>Notas</div>
+							</th>
+							<th>
+								<div>Laboratorio</div>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>true</td>
-							<td>...</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>false</td>
-							<td>...</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>true</td>
-							<td>...</td>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
-							<td>true</td>
-							<td>...</td>
-							<td>2</td>
-						</tr>
+						{/* tr*5>td[data-label='Acción']+td[data-label='Material']+td[data-label='Marca']+td[data-label='Modelo']+td[data-label='Descripción']+td[data-label='Disponible']+td[data-label='Notas']+td[data-label='Laboratorio'] */}
+						{/* {tableData.map((object) => {
+							<tr key={object.}></tr>
+						})}; */}
 					</tbody>
 				</table>
 			</div>

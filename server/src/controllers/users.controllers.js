@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
-	res.send(await prisma.tab_inventory.findMany());
+	res.send(await prisma.tab_users.findMany());
 };
 
 /*async function get() {
