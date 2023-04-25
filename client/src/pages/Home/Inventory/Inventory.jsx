@@ -1,25 +1,33 @@
 import './Inventory.css';
+import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import { useEffect, useContext, useState } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const api = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/inventory/get`;
 
 function Inventory() {
 	const { handleTitle } = useContext(SectionContext);
-	const [tableTitle, setTableTitle] = useState('Materiales');
-	const [tableData, setTableData] = useState([]);
+	const [query, SetQuery] = useState('');
+	const [identifier, setIdentifier] = useState('item_id');
+	const [queryRoute, SetQueryroute] = useState('/api/inventory/get');
+	const [method, SetMethod] = useState('get');
+	const [pageNumber, setPagenumber] = useState(1);
 
-	/*const { data, isLoading, error } = useFetchGet(
-		`${process.env.REACT_APP_API_BASE_URL}/api/inventory`
-	);*/
-
-	/*isLoading && <div className='loading'>Loading...</div>;*/
+	const { loading, error, tableData, hasMore } = usePopulateTable(
+		query,
+		identifier,
+		queryRoute,
+		method,
+		pageNumber
+	);
 
 	useEffect(() => {
 		handleTitle('Inventario');
 	}, []);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		console.log(api);
 		fetch(api)
 			.then((response) => {
@@ -35,11 +43,11 @@ function Inventory() {
 			.catch((error) => {
 				console.error('Error fetching data: ', error);
 			});
-	}, []);
+	}, []); */
 
 	return (
 		<div className='HomeChildContainer'>
-			<h2>{tableTitle}</h2>
+			<h2>Materiales</h2>
 			<div className='tableContainer'>
 				<table className='table '>
 					<thead>
@@ -73,11 +81,13 @@ function Inventory() {
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+					{/* <tbody>
 						{tableData.map((object) => (
 							<tr key={object.item_id}>
 								<td data-label='Acción'>
-									<button></button>
+									<button>
+										<FontAwesomeIcon icon={faEdit} />
+									</button>
 								</td>
 								<td data-label='ID'>{object.item}</td>
 								<td data-label='Material'>{object.item_type}</td>
@@ -89,7 +99,7 @@ function Inventory() {
 								<td data-label='Laboratorio'>{object.item_lab_id}</td>
 							</tr>
 						))}
-					</tbody>
+					</tbody> */}
 				</table>
 			</div>
 		</div>

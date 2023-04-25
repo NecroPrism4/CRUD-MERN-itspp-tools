@@ -42,9 +42,20 @@ td {
 	border-spacing: 0px;
 	width: 100%;
 }
+
+.table button {
+	color: var(--inactive-fg);
+	font-size: 1.5em;
+	background: none;
+	border: none;
+}
+
+.table button:hover {
+	color: var(--active-fg);
+}
+
 .table td {
-	padding: 0;
-	margin: 0px;
+	padding: 10px 0 0 10px;
 	overflow: auto;
 	word-break: break-all;
 }
