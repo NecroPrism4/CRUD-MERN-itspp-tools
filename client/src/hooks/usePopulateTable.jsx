@@ -13,6 +13,13 @@ export default function usePopulateTable(
 	const [tableData, setTableData] = useState([]);
 	const [hasMore, setHasMore] = useState(false);
 
+	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
+	useEffect(() => {
+		setTableData([]);
+	}, [query]);
+
+	/* The logic for querying the database dinamically */
+
 	useEffect(() => {
 		setLoading(true);
 		setError(false);
@@ -29,16 +36,14 @@ export default function usePopulateTable(
 		})
 			.then((res) => {
 				setTableData((prevTableData) => {
-					return [
-						...new Set([...prevTableData, ...res.data.map((b) => b.item_id)]),
-					];
+					return [...new Set([...prevTableData, ...res.data])];
 				});
-				console.log(...res.data.map((b) => b.item_id));
 				setHasMore(res.data.length > 0);
 				setLoading(false);
 			})
 			.catch((e) => {
 				if (axios.isCancel(e)) return;
+				setLoading(false);
 				setError(true);
 			});
 		return () => cancel();

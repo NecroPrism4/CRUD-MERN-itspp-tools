@@ -1,11 +1,9 @@
 import './Inventory.css';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-
-const api = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/inventory/get`;
 
 function Inventory() {
 	const { handleTitle } = useContext(SectionContext);
@@ -14,6 +12,8 @@ function Inventory() {
 	const [queryRoute, SetQueryroute] = useState('/api/inventory/get');
 	const [method, SetMethod] = useState('get');
 	const [pageNumber, setPagenumber] = useState(1);
+
+	const observer = useRef();
 
 	function handleSearch(e) {
 		setQuery(e.target.value);
@@ -96,7 +96,7 @@ function Inventory() {
 					</thead>
 					<tbody>
 						{tableData.map((object) => (
-							<tr key={object.item_id}>
+							<tr key={object[identifier]}>
 								<td data-label='Acción'>
 									<button>
 										<FontAwesomeIcon icon={faEdit} />
