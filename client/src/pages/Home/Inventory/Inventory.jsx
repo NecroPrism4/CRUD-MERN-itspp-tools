@@ -3,7 +3,7 @@ import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState, useRef, useCallback } from 'react';
 
-import { LoadingError } from '../../../components/LoadingError/LoadingError.jsx';
+import LoadingError from '../../../components/HomePage/MainContainer/LoadingError/LoadingError.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -65,7 +65,7 @@ function Inventory() {
 					<thead>
 						<tr>
 							<th>
-								<div className='tableDivAction'>Acción</div>
+								<div className='tableDivAction '>Acción</div>
 							</th>
 							<th>
 								<div>ID</div>
@@ -137,8 +137,7 @@ function Inventory() {
 						})}
 					</tbody>
 				</table>
-				<div>{loading && 'Cargando...'}</div>
-				<div>{error && 'Error...'}</div>
+				<div>{loading && <LoadingError />}</div>
 			</div>
 		</div>
 	);

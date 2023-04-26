@@ -25,7 +25,9 @@ export default function usePopulateTable(
 		let cancel;
 		axios({
 			method: `${method}`,
-			url: `${import.meta.env.VITE_REACT_APP_API_BASE_URL}${queryRoute}`,
+			url: `${
+				/* import.meta.env.VITE_REACT_APP_API_BASE_URL */ 'http://localhost:3000'
+			}${queryRoute}`,
 			params: {
 				page: pageNumber,
 				pageSize: 10,

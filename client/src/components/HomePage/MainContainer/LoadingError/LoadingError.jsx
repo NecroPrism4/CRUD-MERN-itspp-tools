@@ -1,3 +1,5 @@
+import React from 'react';
+
 function LoadingError(props) {
 	return (
 		<div className='LoadingError'>
