@@ -1,7 +1,10 @@
 import './Inventory.css';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
-import { useEffect, useContext, useState, useRef } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
+import { useEffect, useContext, useState, useRef, useCallback } from 'react';
+
+import { LoadingError } from '../../../components/LoadingError/LoadingError.jsx';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,13 +16,6 @@ function Inventory() {
 	const [method, SetMethod] = useState('get');
 	const [pageNumber, setPagenumber] = useState(1);
 
-	const observer = useRef();
-
-	function handleSearch(e) {
-		setQuery(e.target.value);
-		setPagenumber(1);
-	}
-
 	const { loading, error, tableData, hasMore } = usePopulateTable(
 		query,
 		identifier,
@@ -28,28 +24,31 @@ function Inventory() {
 		pageNumber
 	);
 
+	const observer = useRef();
+	const lastElementRef = useCallback(
+		loading
+			? null
+			: (node) => {
+					console.log(observer.current);
+					if (observer.current) observer.current.disconnect();
+					observer.current = new IntersectionObserver((entries) => {
+						if (entries[0].isIntersecting && hasMore) {
+							setPagenumber((prevPageNumber) => prevPageNumber + 1);
+						}
+					});
+					if (node) observer.current.observe(node);
+					console.log(node);
+			  }
+	);
+
+	function handleSearch(e) {
+		setQuery(e.target.value);
+		setPagenumber(1);
+	}
+
 	useEffect(() => {
 		handleTitle('Inventario');
-		console.log(tableData);
-	}, [tableData]);
-
-	/* 	useEffect(() => {
-		console.log(api);
-		fetch(api)
-			.then((response) => {
-				if (response.ok) {
-					console.log('response ok');
-					return response.json();
-				}
-				throw response;
-			})
-			.then((data) => {
-				setTableData(data);
-			})
-			.catch((error) => {
-				console.error('Error fetching data: ', error);
-			});
-	}, []); */
+	}, []);
 
 	return (
 		<div className='HomeChildContainer'>
@@ -95,23 +94,47 @@ function Inventory() {
 						</tr>
 					</thead>
 					<tbody>
-						{tableData.map((object) => (
-							<tr key={object[identifier]}>
-								<td data-label='Acción'>
-									<button>
-										<FontAwesomeIcon icon={faEdit} />
-									</button>
-								</td>
-								<td data-label='ID'>{object.item_id}</td>
-								<td data-label='Material'>{object.item_type}</td>
-								<td data-label='Marca'>{object.item_brand}</td>
-								<td data-label='Modelo'>{object.item_model}</td>
-								<td data-label='Descripción'>{object.item_description}</td>
-								<td data-label='Disponible'>{object.item_available}</td>
-								<td data-label='Notas'>{object.item_remarks}</td>
-								<td data-label='Laboratorio'>{object.item_lab_id}</td>
-							</tr>
-						))}
+						{tableData.map((object) => {
+							console.log(tableData.lastIndexOf(object));
+							console.log(tableData.length);
+							if (tableData.length === tableData.lastIndexOf(object) + 1) {
+								return (
+									<tr key={object[identifier]} ref={lastElementRef}>
+										<td data-label='Acción'>
+											<button>
+												<FontAwesomeIcon icon={faEdit} />
+											</button>
+										</td>
+										<td data-label='ID'>{object.item_id}</td>
+										<td data-label='Material'>{object.item_type}</td>
+										<td data-label='Marca'>{object.item_brand}</td>
+										<td data-label='Modelo'>{object.item_model}</td>
+										<td data-label='Descripción'>{object.item_description}</td>
+										<td data-label='Disponible'>{object.item_available}</td>
+										<td data-label='Notas'>{object.item_remarks}</td>
+										<td data-label='Laboratorio'>{object.item_lab_id}</td>
+									</tr>
+								);
+							} else {
+								return (
+									<tr key={object[identifier]}>
+										<td data-label='Acción'>
+											<button>
+												<FontAwesomeIcon icon={faEdit} />
+											</button>
+										</td>
+										<td data-label='ID'>{object.item_id}</td>
+										<td data-label='Material'>{object.item_type}</td>
+										<td data-label='Marca'>{object.item_brand}</td>
+										<td data-label='Modelo'>{object.item_model}</td>
+										<td data-label='Descripción'>{object.item_description}</td>
+										<td data-label='Disponible'>{object.item_available}</td>
+										<td data-label='Notas'>{object.item_remarks}</td>
+										<td data-label='Laboratorio'>{object.item_lab_id}</td>
+									</tr>
+								);
+							}
+						})}
 					</tbody>
 				</table>
 				<div>{loading && 'Cargando...'}</div>

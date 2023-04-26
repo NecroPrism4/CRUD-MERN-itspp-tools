@@ -19,7 +19,6 @@ export default function usePopulateTable(
 	}, [query]);
 
 	/* The logic for querying the database dinamically */
-
 	useEffect(() => {
 		setLoading(true);
 		setError(false);

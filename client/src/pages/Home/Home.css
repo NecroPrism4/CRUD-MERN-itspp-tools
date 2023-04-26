@@ -21,12 +21,12 @@
 }
 
 .HomeChildContainer {
+	position: relative;
 	box-sizing: border-box;
 	background: var(--secundary-bg);
 	margin: 20px 0 1px 0;
-	padding: 20px;
+	padding: 0px 20px 20px 20px;
 	border-radius: 25px;
-	max-height: 92%;
 	color: var(--inactive-fg);
 	border: 2px solid hsla(0, 0%, 0%, 0.1);
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);

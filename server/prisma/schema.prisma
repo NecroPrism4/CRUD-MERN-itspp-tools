@@ -14,6 +14,8 @@ model tab_borrower {
   borrower_lastname String  @db.VarChar(255)
   borrower_career   String  @db.VarChar(255)
   borrower_notes    String? @db.VarChar(255)
+
+  lendings tab_lendings[]
 }
 
 model tab_inventory {
@@ -25,12 +27,19 @@ model tab_inventory {
   item_available   Boolean @default(false)
   item_remarks     String? @db.VarChar(255)
   item_lab_id      Int
+
+  lendings tab_lendings[]
+
+  lab tab_labs     @relation(fields: [item_lab_id], references: [lab_id])
+  @@index([item_lab_id])
 }
 
 model tab_labs {
   lab_id       Int    @id @default(autoincrement()) @db.UnsignedInt
   lab_name     String @db.VarChar(255)
   lab_location String @db.VarChar(255)
+ 
+  inventory tab_inventory[]
 }
 
 model tab_lendings {
@@ -42,6 +51,15 @@ model tab_lendings {
   id_item              Int
   returned             Boolean   @default(false)
   lending_remarks      String?   @db.VarChar(255)
+
+  user tab_users @relation(fields: [id_user], references: [user_id])
+  @@index([id_user])
+
+  borrower tab_borrower @relation(fields: [id_borrower], references: [borrower_id])
+  @@index([id_borrower])
+
+  item tab_inventory @relation(fields: [id_item], references: [item_id])
+  @@index([id_item])
 }
 
 model tab_users {
@@ -53,4 +71,6 @@ model tab_users {
   user_type        String  @db.VarChar(255)
   user_jobposition String  @db.VarChar(255)
   lab_id           Int
+
+  lendings tab_lendings[]
 }
