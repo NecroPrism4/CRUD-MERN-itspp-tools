@@ -9,11 +9,16 @@ const api = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/inventory/get`;
 
 function Inventory() {
 	const { handleTitle } = useContext(SectionContext);
-	const [query, SetQuery] = useState('');
+	const [query, setQuery] = useState('');
 	const [identifier, setIdentifier] = useState('item_id');
 	const [queryRoute, SetQueryroute] = useState('/api/inventory/get');
 	const [method, SetMethod] = useState('get');
 	const [pageNumber, setPagenumber] = useState(1);
+
+	function handleSearch(e) {
+		setQuery(e.target.value);
+		setPagenumber(1);
+	}
 
 	const { loading, error, tableData, hasMore } = usePopulateTable(
 		query,
@@ -25,9 +30,10 @@ function Inventory() {
 
 	useEffect(() => {
 		handleTitle('Inventario');
-	}, []);
+		console.log(tableData);
+	}, [tableData]);
 
-	/* useEffect(() => {
+	/* 	useEffect(() => {
 		console.log(api);
 		fetch(api)
 			.then((response) => {
@@ -47,7 +53,14 @@ function Inventory() {
 
 	return (
 		<div className='HomeChildContainer'>
-			<h2>Materiales</h2>
+			<div className='tableHeader'>
+				<h2>Materiales</h2>
+				<input
+					type='text'
+					className='tableSearchBar'
+					onChange={handleSearch}
+				></input>
+			</div>
 			<div className='tableContainer'>
 				<table className='table '>
 					<thead>
@@ -81,7 +94,7 @@ function Inventory() {
 							</th>
 						</tr>
 					</thead>
-					{/* <tbody>
+					<tbody>
 						{tableData.map((object) => (
 							<tr key={object.item_id}>
 								<td data-label='Acción'>
@@ -89,7 +102,7 @@ function Inventory() {
 										<FontAwesomeIcon icon={faEdit} />
 									</button>
 								</td>
-								<td data-label='ID'>{object.item}</td>
+								<td data-label='ID'>{object.item_id}</td>
 								<td data-label='Material'>{object.item_type}</td>
 								<td data-label='Marca'>{object.item_brand}</td>
 								<td data-label='Modelo'>{object.item_model}</td>
@@ -99,8 +112,10 @@ function Inventory() {
 								<td data-label='Laboratorio'>{object.item_lab_id}</td>
 							</tr>
 						))}
-					</tbody> */}
+					</tbody>
 				</table>
+				<div>{loading && 'Cargando...'}</div>
+				<div>{error && 'Error...'}</div>
 			</div>
 		</div>
 	);

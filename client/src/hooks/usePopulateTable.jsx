@@ -9,39 +9,40 @@ export default function usePopulateTable(
 	pageNumber
 ) {
 	const [loading, setLoading] = useState(true);
-	const [error, SetError] = useState(false);
+	const [error, setError] = useState(false);
 	const [tableData, setTableData] = useState([]);
 	const [hasMore, setHasMore] = useState(false);
 
 	useEffect(() => {
 		setLoading(true);
-		SetError(false);
+		setError(false);
 		let cancel;
 		axios({
 			method: `${method}`,
 			url: `${import.meta.env.VITE_REACT_APP_API_BASE_URL}${queryRoute}`,
-			params: { q: query, page: pageNumber },
+			params: {
+				page: pageNumber,
+				pageSize: 10,
+				searchTerm: query,
+			},
 			cancelToken: new axios.CancelToken((c) => (cancel = c)),
 		})
 			.then((res) => {
-				console.log(res.data);
 				setTableData((prevTableData) => {
 					return [
-						...new Set([
-							...prevTableData,
-							...res.data.map((b) => b[identifier]),
-						]),
+						...new Set([...prevTableData, ...res.data.map((b) => b.item_id)]),
 					];
 				});
+				console.log(...res.data.map((b) => b.item_id));
 				setHasMore(res.data.length > 0);
 				setLoading(false);
 			})
 			.catch((e) => {
 				if (axios.isCancel(e)) return;
-				SetError(true);
+				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber]);
+	}, [query, pageNumber, queryRoute, method]);
 
 	return { loading, error, tableData, hasMore };
 }
