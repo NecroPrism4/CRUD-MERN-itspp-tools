@@ -1,8 +1,9 @@
-import React from 'react';
+import './Loading.css';
 
-function LoadingError(props) {
+function Loading(props) {
 	return (
-		<div className='LoadingError'>
+		<div className='Loading'>
+			{props.reason && <div className='errorMessage'></div>}
 			<svg
 				width='778'
 				height='769'
@@ -26,38 +27,35 @@ function LoadingError(props) {
 							d='M643.219 595.795C654.456 582.154 652.507 561.987 638.866 550.75C625.225 539.513 605.058 541.462 593.821 555.103C582.584 568.744 584.533 588.912 598.174 600.148C611.815 611.385 631.983 609.436 643.219 595.795ZM622.335 570.818L407.529 393.871L399.899 403.133L614.705 580.08L622.335 570.818Z'
 						/>
 					</g>
-					{/* 	<g id='Text-Logo'>
-							<text
-								transform='translate(91.9153 324.78)'
-								fontSize='128'
-								fontWeight='500'
-								letterSpacing='0em'
-							>
-								<tspan x='0' y='87.888'>
-									Gest
-								</tspan>
-								<tspan x='330.375' y='87.888'>
-									r de{' '}
-								</tspan>
-								<tspan x='0' y='187.888'>
-									laboratorio
-								</tspan>
-							</text>
-							<text
-								transform='translate(91.9153 324.78)'
-								fontSize='128'
-								fontWeight='500'
-								letterSpacing='0em'
-							>
-								<tspan x='258.5' y='87.888' id='o'>
-									o
-								</tspan>
-							</text>
-						</g> */}
+					<g id='Text-Logo'>
+						<text
+							transform='translate(91.9153 324.78)'
+							fontSize='128'
+							fontWeight='500'
+							letterSpacing='0em'
+						>
+							<tspan x='0' y='87.888'>
+								Carg
+							</tspan>
+							<tspan x='330.375' y='87.888'>
+								ndo...{' '}
+							</tspan>
+						</text>
+						<text
+							transform='translate(91.9153 324.78)'
+							fontSize='128'
+							fontWeight='500'
+							letterSpacing='0em'
+						>
+							<tspan x='258.5' y='87.888' id='o'>
+								a
+							</tspan>
+						</text>
+					</g>
 				</g>
 			</svg>
 		</div>
 	);
 }
 
-export default LoadingError;
+export default Loading;

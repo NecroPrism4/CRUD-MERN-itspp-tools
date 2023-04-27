@@ -1,7 +1,7 @@
 import './Dashboard.css';
 import { useEffect, useContext } from 'react';
 
-import LoadingError from '../../../components/HomePage/MainContainer/LoadingError/LoadingError';
+import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 
 import { SectionContext } from '../../../context/SectionContext';
 
@@ -16,7 +16,7 @@ function Dashboard() {
 		<div className='HomeChildContainer'>
 			<h2>Dashboard</h2>
 
-			<LoadingError></LoadingError>
+			<Loading></Loading>
 		</div>
 	);
 }

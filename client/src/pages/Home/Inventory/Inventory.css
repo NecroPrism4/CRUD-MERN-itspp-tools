@@ -9,7 +9,7 @@
 }
 
 .tableHeader .tableSearchBar {
-	margin-left: 15px;
+	margin-left: 10%;
 	background: var(--tertiary-bg);
 	border: none;
 	border-radius: 15px;
@@ -17,10 +17,12 @@
 	color: var(--active-fg);
 	font-size: 1.5em;
 	width: 100%;
+	opacity: 0.8;
 }
 
-.tableHeader .tableSearchBar:active {
-	border: none;
+.tableHeader .tableSearchBar:focus {
+	outline: none;
+	caret-color: var(--primary-bg); /* Cambiar el color de la línea del cursor */
 }
 
 .tableContainer {
@@ -34,36 +36,6 @@
 	border-spacing: 0px;
 	width: 100%;
 }
-
-/* .table {
-	width: 100%;
-	border-collapse: collapse;
-	word-break: break-all;
-
-	table-layout: fixed;
-
-	overflow-x: auto;
-}
-thead {
-	position: relative;
-}
-
-th {
-	min-width: 100px;
-	resize: horizontal;
-	border: 1px solid white;
-}
-
-th,
-td {
-	resize: horizontal;
-	overflow-x: auto;
-}
-
-.table td,
-.table th {
-	padding: 12px 15px;
-} */
 
 .table tbody tr:hover {
 	color: var(--active-fg);
@@ -83,6 +55,7 @@ td {
 
 .table button:hover {
 	color: var(--active-fg) !important;
+	cursor: pointer;
 }
 
 .table td {

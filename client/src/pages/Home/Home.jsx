@@ -1,5 +1,5 @@
 import './Home.css';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useRef } from 'react';
 import { ThemeContext } from '../../context/ThemeContext.jsx';
 
 import { Outlet } from 'react-router-dom';
@@ -10,6 +10,8 @@ import UpperNav from '../../components/HomePage/MainContainer/UpperNav/UpperNav.
 function Home() {
 	const { theme } = useContext(ThemeContext);
 
+	const upperNavRef = useRef(null);
+
 	return (
 		<>
 			<div className='HomePrimaryContainer' data-theme={theme}>
@@ -19,7 +21,7 @@ function Home() {
 					<SideMenu></SideMenu>
 				</aside>
 				<div className='HomeMainContainer'>
-					<UpperNav />
+					<UpperNav ref={upperNavRef} />
 					<Outlet />
 				</div>
 				<div className='HomeRighSideContainer'>

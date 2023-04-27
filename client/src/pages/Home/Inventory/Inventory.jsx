@@ -3,10 +3,11 @@ import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState, useRef, useCallback } from 'react';
 
-import LoadingError from '../../../components/HomePage/MainContainer/LoadingError/LoadingError.jsx';
+import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Error from '../../../components/HomePage/MainContainer/Error/Error';
 
 function Inventory() {
 	const { handleTitle } = useContext(SectionContext);
@@ -29,7 +30,6 @@ function Inventory() {
 		loading
 			? null
 			: (node) => {
-					console.log(observer.current);
 					if (observer.current) observer.current.disconnect();
 					observer.current = new IntersectionObserver((entries) => {
 						if (entries[0].isIntersecting && hasMore) {
@@ -37,7 +37,6 @@ function Inventory() {
 						}
 					});
 					if (node) observer.current.observe(node);
-					console.log(node);
 			  }
 	);
 
@@ -55,6 +54,7 @@ function Inventory() {
 			<div className='tableHeader'>
 				<h2>Materiales</h2>
 				<input
+					placeholder='Buscar...'
 					type='text'
 					className='tableSearchBar'
 					onChange={handleSearch}
@@ -95,8 +95,6 @@ function Inventory() {
 					</thead>
 					<tbody>
 						{tableData.map((object) => {
-							console.log(tableData.lastIndexOf(object));
-							console.log(tableData.length);
 							if (tableData.length === tableData.lastIndexOf(object) + 1) {
 								return (
 									<tr key={object[identifier]} ref={lastElementRef}>
@@ -137,7 +135,8 @@ function Inventory() {
 						})}
 					</tbody>
 				</table>
-				<div>{loading && <LoadingError />}</div>
+				<div>{loading && <Loading />}</div>
+				<div>{error && <Error />}</div>
 			</div>
 		</div>
 	);
