@@ -1,5 +1,6 @@
 import './Inventory.css';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
+import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState, useRef, useCallback } from 'react';
 
@@ -25,7 +26,9 @@ function Inventory() {
 		pageNumber
 	);
 
-	const observer = useRef();
+	const lastElementRef = useInfinitScrolling(loading, hasMore, setPagenumber);
+
+	/* 	const observer = useRef();
 	const lastElementRef = useCallback(
 		loading
 			? null
@@ -38,7 +41,7 @@ function Inventory() {
 					});
 					if (node) observer.current.observe(node);
 			  }
-	);
+	); */
 
 	function handleSearch(e) {
 		setQuery(e.target.value);
