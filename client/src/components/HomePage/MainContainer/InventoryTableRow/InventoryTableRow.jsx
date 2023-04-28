@@ -30,7 +30,6 @@ function InventoryTableRow({ data }) {
 					<p>Estas son algunas notas del utensilio</p>
 				</div>
 				<div>
-					{' '}
 					<h3>Descripción</h3>
 					<p>
 						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla,
