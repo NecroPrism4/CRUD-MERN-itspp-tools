@@ -5,22 +5,28 @@ import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState, useRef, useCallback } from 'react';
 
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
+import InventoryTableRow from '../../../components/HomePage/MainContainer/InventoryTableRow/InventoryTableRow.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
+import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
 function Inventory() {
+	useEffect(() => {
+		handleTitle('Inventario');
+	}, []);
+
 	const { handleTitle } = useContext(SectionContext);
 	const [query, setQuery] = useState('');
-	const [identifier, setIdentifier] = useState('item_id');
+	const [queryOption, setQueryOption] = useState('item_type');
 	const [queryRoute, SetQueryroute] = useState('/api/inventory/get');
 	const [method, SetMethod] = useState('get');
 	const [pageNumber, setPagenumber] = useState(1);
 
 	const { loading, error, tableData, hasMore } = usePopulateTable(
 		query,
-		identifier,
+		queryOption,
 		queryRoute,
 		method,
 		pageNumber
@@ -28,43 +34,45 @@ function Inventory() {
 
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPagenumber);
 
-	/* 	const observer = useRef();
-	const lastElementRef = useCallback(
-		loading
-			? null
-			: (node) => {
-					if (observer.current) observer.current.disconnect();
-					observer.current = new IntersectionObserver((entries) => {
-						if (entries[0].isIntersecting && hasMore) {
-							setPagenumber((prevPageNumber) => prevPageNumber + 1);
-						}
-					});
-					if (node) observer.current.observe(node);
-			  }
-	); */
+	function handleQueryOption(e) {
+		setQueryOption(e.target.value);
+		setPagenumber(1);
+	}
 
 	function handleSearch(e) {
 		setQuery(e.target.value);
 		setPagenumber(1);
 	}
 
-	useEffect(() => {
-		handleTitle('Inventario');
-	}, []);
+	const queryOptions = [
+		{ value: 'item_type', label: 'Nombre' },
+		{ value: 'item_brand', label: 'ID' },
+		{ value: 'item_model', label: 'ID' },
+		{ value: 'item_description', label: 'ID' },
+		{ value: 'item_available', label: 'ID' },
+		{ value: 'item_notes', label: 'ID' },
+	];
 
 	return (
 		<div className='HomeChildContainer'>
 			<div className='tableHeader'>
 				<h2>Materiales</h2>
-				<input
-					placeholder='Buscar...'
-					type='text'
-					className='tableSearchBar'
-					onChange={handleSearch}
-				></input>
+				<div>
+					<p>Buscar por</p>
+					<SelectComponent
+						options={queryOptions}
+						onChange={handleQueryOption}
+					/>
+					<input
+						placeholder='Buscar...'
+						type='text'
+						className='tableSearchBar'
+						onChange={handleSearch}
+					></input>
+				</div>
 			</div>
 			<div className='tableContainer'>
-				<table className='table '>
+				<table className='table'>
 					<thead>
 						<tr>
 							<th>
@@ -96,11 +104,11 @@ function Inventory() {
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+					{/* <tbody>
 						{tableData.map((object) => {
 							if (tableData.length === tableData.lastIndexOf(object) + 1) {
 								return (
-									<tr key={object[identifier]} ref={lastElementRef}>
+									<tr key={object.item_id} ref={lastElementRef}>
 										<td data-label='Acción'>
 											<button>
 												<FontAwesomeIcon icon={faEdit} />
@@ -118,7 +126,7 @@ function Inventory() {
 								);
 							} else {
 								return (
-									<tr key={object[identifier]}>
+									<tr key={object.item_id}>
 										<td data-label='Acción'>
 											<button>
 												<FontAwesomeIcon icon={faEdit} />
@@ -136,8 +144,21 @@ function Inventory() {
 								);
 							}
 						})}
-					</tbody>
+					</tbody> */}
 				</table>
+
+				{tableData.map((object) => {
+					if (tableData.length === tableData.lastIndexOf(object) + 1) {
+						return (
+							<div key={object.item_id} ref={lastElementRef}>
+								<InventoryTableRow data={object} />
+							</div>
+						);
+					} else {
+						return <InventoryTableRow key={object.item_id} data={object} />;
+					}
+				})}
+
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>
 			</div>

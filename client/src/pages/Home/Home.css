@@ -25,7 +25,7 @@
 	box-sizing: border-box;
 	background: var(--secundary-bg);
 	margin: 20px 0 1px 0;
-	padding: 0px 20px 20px 20px;
+	padding: 0px 20px 0px 20px;
 	border-radius: 25px;
 	color: var(--inactive-fg);
 	border: 2px solid hsla(0, 0%, 0%, 0.1);
@@ -49,6 +49,14 @@
 }
 .HomeRighSideContainer input {
 	width: auto;
+	margin: 10px;
+	background: var(--tertiary-bg);
+	border: none;
+	border-radius: 15px;
+	color: var(--active-fg);
+}
+.HomeRighSideContainer input:focus {
+	outline: var(--tertiary-bg);
 }
 
 /* @media only screen and (min-width: 400px) {
@@ -87,8 +95,8 @@
 		font-size: 0.8em;
 	}
 
-	.HomeRighSideContainer {
-	}
+	/* .HomeRighSideContainer {
+	} */
 }
 
 @media only screen and (min-width: 1375px) {

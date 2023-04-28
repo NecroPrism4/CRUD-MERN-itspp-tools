@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default function usePopulateTable(
 	query,
-	identifier,
+	queryOption,
 	queryRoute,
 	method,
 	pageNumber

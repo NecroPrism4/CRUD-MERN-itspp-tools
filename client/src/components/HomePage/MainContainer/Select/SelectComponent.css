@@ -1,0 +1,6 @@
+.SelectSearch {
+	border-radius: 20px;
+	color: var(--active-fg);
+	background: var(--tertiary-bg);
+	outline: none;
+}

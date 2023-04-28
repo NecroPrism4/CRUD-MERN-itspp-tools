@@ -1,0 +1,32 @@
+.TableRow {
+	display: grid;
+	height: auto;
+	border-radius: 15px;
+	padding: 10px;
+	background: var(--tertiary-bg);
+	margin-bottom: 20px;
+	grid-template-rows: 1fr auto;
+}
+
+.TableRow .ShowedInfo {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+}
+
+.TableRow .ShowedInfo .BrandModel div {
+	display: flex;
+	justify-content: center;
+}
+.BrandModel h4,
+.BrandModel p {
+	margin-left: 4px;
+}
+
+.TableRow .Expandible {
+	display: unset;
+	border-top: 1px dashed var(--inactive-fg);
+}
+
+.TableRow .Expandible .Expanded {
+	display: unset;
+}

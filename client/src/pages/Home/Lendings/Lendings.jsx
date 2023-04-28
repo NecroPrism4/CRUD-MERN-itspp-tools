@@ -11,9 +11,22 @@ function Lendings() {
 
 	const [tableTitle, setTableTitle] = useState('Vigentes');
 
+	function handleSearch(e) {
+		setQuery(e.target.value);
+		setPagenumber(1);
+	}
+
 	return (
 		<div className='HomeChildContainer'>
-			<h2>Prestamos {tableTitle}</h2>
+			<div className='tableHeader prestamos'>
+				<h2>Prestamos {tableTitle}</h2>
+				<input
+					placeholder='Buscar...'
+					type='text'
+					className='tableSearchBar'
+					onChange={handleSearch}
+				></input>
+			</div>
 		</div>
 	);
 }

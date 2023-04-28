@@ -8,16 +8,38 @@
 	z-index: 1;
 }
 
-.tableHeader .tableSearchBar {
-	margin-left: 10%;
+.tableHeader input,
+.tableHeader select {
+	height: auto;
+	color: var(--active-fg);
 	background: var(--tertiary-bg);
+}
+
+.tableHeader .tableSearchBar {
+	margin-left: 15px;
+
 	border: none;
 	border-radius: 15px;
 	padding: 0 10px 0 10px;
-	color: var(--active-fg);
-	font-size: 1.5em;
-	width: 100%;
+
+	font-size: 1.2em;
 	opacity: 0.8;
+}
+
+.tableHeader div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: end;
+	width: 100%;
+}
+
+.tableHeader div p {
+	padding-right: 10px;
+}
+
+.tableHeader select {
+	font-size: 1em;
 }
 
 .tableHeader .tableSearchBar:focus {

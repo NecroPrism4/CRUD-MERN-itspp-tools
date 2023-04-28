@@ -1,0 +1,14 @@
+.tableHeader .prestamos {
+	display: grid;
+	grid-template-columns: auto 1fr;
+}
+
+.tableHeader .prestamos h2 {
+	grid-column: 1;
+}
+
+.tableHeader .prestamos input {
+	grid-column: 2;
+	margin: 0;
+	padding: 0;
+}
