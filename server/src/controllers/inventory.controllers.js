@@ -11,6 +11,13 @@ export const getInventory = async (req, res) => {
 		const items = await prisma.tab_inventory.findMany({
 			skip: offset,
 			take: pageSize,
+			include: {
+				lendings: {
+					select: {
+						returned: true,
+					},
+				},
+			},
 			where: {
 				item_type: {
 					contains: searchTerm,
