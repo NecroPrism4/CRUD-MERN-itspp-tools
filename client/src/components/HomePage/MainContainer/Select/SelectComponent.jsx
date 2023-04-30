@@ -1,9 +1,8 @@
 import './SelectComponent.css';
-import React from 'react';
 
-function SelectComponent({ options }) {
+function SelectComponent({ options, handler }) {
 	return (
-		<select className='SelectSearch'>
+		<select className='SelectSearch' onChange={(e) => handler(e)}>
 			{options &&
 				options.map((option) => {
 					return (

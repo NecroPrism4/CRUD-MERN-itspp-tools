@@ -1,10 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+import { toBool } from '../helpers/parsers.js';
+
 export const getInventory = async (req, res) => {
 	const page = parseInt(req.query.page) || 1; // Establecer un valor predeterminado para page
 	const pageSize = parseInt(req.query.pageSize) || 10; // Establecer un valor predeterminado para pageSize
 	const offset = (page - 1) * pageSize; // Calcular el valor de offset
+	const isAvailable = toBool(req.query.isAvailable); //Establecer valores booleanos a partir de el req string
+	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
 
 	try {
@@ -19,7 +23,10 @@ export const getInventory = async (req, res) => {
 				},
 			},
 			where: {
-				item_type: {
+				...(isAvailable != null
+					? { item_available: { equals: isAvailable } }
+					: {}),
+				[queryOption]: {
 					contains: searchTerm,
 				},
 			},

@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { PORT } from './config.js';
-import routes from './routes/other.routes.js';
+import routes from './routes/index.routes.js';
 
 const port = PORT;
 const app = express();

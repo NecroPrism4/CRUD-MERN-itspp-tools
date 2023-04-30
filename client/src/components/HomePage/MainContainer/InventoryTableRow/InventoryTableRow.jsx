@@ -1,5 +1,6 @@
-import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 import './InventoryTableRow.css';
+import { faLeaf } from '@fortawesome/free-solid-svg-icons';
+import OnEditButtons from '../OnEditButtons/OnEditButtons';
 
 function InventoryTableRow({ data }) {
 	return (
@@ -36,6 +37,7 @@ function InventoryTableRow({ data }) {
 						cumque.
 					</p>
 				</div>
+				<OnEditButtons></OnEditButtons>
 			</div>
 		</div>
 	);

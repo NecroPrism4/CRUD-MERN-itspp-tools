@@ -1,11 +1,17 @@
 .TableRow {
 	display: grid;
 	height: auto;
+	max-width: unset;
 	border-radius: 15px;
 	padding: 10px;
 	background: var(--tertiary-bg);
 	margin-bottom: 20px;
 	grid-template-rows: 1fr auto;
+}
+
+.TableRow:hover,
+.TableRow:active {
+	color: var(--active-fg);
 }
 
 .TableRow .ShowedInfo {
@@ -23,10 +29,42 @@
 }
 
 .TableRow .Expandible {
-	display: unset;
 	border-top: 1px dashed var(--inactive-fg);
+	position: absolute;
+	opacity: 0;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .TableRow .Expandible .Expanded {
 	display: unset;
+}
+
+@media screen and (max-width: 768px) {
+	.TableRow {
+		font-size: 1.5em;
+	}
+
+	.TableRow .ShowedInfo {
+		display: inline;
+	}
+
+	.TableRow .ShowedInfo div {
+		width: fit-content;
+	}
+}
+
+.TableRow:hover .Expandible {
+	animation: ShowExpandible 1.5s forwards;
+}
+
+@keyframes ShowExpandible {
+	0% {
+		opacity: 0;
+		position: relative;
+	}
+
+	100% {
+		opacity: 1;
+		position: relative;
+	}
 }

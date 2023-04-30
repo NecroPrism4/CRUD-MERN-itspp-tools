@@ -14,7 +14,12 @@ function UpperNav() {
 	return (
 		<>
 			<nav className='UpperNav'>
-				<div className='ShowMenu'>
+				<div
+					className='ShowMenu'
+					onClick={() => {
+						alert('Not implemented show Menu');
+					}}
+				>
 					<FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
 				</div>
 				<h2>{title}</h2>
@@ -28,7 +33,7 @@ function UpperNav() {
 					<button
 						className='toggle-button'
 						onClick={() => {
-							alert('Showright');
+							alert('Not implemented show right side');
 						}}
 					>
 						<FontAwesomeIcon icon={faCaretLeft} className='ShowRight' />

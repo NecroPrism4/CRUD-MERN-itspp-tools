@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function usePopulateTable(
-	query,
-	queryOption,
 	queryRoute,
 	method,
-	pageNumber
+	pageNumber,
+	isAvailable,
+	queryOption,
+	query
 ) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
@@ -16,19 +17,22 @@ export default function usePopulateTable(
 	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
 	useEffect(() => {
 		setTableData([]);
-	}, [query]);
+	}, [query, isAvailable, queryOption]);
 
 	/* The logic for querying the database dinamically */
 	useEffect(() => {
+		console.log(isAvailable);
 		setLoading(true);
 		setError(false);
 		let cancel;
 		axios({
 			method: `${method}`,
-			url: `${import.meta.env.VITE_REACT_APP_API_BASE_URL}${queryRoute}`,
+			url: `http://${window.location.hostname}:3000${queryRoute}`,
 			params: {
 				page: pageNumber,
 				pageSize: 10,
+				isAvailable: isAvailable,
+				queryOption: queryOption,
 				searchTerm: query,
 			},
 			cancelToken: new axios.CancelToken((c) => (cancel = c)),
@@ -46,7 +50,7 @@ export default function usePopulateTable(
 				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber, queryRoute, method]);
+	}, [query, pageNumber, queryRoute, method, queryOption, isAvailable]);
 
 	return { loading, error, tableData, hasMore };
 }
