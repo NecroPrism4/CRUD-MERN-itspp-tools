@@ -18,7 +18,8 @@
 		"react-aria": "^3.24.0",
 		"react-dom": "^18.2.0",
 		"react-resizable": "^3.0.5",
-		"react-router-dom": "6.4"
+		"react-router-dom": "6.4",
+		"react-textarea-autosize": "^8.4.1"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.28",

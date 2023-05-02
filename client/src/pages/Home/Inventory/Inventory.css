@@ -12,6 +12,7 @@
 
 .tableHeader input {
 	font-size: 0.9em;
+	width: 100%;
 }
 
 .tableHeader input,

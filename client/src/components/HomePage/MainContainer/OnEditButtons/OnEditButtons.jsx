@@ -3,23 +3,20 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function OnEditButtons() {
-	const [isEditing, setIsEditing] = useState(false);
-
+function OnEditButtons({ handleEditField, isEditing, cancelEdit }) {
 	function handleEdit() {
-		setIsEditing(true);
+		handleEditField(true);
 	}
 
 	function handleAcceptEdit() {
-		setIsEditing(false);
+		handleEditField(false);
 	}
 
 	function handleCancelEdit() {
 		setTimeout(() => {
-			setIsEditing(false);
+			handleEditField(false);
 		}, 150);
 	}
-
 	return (
 		<div className='EditButtons'>
 			{isEditing ? (

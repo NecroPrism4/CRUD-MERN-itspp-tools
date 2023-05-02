@@ -2,13 +2,11 @@ import './Inventory.css';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
-import { useEffect, useContext, useState, useRef, useCallback } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 import InventoryTableRow from '../../../components/HomePage/MainContainer/InventoryTableRow/InventoryTableRow.jsx';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
@@ -18,16 +16,16 @@ function Inventory() {
 	}, []);
 
 	const { handleTitle } = useContext(SectionContext);
-	const [queryRoute, SetQueryroute] = useState('/api/inventory/get');
-	const [method, SetMethod] = useState('get');
+	const [api, setapi] = useState('/api/inventory/get');
+	const [method, setMethod] = useState('get');
 	const [pageNumber, setPagenumber] = useState(1);
 	const [isAvailable, setIsAvailable] = useState('');
 	const [queryOption, setQueryOption] = useState('item_type');
 	const [query, setQuery] = useState('');
 
 	const { loading, error, tableData, hasMore } = usePopulateTable(
-		queryRoute,
 		method,
+		api,
 		pageNumber,
 		isAvailable,
 		queryOption,

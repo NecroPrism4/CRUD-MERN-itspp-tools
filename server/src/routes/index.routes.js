@@ -9,6 +9,7 @@ import { corsOptions } from '../config.js';
 const router = Router();
 //INVENTORY ROUTES
 router.get('/api/inventory/get', getInventory);
+router.get('/api/inventory/getById', getInventory);
 
 //LENDINGS ROUTES
 router.get('/api/lendings/get', getLendings);

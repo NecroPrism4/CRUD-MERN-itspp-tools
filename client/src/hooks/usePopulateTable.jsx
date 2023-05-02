@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function usePopulateTable(
-	queryRoute,
 	method,
+	api,
 	pageNumber,
 	isAvailable,
 	queryOption,
@@ -21,13 +21,12 @@ export default function usePopulateTable(
 
 	/* The logic for querying the database dinamically */
 	useEffect(() => {
-		console.log(isAvailable);
 		setLoading(true);
 		setError(false);
 		let cancel;
 		axios({
 			method: `${method}`,
-			url: `http://${window.location.hostname}:3000${queryRoute}`,
+			url: `http://${window.location.hostname}:3000${api}`,
 			params: {
 				page: pageNumber,
 				pageSize: 10,
@@ -50,7 +49,7 @@ export default function usePopulateTable(
 				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber, queryRoute, method, queryOption, isAvailable]);
+	}, [query, pageNumber, api, method, queryOption, isAvailable]);
 
 	return { loading, error, tableData, hasMore };
 }

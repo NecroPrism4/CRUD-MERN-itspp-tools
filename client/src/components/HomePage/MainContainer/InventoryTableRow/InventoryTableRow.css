@@ -1,5 +1,4 @@
 .TableRow {
-	display: grid;
 	height: auto;
 	max-width: unset;
 	border-radius: 15px;
@@ -7,6 +6,10 @@
 	background: var(--tertiary-bg);
 	margin-bottom: 20px;
 	grid-template-rows: 1fr auto;
+}
+
+.TableRow p {
+	overflow-wrap: anywhere;
 }
 
 .TableRow:hover,
@@ -17,6 +20,7 @@
 .TableRow .ShowedInfo {
 	display: grid;
 	grid-template-columns: auto 1fr auto;
+	gap: 20px;
 }
 
 .TableRow .ShowedInfo .BrandModel div {
