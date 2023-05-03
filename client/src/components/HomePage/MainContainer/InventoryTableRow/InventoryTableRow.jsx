@@ -1,6 +1,6 @@
 import './InventoryTableRow.css';
 import { useState } from 'react';
-import useGetById from '../../../../hooks/useManipulateByID';
+import { GetById } from '../../../../apis/GetById.jsx';
 import OnEditButtons from '../OnEditButtons/OnEditButtons';
 
 function InventoryTableRow({ data }) {
@@ -12,24 +12,23 @@ function InventoryTableRow({ data }) {
 		console.log({ ...editedData, [field]: e.target.textContent });
 	}
 
-	const { loadingItem, error, objectData } = useGetById(
-		'get',
-		'/api/inventory/getById',
-		data.item_id,
-		isEditable
-	);
+	const handleCancelEdit = () => {
+		console.log(() => {
+			GetById('/api/inventory/get', data.item_id);
+		});
+	};
 
 	return (
 		<div className='TableRow'>
 			<div className='ShowedInfo'>
 				<div>
-					<h4>ID: {data.item_id}</h4>
+					<h4>ID: {editedData.item_id}</h4>
 					<h3
 						contentEditable={isEditable}
 						onInput={(e) => handleEditData('item_brand', e)}
 						suppressContentEditableWarning
 					>
-						{data.item_type}
+						{editedData.item_type}
 					</h3>
 				</div>
 				<div className='BrandModel'>
@@ -40,16 +39,18 @@ function InventoryTableRow({ data }) {
 							onInput={(e) => handleEditData('item_brand', e)}
 							suppressContentEditableWarning
 						>
-							{data.item_brand}
+							{editedData.item_brand}
 						</p>
 					</div>
 					<div>
 						<h4>Modelo: </h4>
-						<p>{data.item_model}</p>
+						<p>{editedData.item_model}</p>
 					</div>
 				</div>
-				<h3 style={{ color: data.item_available ? '#00c69f' : '#e56552' }}>
-					{data.item_available ? 'Disponible' : 'No Disponible'}
+				<h3
+					style={{ color: editedData.item_available ? '#00c69f' : '#e56552' }}
+				>
+					{editedData.item_available ? 'Disponible' : 'No Disponible'}
 				</h3>
 			</div>
 
@@ -70,7 +71,7 @@ function InventoryTableRow({ data }) {
 						setIsEditable(value);
 					}}
 					isEditing={isEditable}
-					cancelEdit={'v'}
+					cancelEdit={handleCancelEdit}
 				></OnEditButtons>
 			</div>
 		</div>

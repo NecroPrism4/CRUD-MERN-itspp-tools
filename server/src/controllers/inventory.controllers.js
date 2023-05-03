@@ -38,3 +38,19 @@ export const getInventory = async (req, res) => {
 		res.status(500).send('Internal server error');
 	}
 };
+
+export const getInventoryById = async (req, res) => {
+	const Id = parseInt(req.query.Id) || 1; // Establecer un valor predeterminado para page
+	try {
+		const item = await prisma.tab_inventory.findMany({
+			where: {
+				item_id: Id,
+			},
+		});
+
+		res.send(item);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send('Internal server error');
+	}
+};
