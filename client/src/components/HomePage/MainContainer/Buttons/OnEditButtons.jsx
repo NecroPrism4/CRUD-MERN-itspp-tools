@@ -15,7 +15,6 @@ function OnEditButtons({ handleEditField, isEditing, cancelEdit }) {
 	function handleCancelEdit() {
 		setTimeout(() => {
 			handleEditField(false);
-
 			cancelEdit();
 		}, 150);
 	}

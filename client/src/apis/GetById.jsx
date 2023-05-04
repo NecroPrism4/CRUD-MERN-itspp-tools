@@ -10,9 +10,10 @@ export function GetById(api, id) {
 		cancelToken: new axios.CancelToken((e) => (cancel = e)),
 	})
 		.then((res) => {
-			return console.log(res.data);
+			return res.data;
 		})
 		.catch((e) => {
 			if (axios.isCancel(e)) return;
+			return e;
 		});
 }

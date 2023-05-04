@@ -1,20 +1,27 @@
 import './InventoryTableRow.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GetById } from '../../../../apis/GetById.jsx';
 import OnEditButtons from '../Buttons/OnEditButtons.jsx';
 
 function InventoryTableRow({ data }) {
 	const [isEditable, setIsEditable] = useState(false);
 	const [editedData, setEditedData] = useState(data);
+	const [error, setError] = useState(false);
+
+	const [brand, setBrand] = useState(editedData.item_brand);
+
+	useEffect(() => {
+		console.log('UseEffect');
+	}, [editedData]);
 
 	function handleEditData(field, e) {
 		console.log(editedData);
 		console.log({ ...editedData, [field]: e.target.textContent });
 	}
 
-	const handleCancelEdit = () => {
-		console.log(GetById('/api/inventory/getById', data.item_id));
-	};
+	function handleCancelEdit() {
+		setEditedData(...data);
+	}
 
 	return (
 		<div className='TableRow'>
@@ -37,7 +44,7 @@ function InventoryTableRow({ data }) {
 							onInput={(e) => handleEditData('item_brand', e)}
 							suppressContentEditableWarning
 						>
-							{editedData.item_brand}
+							{brand}
 						</p>
 					</div>
 					<div>
@@ -51,8 +58,8 @@ function InventoryTableRow({ data }) {
 					{editedData.item_available ? 'Disponible' : 'No Disponible'}
 				</h3>
 			</div>
-
 			<div className='Expandible'>
+				{error && <div>Hubo un error!</div>}
 				<div>
 					<h3>Notas</h3>
 					<p>Estas son algunas notas del utensilio</p>
@@ -67,6 +74,7 @@ function InventoryTableRow({ data }) {
 				<OnEditButtons
 					handleEditField={(value) => {
 						setIsEditable(value);
+						console.log(value);
 					}}
 					isEditing={isEditable}
 					cancelEdit={handleCancelEdit}
