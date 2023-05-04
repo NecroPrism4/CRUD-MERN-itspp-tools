@@ -4,10 +4,9 @@ import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState } from 'react';
 
-import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
-import InventoryTableRow from '../../../components/HomePage/MainContainer/InventoryTableRow/InventoryTableRow.jsx';
-
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
+import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
+import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow.jsx';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
 function Inventory() {

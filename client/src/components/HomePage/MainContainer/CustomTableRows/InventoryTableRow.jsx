@@ -1,7 +1,7 @@
 import './InventoryTableRow.css';
 import { useState } from 'react';
 import { GetById } from '../../../../apis/GetById.jsx';
-import OnEditButtons from '../OnEditButtons/OnEditButtons';
+import OnEditButtons from '../Buttons/OnEditButtons.jsx';
 
 function InventoryTableRow({ data }) {
 	const [isEditable, setIsEditable] = useState(false);
@@ -13,9 +13,7 @@ function InventoryTableRow({ data }) {
 	}
 
 	const handleCancelEdit = () => {
-		console.log(() => {
-			GetById('/api/inventory/get', data.item_id);
-		});
+		console.log(GetById('/api/inventory/getById', data.item_id));
 	};
 
 	return (

@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import ButtonMenu from './SideMenuButton/ButtonMenu.jsx';
+import ButtonMenu from '../MainContainer/Buttons/SideMenuButton/ButtonMenu.jsx';
 
 function SideMenu(props) {
 	const [ShowMenu, setShowMenu] = useState(false);
