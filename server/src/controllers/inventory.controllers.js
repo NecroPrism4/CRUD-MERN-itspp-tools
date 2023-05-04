@@ -19,6 +19,16 @@ export const getInventory = async (req, res) => {
 				lendings: {
 					select: {
 						returned: true,
+						id_borrower: true,
+						user: {
+							select: {
+								user_name: true,
+								user_lastname: true,
+							},
+						},
+					},
+					where: {
+						returned: false,
 					},
 				},
 			},
