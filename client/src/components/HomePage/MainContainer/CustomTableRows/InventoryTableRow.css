@@ -63,7 +63,12 @@
 }
 
 .returnedNotes {
-	font-weight: 900;
+	font-weight: 600;
+}
+
+.returnedNotes span {
+	font-weight: 400;
+	color: var(--inactive-fg);
 }
 
 @media screen and (max-width: 768px) {

@@ -66,8 +66,13 @@ function InventoryTableRow({ data }) {
 					<p>Estas son algunas notas del utensilio</p>
 				</div>
 				<div className='returnedNotes'>
-					{editedData.lendings[0] &&
-						`En posesión de:  ${editedData.lendings[0].borrower.borrower_name} ${editedData.lendings[0].borrower.borrower_lastname} (${editedData.lendings[0].borrower.borrower_jobposition})`}
+					{editedData.lendings[0] && (
+						<div>
+							En posesión de: {editedData.lendings[0].borrower.borrower_name}{' '}
+							{editedData.lendings[0].borrower.borrower_lastname}
+							<span>{` (${editedData.lendings[0].borrower.borrower_type})`}</span>
+						</div>
+					)}
 				</div>
 				<OnEditButtons
 					handleEditField={(value) => {
