@@ -8,8 +8,27 @@
 	grid-template-rows: 1fr auto;
 }
 
-.TableRow p {
-	overflow-wrap: anywhere;
+.itemAvailable {
+	position: relative;
+}
+.itemAvailable::before {
+	scale: 0;
+	content: attr(data-tooltip);
+	position: absolute;
+	color: var(--secundary-bg);
+	background: var(--inactive-fg);
+	font-size: 0.8em;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 10px;
+	left: -10px;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 1s;
+}
+
+.itemAvailable:hover::before {
+	scale: 1;
+
+	transform: translateX(-100%);
 }
 
 .TableRow:hover,
@@ -41,6 +60,10 @@
 
 .TableRow .Expandible .Expanded {
 	display: unset;
+}
+
+.returnedNotes {
+	font-weight: 900;
 }
 
 @media screen and (max-width: 768px) {

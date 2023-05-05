@@ -1,26 +1,19 @@
 import './InventoryTableRow.css';
-import { useState, useEffect } from 'react';
-import { GetById } from '../../../../apis/GetById.jsx';
+import { useState } from 'react';
 import OnEditButtons from '../Buttons/OnEditButtons.jsx';
 
 function InventoryTableRow({ data }) {
+	const [itemName, setItemName] = useState(data.item_type);
 	const [isEditable, setIsEditable] = useState(false);
 	const [editedData, setEditedData] = useState(data);
-	const [error, setError] = useState(false);
-
-	const [brand, setBrand] = useState(editedData.item_brand);
-
-	useEffect(() => {
-		console.log('UseEffect');
-	}, [editedData]);
 
 	function handleEditData(field, e) {
 		console.log(editedData);
 		console.log({ ...editedData, [field]: e.target.textContent });
 	}
-
+	useState(() => {}, []);
 	function handleCancelEdit() {
-		setEditedData(...data);
+		setItemName(data.item_type);
 	}
 
 	return (
@@ -33,7 +26,7 @@ function InventoryTableRow({ data }) {
 						onInput={(e) => handleEditData('item_brand', e)}
 						suppressContentEditableWarning
 					>
-						{editedData.item_type}
+						{itemName}
 					</h3>
 				</div>
 				<div className='BrandModel'>
@@ -44,7 +37,7 @@ function InventoryTableRow({ data }) {
 							onInput={(e) => handleEditData('item_brand', e)}
 							suppressContentEditableWarning
 						>
-							{brand}
+							{editedData.item_brand}
 						</p>
 					</div>
 					<div>
@@ -53,23 +46,28 @@ function InventoryTableRow({ data }) {
 					</div>
 				</div>
 				<h3
+					className='itemAvailable'
 					style={{ color: editedData.item_available ? '#00c69f' : '#e56552' }}
+					data-tooltip={editedData.item_available ? '' : 'Revise notas..'}
 				>
 					{editedData.item_available ? 'Disponible' : 'No Disponible'}
 				</h3>
 			</div>
 			<div className='Expandible'>
-				{error && <div>Hubo un error!</div>}
-				<div>
-					<h3>Notas</h3>
-					<p>Estas son algunas notas del utensilio</p>
-				</div>
 				<div>
 					<h3>Descripción</h3>
 					<p>
 						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla,
 						cumque.
 					</p>
+				</div>
+				<div>
+					<h3>Notas</h3>
+					<p>Estas son algunas notas del utensilio</p>
+				</div>
+				<div className='returnedNotes'>
+					{editedData.lendings[0] &&
+						`En posesión de:  ${editedData.lendings[0].borrower.borrower_name} ${editedData.lendings[0].borrower.borrower_lastname} (${editedData.lendings[0].borrower.borrower_jobposition})`}
 				</div>
 				<OnEditButtons
 					handleEditField={(value) => {

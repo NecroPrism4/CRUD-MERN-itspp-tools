@@ -53,7 +53,7 @@ function Inventory() {
 		{ value: 'item_brand', label: 'Marca' },
 		{ value: 'item_model', label: 'Modelo' },
 		{ value: 'item_description', label: 'Descripción' },
-		{ value: 'item_notes', label: 'notas' },
+		{ value: 'item_notes', label: 'Notas' },
 	];
 
 	const availabityOptions = [
@@ -61,7 +61,6 @@ function Inventory() {
 		{ value: 'true', label: 'Disponibles' },
 		{ value: 'false', label: 'No Disponibles' },
 	];
-
 	return (
 		<div className='HomeChildContainer'>
 			<div className='tableHeader'>
@@ -96,6 +95,11 @@ function Inventory() {
 
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>
+				<div>
+					{!loading && !error && tableData.length < 1 && (
+						<Error noResults={tableData.length < 1} />
+					)}
+				</div>
 			</div>
 		</div>
 	);
