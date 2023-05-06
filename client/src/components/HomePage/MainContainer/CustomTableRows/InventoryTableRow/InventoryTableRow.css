@@ -1,11 +1,15 @@
 .TableRow {
-	height: auto;
 	max-width: unset;
 	border-radius: 15px;
 	padding: 10px;
 	background: var(--tertiary-bg);
 	margin-bottom: 20px;
 	grid-template-rows: 1fr auto;
+}
+
+.TableRow p,
+.TableRow h3 {
+	word-break: break-all;
 }
 
 .itemAvailable {
@@ -27,7 +31,6 @@
 
 .itemAvailable:hover::before {
 	scale: 1;
-
 	transform: translateX(-100%);
 }
 
@@ -38,7 +41,7 @@
 
 .TableRow .ShowedInfo {
 	display: grid;
-	grid-template-columns: auto 1fr auto;
+	grid-template-columns: 1fr 1fr auto;
 	gap: 20px;
 }
 
@@ -71,6 +74,16 @@
 	color: var(--inactive-fg);
 }
 
+.InteractiveButtons {
+	display: flex;
+	justify-items: end;
+	justify-content: space-between;
+}
+
+.EditButtons.Lendings {
+	margin-left: unset;
+}
+
 @media screen and (max-width: 768px) {
 	.TableRow {
 		font-size: 1.5em;
@@ -85,7 +98,7 @@
 	}
 }
 
-.TableRow:hover .Expandible {
+.TableRow.Expand .Expandible {
 	animation: ShowExpandible 1.5s forwards;
 }
 

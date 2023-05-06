@@ -23,6 +23,7 @@
 	padding: 10px;
 	box-sizing: border-box;
 	grid-template-rows: auto 1fr;
+	background: var(--primary-bg);
 }
 
 .HomeChildContainer {

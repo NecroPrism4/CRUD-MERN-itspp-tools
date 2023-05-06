@@ -6,7 +6,7 @@ import { useEffect, useContext, useState } from 'react';
 
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
-import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow.jsx';
+import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
 function Inventory() {
@@ -61,6 +61,7 @@ function Inventory() {
 		{ value: 'true', label: 'Disponibles' },
 		{ value: 'false', label: 'No Disponibles' },
 	];
+
 	return (
 		<div className='HomeChildContainer'>
 			<div className='tableHeader'>

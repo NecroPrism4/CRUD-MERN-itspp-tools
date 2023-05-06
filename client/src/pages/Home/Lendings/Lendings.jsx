@@ -2,14 +2,19 @@ import './Lendings.css';
 import { useEffect, useContext, useState } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 
+import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
+
 function Lendings() {
 	const { handleTitle } = useContext(SectionContext);
-
 	useEffect(() => {
 		handleTitle('Prestamos');
 	}, []);
 
-	const [tableTitle, setTableTitle] = useState('Vigentes');
+	const [activeTab, setActiveTab] = useState(0);
+
+	function handleTabActive(value) {
+		setActiveTab(value);
+	}
 
 	function handleSearch(e) {
 		setQuery(e.target.value);
@@ -18,15 +23,33 @@ function Lendings() {
 
 	return (
 		<div className='HomeChildContainer'>
-			<div className='tableHeader prestamos'>
-				<h2>Prestamos {tableTitle}</h2>
-				<input
-					placeholder='Buscar...'
-					type='text'
-					className='tableSearchBar'
-					onChange={handleSearch}
-				></input>
+			<div className='tableHeader Lendings'>
+				<div className='TabOptions'>
+					<h2
+						className={activeTab == 0 && 'active'}
+						onClick={() => handleTabActive(0)}
+					>
+						Vigentes
+					</h2>
+					<h2
+						className={activeTab == 1 && 'active'}
+						onClick={() => handleTabActive(1)}
+					>
+						Inactivos
+					</h2>
+				</div>
+				<div className='SearchOptions'>
+					<SelectComponent />
+					<SelectComponent />
+					<input
+						placeholder='Buscar...'
+						type='text'
+						className='tableSearchBar'
+						onChange={handleSearch}
+					></input>
+				</div>
 			</div>
+			<div className='tableContainer'></div>
 		</div>
 	);
 }

@@ -1,6 +1,5 @@
 .EditButtons {
-	display: flex;
-	justify-content: flex-end;
+	margin-left: auto;
 }
 
 .EditButtons button {
@@ -13,6 +12,7 @@
 	font-weight: 600;
 	color: var(--inactive-fg);
 	margin-left: 5px;
+	cursor: pointer;
 }
 
 .EditButtons button:hover {
