@@ -2,6 +2,7 @@ import './Lendings.css';
 import { useEffect, useContext, useState } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 
+import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
 function Lendings() {
@@ -49,7 +50,16 @@ function Lendings() {
 					></input>
 				</div>
 			</div>
-			<div className='tableContainer'></div>
+			<div className='tableContainer'>
+				<div className={`ActiveLendingsRows ${activeTab == 0 ? 'Active' : ''}`}>
+					<LendingsTableRow />
+				</div>
+				<div
+					className={`ReturnedLendingsRows ${activeTab == 1 ? 'Active' : ''}`}
+				>
+					<LendingsTableRow />
+				</div>
+			</div>
 		</div>
 	);
 }

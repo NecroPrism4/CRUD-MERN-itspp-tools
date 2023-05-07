@@ -7,7 +7,9 @@ import { SectionContext } from '../../../context/SectionContext';
 
 function Dashboard() {
 	const { handleTitle } = useContext(SectionContext);
-	handleTitle('Dashboard');
+	useEffect(() => {
+		handleTitle('Dashboard');
+	}, []);
 
 	return (
 		<div className='HomeChildContainer'>

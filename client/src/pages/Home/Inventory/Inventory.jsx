@@ -10,11 +10,11 @@ import InventoryTableRow from '../../../components/HomePage/MainContainer/Custom
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
 function Inventory() {
+	const { handleTitle } = useContext(SectionContext);
 	useEffect(() => {
 		handleTitle('Inventario');
 	}, []);
 
-	const { handleTitle } = useContext(SectionContext);
 	const [api, setapi] = useState('/api/inventory/get');
 	const [method, setMethod] = useState('get');
 	const [pageNumber, setPagenumber] = useState(1);
