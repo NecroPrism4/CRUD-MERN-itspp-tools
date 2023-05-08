@@ -20,13 +20,20 @@ export const getInventory = async (req, res) => {
 					select: {
 						lendings: {
 							select: {
+								lending_id: true,
+								returned: true,
 								borrower: {
 									select: {
+										borrower_id: true,
 										borrower_name: true,
-										borrower_lastname: true,
 									},
 								},
 							},
+						},
+					},
+					where: {
+						lendings: {
+							returned: { equals: false },
 						},
 					},
 				},
@@ -38,6 +45,7 @@ export const getInventory = async (req, res) => {
 				[queryOption]: { contains: searchTerm },
 			},
 		});
+
 		res.send(items);
 	} catch (error) {
 		console.log(error);
