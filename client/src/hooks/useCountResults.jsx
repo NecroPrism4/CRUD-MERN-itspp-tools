@@ -2,22 +2,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../config.js';
 
-function usePopulateTable(
-	method,
-	api,
-	pageNumber,
-	conditional,
-	queryOption,
-	query
-) {
+function useCountResults(api, conditional, queryOption, query) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	const [tableData, setTableData] = useState([]);
-	const [hasMore, setHasMore] = useState(false);
+	const [countData, setCountData] = useState();
 
 	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
 	useEffect(() => {
-		setTableData([]);
+		setCountData(0);
 	}, [query, conditional, queryOption]);
 
 	/* The logic for querying the database dinamically */
@@ -26,11 +18,9 @@ function usePopulateTable(
 		setError(false);
 		let cancel;
 		axios({
-			method: `${method}`,
+			method: `get`,
 			url: `${API_URL}${api}`,
 			params: {
-				page: pageNumber,
-				pageSize: 10,
 				conditional: conditional,
 				queryOption: queryOption,
 				searchTerm: query,
@@ -38,11 +28,8 @@ function usePopulateTable(
 			cancelToken: new axios.CancelToken((c) => (cancel = c)),
 		})
 			.then((res) => {
-				setTableData((prevTableData) => {
-					return [...new Set([...prevTableData, ...res.data])];
-				});
-				setHasMore(res.data.length > 0);
 				setLoading(false);
+				return setCountData(res.data);
 			})
 			.catch((e) => {
 				if (axios.isCancel(e)) return;
@@ -50,9 +37,9 @@ function usePopulateTable(
 				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber, api, method, queryOption, conditional]);
+	}, [api, query, queryOption, conditional]);
 
-	return { loading, error, tableData, hasMore };
+	return { loading, error, countData };
 }
 
-export default usePopulateTable;
+export default useCountResults;

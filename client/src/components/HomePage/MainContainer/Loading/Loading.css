@@ -6,7 +6,7 @@
 	overflow: hidden;
 	border-radius: 50px;
 
-	animation: Entry 2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+	animation: Entry 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 .Loading svg {

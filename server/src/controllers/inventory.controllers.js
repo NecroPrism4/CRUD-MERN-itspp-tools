@@ -7,7 +7,7 @@ export const getInventory = async (req, res) => {
 	const page = parseInt(req.query.page) || 1; // Establecer un valor predeterminado para page
 	const pageSize = parseInt(req.query.pageSize) || 10; // Establecer un valor predeterminado para pageSize
 	const offset = (page - 1) * pageSize; // Calcular el valor de offset
-	const isAvailable = toBool(req.query.isAvailable); //Establecer valores booleanos a partir de el req string
+	const conditional = toBool(req.query.conditional); //Establecer valores booleanos a partir de el req string
 	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
 
@@ -18,31 +18,26 @@ export const getInventory = async (req, res) => {
 			include: {
 				lendings: {
 					select: {
-						returned: true,
-						id_borrower: true,
-						borrower: {
+						lendings: {
 							select: {
-								borrower_name: true,
-								borrower_lastname: true,
-								borrower_type: true,
+								borrower: {
+									select: {
+										borrower_name: true,
+										borrower_lastname: true,
+									},
+								},
 							},
 						},
-					},
-					where: {
-						returned: false,
 					},
 				},
 			},
 			where: {
-				...(isAvailable != null
-					? { item_available: { equals: isAvailable } }
+				...(conditional != null
+					? { item_available: { equals: conditional } }
 					: {}),
-				[queryOption]: {
-					contains: searchTerm,
-				},
+				[queryOption]: { contains: searchTerm },
 			},
 		});
-
 		res.send(items);
 	} catch (error) {
 		console.log(error);

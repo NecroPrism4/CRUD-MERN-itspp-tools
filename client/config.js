@@ -1,4 +1,4 @@
-import os from 'os';
+/* import os from 'os';
 const networkInterfaces = os.networkInterfaces();
 const ipv4Interfaces = networkInterfaces['Ethernet'].filter(
 	(iface) => iface.family === 'IPv4'
@@ -11,4 +11,6 @@ if (ipv4Interfaces.length > 0) {
 	console.error('No IP address found');
 }
 
-export default ipAddress;
+export default ipAddress; */
+
+export const API_URL = `http://${window.location.hostname}:3000`;

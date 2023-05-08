@@ -1,10 +1,11 @@
 import './InventoryTableRow.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 
 function InventoryTableRow({ data }) {
 	const [isEditable, setIsEditable] = useState(false);
 	const [rowData, setRowData] = useState(data);
+	const [actualBorrower, setActualBorrower] = useState();
 
 	function handleEditData(field, e) {
 		setRowData(
@@ -21,13 +22,13 @@ function InventoryTableRow({ data }) {
 			<div className='ShowedInfo'>
 				<div>
 					<h4>ID: {rowData.item_id}</h4>
-					<h3
+					<h2
 						contentEditable={isEditable}
 						onBlur={(e) => handleEditData('item_type', e)}
 						suppressContentEditableWarning
 					>
 						{rowData.item_type}
-					</h3>
+					</h2>
 				</div>
 				<div className='BrandModel'>
 					<div>
@@ -74,18 +75,19 @@ function InventoryTableRow({ data }) {
 					<h3>Notas</h3>
 					<p
 						contentEditable={isEditable}
-						onBlur={(e) => handleEditData('item_notes', e)}
+						onBlur={(e) => handleEditData('item_remarks', e)}
 						suppressContentEditableWarning
 					>
-						{rowData.item_notes}
+						{rowData.item_remarks}
 					</p>
 				</div>
 				<div className='returnedNotes'>
 					{rowData.lendings[0] && (
 						<div>
-							En posesión de: {rowData.lendings[0].borrower.borrower_name}{' '}
-							{rowData.lendings[0].borrower.borrower_lastname}
-							<span>{` (${rowData.lendings[0].borrower.borrower_type})`}</span>
+							En posesión de:{' '}
+							{rowData.lendings[0].lending.borrower.borrower_name}{' '}
+							{rowData.lendings[0].lending.borrower.borrower_lastname}
+							<span>{` (${rowData.lendings[0].lending.borrower.borrower_type})`}</span>
 						</div>
 					)}
 				</div>

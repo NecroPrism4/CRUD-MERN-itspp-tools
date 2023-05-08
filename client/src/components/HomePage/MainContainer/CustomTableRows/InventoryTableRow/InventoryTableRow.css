@@ -75,6 +75,7 @@
 }
 
 .InteractiveButtons {
+	margin-top: 10px;
 	display: flex;
 	justify-items: end;
 	justify-content: space-between;
@@ -95,6 +96,10 @@
 
 	.TableRow .ShowedInfo div {
 		width: fit-content;
+	}
+
+	.InteractiveButtons {
+		font-size: 0.9em;
 	}
 }
 

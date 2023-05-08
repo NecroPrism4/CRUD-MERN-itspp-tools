@@ -3,8 +3,12 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../../../context/ThemeContext.jsx';
 import { SectionContext } from '../../../../context/SectionContext.jsx';
 
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
-import { faBars, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+	faBars,
+	faCaretLeft,
+	faMoon,
+	faSun,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function UpperNav() {
@@ -20,7 +24,7 @@ function UpperNav() {
 						alert('Not implemented show Menu');
 					}}
 				>
-					<FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
+					<FontAwesomeIcon icon={faBars} />
 				</div>
 				<h2>{title}</h2>
 				<div className='NavRightSide'>
