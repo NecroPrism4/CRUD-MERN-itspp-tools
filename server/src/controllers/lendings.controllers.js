@@ -51,10 +51,18 @@ export const getLendings = async (req, res) => {
 					  }
 					: {}),
 				...(queryOption == 'borrower_name'
-					? { borrower: { [queryOption]: { contains: searchTerm } } }
+					? {
+							borrower: {
+								borrower_fullname: { contains: searchTerm },
+							},
+					  }
 					: {}),
 				...(queryOption == 'user_name'
-					? { user: { [queryOption]: { contains: searchTerm } } }
+					? {
+							user: {
+								user_fullname: { contains: searchTerm },
+							},
+					  }
 					: {}),
 			},
 		});
@@ -83,10 +91,18 @@ export const getLendingsCount = async (req, res) => {
 					  }
 					: {}),
 				...(queryOption == 'borrower_name'
-					? { borrower: { [queryOption]: { contains: searchTerm } } }
+					? {
+							borrower: {
+								borrower_fullname: { contains: searchTerm },
+							},
+					  }
 					: {}),
 				...(queryOption == 'user_name'
-					? { user: { [queryOption]: { contains: searchTerm } } }
+					? {
+							user: {
+								user_fullname: { contains: searchTerm },
+							},
+					  }
 					: {}),
 			},
 		});

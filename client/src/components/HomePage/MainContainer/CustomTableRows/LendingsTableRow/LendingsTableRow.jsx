@@ -41,7 +41,7 @@ function LendingsTableRow({ data }) {
 			<div className='ShowedInfo Lendings'>
 				<div>
 					<h4>{borrowRelativeDate}</h4>
-					<h2>Darien Alejandro Verdugo Reyna</h2>
+					<h2>{`${rowData.borrower.borrower_name} ${rowData.borrower.borrower_lastname}`}</h2>
 				</div>
 				<div
 					className='ReturnedIndicator'
@@ -81,6 +81,7 @@ function LendingsTableRow({ data }) {
 						</div>
 					</div>
 				</div>
+
 				<div>
 					<p>
 						ID de prestamo: <span>{rowData.lending_id}</span>
@@ -106,12 +107,12 @@ function LendingsTableRow({ data }) {
 			<div className='Expandible'>
 				<div>
 					<h3>Notas</h3>
-					<p>Estas son algunas notas</p>
+					<p>{rowData.lending_remarks}</p>
 				</div>
 				<div className='InteractiveButtons Lendings'>
 					<OnEditButtons></OnEditButtons>
 					<div className='EditButtons Lendings'>
-						<button>Confirmar Devolución</button>
+						{rowData.returned ? null : <button>Confirmar Devolución</button>}
 					</div>
 				</div>
 			</div>

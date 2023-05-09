@@ -61,6 +61,7 @@ function Lendings() {
 		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
 		if (queryOption != 'lending_id') {
 			console.log('primer if');
+			console.log(query + queryOption);
 			setInvalid(false);
 			setQuery(value);
 		} else if (!onlyNumbers.test(value)) {
@@ -122,7 +123,11 @@ function Lendings() {
 				</div>
 				<div className='SearchOptions'>
 					<div>
-						<p>{!countError && !countLoading && countData} resultados</p>
+						<p>
+							{!countError && !countLoading && countData
+								? `${countData} resultado(s)`
+								: ``}
+						</p>
 					</div>
 					<div>
 						<SelectComponent />
