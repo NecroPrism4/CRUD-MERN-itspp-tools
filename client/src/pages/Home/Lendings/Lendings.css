@@ -5,17 +5,18 @@
 }
 .tableHeader.Lendings .TabOptions {
 	display: flex;
+	justify-content: flex-start;
 }
 
-.tableHeader.Lendings h2 {
+.tableHeader.Lendings h1 {
 	grid-column: 1;
 	transition: all 0.3s ease-in-out;
-	font-size: 1.3em;
+
 	cursor: pointer;
 	color: var(--inactive-fg);
 }
-.tableHeader.Lendings h2:hover,
-.tableHeader.Lendings h2.active {
+.tableHeader.Lendings h1:hover,
+.tableHeader.Lendings h1.active {
 	color: var(--active-fg);
 }
 
@@ -37,7 +38,6 @@
 .SearchOptions {
 	gap: 10px;
 	justify-content: end;
-	font-size: 1.3em;
 }
 .SearchOptions .ActiveLendingsRows {
 	height: 0;

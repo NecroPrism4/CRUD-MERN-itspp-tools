@@ -108,18 +108,18 @@ function Lendings() {
 		<div className='HomeChildContainer'>
 			<div className='tableHeader Lendings'>
 				<div className='TabOptions'>
-					<h2
+					<h1
 						className={isActive == 'true' ? 'active' : ''}
 						onClick={() => handleTabActive('true')}
 					>
 						Vigentes
-					</h2>
-					<h2
+					</h1>
+					<h1
 						className={isActive == 'false' ? 'active' : ''}
 						onClick={() => handleTabActive('false')}
 					>
 						Inactivos
-					</h2>
+					</h1>
 				</div>
 				<div className='SearchOptions'>
 					<div>
