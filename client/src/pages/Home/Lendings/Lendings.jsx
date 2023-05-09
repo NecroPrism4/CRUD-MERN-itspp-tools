@@ -9,7 +9,6 @@ import Loading from '../../../components/HomePage/MainContainer/Loading/Loading'
 import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import useCountResults from '../../../hooks/useCountResults';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 function Lendings() {
 	//Maneja el título de la barra de navegación superior

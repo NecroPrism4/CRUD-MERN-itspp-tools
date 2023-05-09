@@ -20,7 +20,19 @@
 .CenterRow {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	align-items: center;
+	align-items: start;
+}
+
+.CenterRow div:nth-child(1) {
+	box-sizing: border-box;
+	padding-right: 30px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+.CenterRow div:nth-child(1) div {
+	background: var(--secundary-bg);
+	border-radius: 25px;
+	padding: 10px;
 }
 
 .CenterRow div:nth-child(2) {
@@ -29,7 +41,7 @@
 
 .ItemsList ul {
 	padding-left: 10px;
-	max-height: 70px;
+	max-height: 105px;
 	gap: 10px;
 	overflow: hidden;
 	transition: all 0.5s ease-in-out;
@@ -74,4 +86,8 @@
 .InteractiveButtons.Lendings button {
 	padding-top: 2px;
 	padding-bottom: 2px;
+}
+
+.InteractiveButtons.Lendings div:last-child button:hover {
+	background: var(--gradient-accent);
 }

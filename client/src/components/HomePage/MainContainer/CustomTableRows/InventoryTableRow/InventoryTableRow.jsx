@@ -17,6 +17,10 @@ function InventoryTableRow({ data }) {
 		setRowData((prev) => (prev = data));
 	}
 
+	useEffect(() => {
+		console.log(rowData);
+	}, []);
+
 	return (
 		<div className='TableRow Expand'>
 			<div className='ShowedInfo'>
@@ -84,10 +88,10 @@ function InventoryTableRow({ data }) {
 				<div className='returnedNotes'>
 					{rowData.lendings[0] && (
 						<div>
-							En posesión de:{' '}
-							{rowData.lendings[0].lending.borrower.borrower_name}{' '}
-							{rowData.lendings[0].lending.borrower.borrower_lastname}
-							<span>{` (${rowData.lendings[0].lending.borrower.borrower_type})`}</span>
+							<span>En posesión de: </span>
+							{rowData.lendings[0].lendings.borrower.borrower_name}{' '}
+							{rowData.lendings[0].lendings.borrower.borrower_lastname}
+							<span>{` (${rowData.lendings[0].lendings.borrower.borrower_type})`}</span>
 						</div>
 					)}
 				</div>

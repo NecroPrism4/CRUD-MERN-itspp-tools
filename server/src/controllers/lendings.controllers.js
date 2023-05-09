@@ -24,6 +24,7 @@ export const getLendings = async (req, res) => {
 						user_id: true,
 						user_name: true,
 						user_lastname: true,
+						user_jobposition: true,
 					},
 				},
 				borrower: {

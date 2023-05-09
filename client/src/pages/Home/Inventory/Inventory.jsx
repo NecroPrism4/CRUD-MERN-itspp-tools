@@ -96,7 +96,11 @@ function Inventory() {
 					></input>
 				</div>
 			</div>
-			<div className='tableContainer'>
+			<div
+				className={`tableContainer ShowTableAnim ${
+					tableData.length > 0 ? 'Active' : ''
+				}`}
+			>
 				{tableData.map((object) => {
 					if (tableData.length === tableData.lastIndexOf(object) + 1) {
 						return (

@@ -41,6 +41,7 @@ body {
 	background: var(--primary-bg);
 	min-width: 300px;
 	direction: ltr;
+	text-shadow: none !important;
 }
 
 @media screen and (min-width: 768px) {

@@ -32,7 +32,8 @@ function LendingsTableRow({ data }) {
 	}
 
 	useEffect(() => {
-		//console.log(rowData);
+		//console.log(rowData.items[0] != undefined ? rowData.items.length : '');
+		console.log(rowData.items.length);
 	}, [rowData]);
 
 	return (
@@ -56,25 +57,34 @@ function LendingsTableRow({ data }) {
 
 			<div className='CenterRow'>
 				<div>
-					<h3>Materiales:</h3>
-					<div className='ItemsList'>
-						<ul className={showMore ? 'ShowMore' : ''}>
-							{rowData.items.map((items) => {
-								return console.log(items);
-							})}
-						</ul>
-						<button
-							className='ShowMoreButton'
-							onClick={() => {
-								handleShowMore();
-							}}
-						>
-							<FontAwesomeIcon icon={showMore ? faCaretUp : faCaretDown} />
-							<p>Ver {showMore ? 'menos' : 'más'}</p>
-						</button>
+					<div>
+						<h3>Materiales:</h3>
+						<div className='ItemsList'>
+							<ul className={showMore ? 'ShowMore' : ''}>
+								{rowData.items.map((items) => {
+									return (
+										<li key={items.items.item_id}>{items.items.item_type}</li>
+									);
+								})}
+							</ul>
+							{rowData.items.length > 4 && (
+								<button
+									className='ShowMoreButton'
+									onClick={() => {
+										handleShowMore();
+									}}
+								>
+									<FontAwesomeIcon icon={showMore ? faCaretUp : faCaretDown} />
+									<p>Ver {showMore ? 'menos' : 'más'}</p>
+								</button>
+							)}
+						</div>
 					</div>
 				</div>
 				<div>
+					<p>
+						ID de prestamo: <span>{rowData.lending_id}</span>
+					</p>
 					<div className='LendingDate'>
 						<h4>Fecha de Prestamo: </h4>
 						<p>{borrowFormatedDate}</p>
@@ -86,7 +96,8 @@ function LendingsTableRow({ data }) {
 
 					<div className='AuthorizedBy'>
 						<h4>
-							Autorizó: <span>Jorge Perez (laboratorista)</span>
+							Autorizó:{' '}
+							<span>{`${rowData.user.user_name} ${rowData.user.user_lastname} (${rowData.user.user_jobposition})`}</span>
 						</h4>
 					</div>
 				</div>

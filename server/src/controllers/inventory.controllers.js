@@ -26,6 +26,8 @@ export const getInventory = async (req, res) => {
 									select: {
 										borrower_id: true,
 										borrower_name: true,
+										borrower_lastname: true,
+										borrower_type: true,
 									},
 								},
 							},
