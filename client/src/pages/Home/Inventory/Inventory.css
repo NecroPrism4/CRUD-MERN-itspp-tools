@@ -10,6 +10,11 @@
 	color: var(--active-fg);
 }
 
+.tableHeader h2,
+.ShowedInfo h2 {
+	font-size: 1.8em;
+}
+
 .tableHeader input,
 .tableHeader select {
 	box-sizing: border-box;
@@ -20,7 +25,8 @@
 	outline: none;
 	border: none;
 	margin: 5px;
-	font-size: 1em;
+	font-size: 1.5em;
+	height: 100%;
 }
 
 .tableHeader input {
@@ -30,14 +36,13 @@
 
 .tableHeader div {
 	display: inline-block;
-	width: 100%;
 	align-items: center;
 	justify-content: flex-end;
 }
 
 .tableHeader div p {
 	padding: 0 10px 0 10px;
-	font-size: 1em;
+	font-size: 1.5em;
 }
 
 .tableHeader .tableSearchBar:focus {
@@ -59,7 +64,7 @@
 	animation: ShowTableAnim 500ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-.table {
+/* .table {
 	border-collapse: collapse;
 	border-spacing: 0px;
 }
@@ -114,13 +119,20 @@ td div {
 	width: auto;
 	height: auto;
 	min-height: 20px;
-}
+} */
 
 @media screen and (min-width: 768px) {
 	.tableHeader div {
 		display: flex;
 	}
+
+	.tableHeader input,
+	.tableHeader select {
+		font-size: 1em;
+	}
+
 	.tableHeader div p {
+		font-size: 1em;
 	}
 }
 

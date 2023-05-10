@@ -80,7 +80,7 @@ function Inventory() {
 	return (
 		<div className='HomeChildContainer'>
 			<div className='tableHeader'>
-				<h1>Materiales</h1>
+				<h2>Materiales</h2>
 				<div>
 					<p>Buscar por</p>
 					<SelectComponent

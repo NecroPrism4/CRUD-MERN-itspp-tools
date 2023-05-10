@@ -19,12 +19,9 @@
 	margin: 0 15px 0 15px;
 }
 
-.menuButtonText {
-	text-decoration: solid;
-}
-
-a {
-	text-decoration: none;
+a,
+a:hover {
+	text-decoration: none !important;
 }
 
 @media screen and (max-width: 600px) {

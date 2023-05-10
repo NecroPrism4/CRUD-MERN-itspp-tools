@@ -1,14 +1,16 @@
 import './Lendings.css';
 import { useEffect, useContext, useState } from 'react';
+
 import { SectionContext } from '../../../context/SectionContext';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
+import useCountResults from '../../../hooks/useCountResults';
 
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading';
 import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
-import useCountResults from '../../../hooks/useCountResults';
+import CustomDateRangePicker from '../../../components/HomePage/MainContainer/CustomDatePicker/CustomDateRangePicker.jsx';
 
 function Lendings() {
 	//Maneja el título de la barra de navegación superior
@@ -108,18 +110,18 @@ function Lendings() {
 		<div className='HomeChildContainer'>
 			<div className='tableHeader Lendings'>
 				<div className='TabOptions'>
-					<h1
+					<h2
 						className={isActive == 'true' ? 'active' : ''}
 						onClick={() => handleTabActive('true')}
 					>
 						Vigentes
-					</h1>
-					<h1
+					</h2>
+					<h2
 						className={isActive == 'false' ? 'active' : ''}
 						onClick={() => handleTabActive('false')}
 					>
 						Inactivos
-					</h1>
+					</h2>
 				</div>
 				<div className='SearchOptions'>
 					<div>
@@ -130,7 +132,7 @@ function Lendings() {
 						</p>
 					</div>
 					<div>
-						<SelectComponent />
+						<CustomDateRangePicker />
 						<SelectComponent
 							options={queryOptions}
 							handler={handleQueryOption}

@@ -91,3 +91,7 @@
 .InteractiveButtons.Lendings div:last-child button:hover {
 	background: var(--gradient-accent);
 }
+
+.TableRow.Expand .Expandible {
+	animation: ShowExpandible 1.5s forwards;
+}

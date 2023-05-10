@@ -8,15 +8,14 @@
 	justify-content: flex-start;
 }
 
-.tableHeader.Lendings h1 {
+.tableHeader.Lendings h2 {
 	grid-column: 1;
 	transition: all 0.3s ease-in-out;
-
 	cursor: pointer;
 	color: var(--inactive-fg);
 }
-.tableHeader.Lendings h1:hover,
-.tableHeader.Lendings h1.active {
+.tableHeader.Lendings h2:hover,
+.tableHeader.Lendings h2.active {
 	color: var(--active-fg);
 }
 
@@ -39,7 +38,8 @@
 	gap: 10px;
 	justify-content: end;
 }
-.SearchOptions .ActiveLendingsRows {
+
+.ActiveLendingsRows {
 	height: 0;
 	scale: 0;
 	opacity: 0;

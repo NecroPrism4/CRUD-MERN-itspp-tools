@@ -21,7 +21,6 @@
 	position: absolute;
 	color: var(--secundary-bg);
 	background: var(--inactive-fg);
-	font-size: 0.8em;
 	padding-left: 5px;
 	padding-right: 5px;
 	border-radius: 10px;
