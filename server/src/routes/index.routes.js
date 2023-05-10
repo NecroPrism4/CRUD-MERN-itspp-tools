@@ -1,12 +1,27 @@
 import { Router } from 'express';
-import { pool } from '../db.js';
+import { getUsers } from '../controllers/users.controllers.js';
+import {
+	getInventory,
+	getInventoryById,
+} from '../controllers/inventory.controllers.js';
+import {
+	getLendings,
+	getLendingsCount,
+} from '../controllers/lendings.controllers.js';
+
+import cors from 'cors';
+import { corsOptions } from '../config.js';
 
 const router = Router();
+//INVENTORY ROUTES
+router.get('/api/inventory/get', getInventory);
+router.get('/api/inventory/getById', getInventoryById);
 
-router.get('/ping', async (req, res) => {
-	const [rows] = await pool.query('SELECT 1 + 1 as result');
-	console.log(rows[0]);
-	res.json(rows[0]);
-});
+//LENDINGS ROUTES
+router.get('/api/lendings/getCount', getLendingsCount);
+router.get('/api/lendings/get', getLendings);
+
+//USERS ROUTES
+router.get('/api/users/get', getUsers);
 
 export default router;

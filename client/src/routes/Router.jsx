@@ -1,9 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import NotFound from '../pages/NotFound.jsx';
 import Login from '../pages/Login/Login.jsx';
 import Home from '../pages/Home/Home.jsx';
 import Dashboard from '../pages/Home/Dashboard/Dashboard.jsx';
-import NotFound from '../pages/NotFound.jsx';
 import Inventory from '../pages/Home/Inventory/Inventory.jsx';
 import Lendings from '../pages/Home/Lendings/Lendings.jsx';
 import Personas from '../pages/Home/Personas/Personas.jsx';

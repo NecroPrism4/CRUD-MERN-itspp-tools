@@ -8,69 +8,75 @@ datasource db {
   relationMode = "prisma"
 }
 
-model tab_borrower {
-  borrower_id       Int     @id @db.UnsignedInt
-  borrower_name     String  @db.VarChar(255)
-  borrower_lastname String  @db.VarChar(255)
-  borrower_career   String  @db.VarChar(255)
-  borrower_notes    String? @db.VarChar(255)
-
-  lendings tab_lendings[]
-}
-
 model tab_inventory {
-  item_id          Int     @id @default(autoincrement()) @db.UnsignedInt
-  item_type        String  @db.VarChar(255)
-  item_brand       String? @db.VarChar(255)
-  item_model       String? @db.VarChar(255)
-  item_description String? @db.VarChar(255)
-  item_available   Boolean @default(false)
-  item_remarks     String? @db.VarChar(255)
+  item_id          Int                   @id @default(autoincrement()) @db.UnsignedInt
+  item_type        String                @db.VarChar(255)
+  item_brand       String?               @db.VarChar(255)
+  item_model       String?               @db.VarChar(255)
+  item_description String?               @db.VarChar(255)
+  item_available   Boolean               @default(false)
+  item_remarks     String?               @db.VarChar(255)
   item_lab_id      Int
+  lab              tab_labs              @relation(fields: [item_lab_id], references: [lab_id])
+  lendings         LendingsToInventory[]
 
-  lendings tab_lendings[]
-
-  lab tab_labs     @relation(fields: [item_lab_id], references: [lab_id])
   @@index([item_lab_id])
 }
 
-model tab_labs {
-  lab_id       Int    @id @default(autoincrement()) @db.UnsignedInt
-  lab_name     String @db.VarChar(255)
-  lab_location String @db.VarChar(255)
- 
-  inventory tab_inventory[]
+model tab_lendings {
+  lending_id           Int                   @id @default(autoincrement()) @db.UnsignedInt
+  lending_borrowdate   DateTime              @db.DateTime(0)
+  lending_returneddate DateTime?             @db.DateTime(0)
+  id_user              Int                   @db.UnsignedInt
+  id_borrower          Int                   @db.UnsignedInt
+  returned             Boolean               @default(false)
+  lending_remarks      String?               @db.VarChar(255)
+  user                 tab_users             @relation(fields: [id_user], references: [user_id])
+  borrower             tab_borrower          @relation(fields: [id_borrower], references: [borrower_id])
+  items                LendingsToInventory[]
+
+  @@index([id_user])
+  @@index([id_borrower])
 }
 
-model tab_lendings {
-  lending_id           Int       @id @default(autoincrement()) @db.UnsignedInt
-  lending_borrowdate   DateTime  @db.DateTime(0)
-  lending_returneddate DateTime? @db.DateTime(0)
-  id_user              Int       @db.UnsignedInt
-  id_borrower          Int       @db.UnsignedInt
-  id_item              Int
-  returned             Boolean   @default(false)
-  lending_remarks      String?   @db.VarChar(255)
+model LendingsToInventory {
+  id_item    Int
+  id_lending Int
+  items      tab_inventory @relation(fields: [id_item], references: [item_id])
+  lendings   tab_lendings  @relation(fields: [id_lending], references: [lending_id])
 
-  user tab_users @relation(fields: [id_user], references: [user_id])
-  @@index([id_user])
-
-  borrower tab_borrower @relation(fields: [id_borrower], references: [borrower_id])
-  @@index([id_borrower])
-
-  item tab_inventory @relation(fields: [id_item], references: [item_id])
+  @@id([id_item, id_lending])
   @@index([id_item])
+  @@index([id_lending])
+}
+
+model tab_borrower {
+  borrower_id       Int            @id @db.UnsignedInt
+  borrower_fullname String?        @db.VarChar(255)
+  borrower_name     String         @db.VarChar(255)
+  borrower_lastname String         @db.VarChar(255)
+  borrower_type     String         @db.VarChar(255)
+  borrower_career   String         @db.VarChar(255)
+  borrower_notes    String?        @db.VarChar(255)
+  lendings          tab_lendings[]
+}
+
+model tab_labs {
+  lab_id       Int             @id @default(autoincrement()) @db.UnsignedInt
+  lab_name     String          @db.VarChar(255)
+  lab_location String          @db.VarChar(255)
+  inventory    tab_inventory[]
 }
 
 model tab_users {
-  user_id          Int     @id @db.UnsignedInt
-  user_name        String  @db.VarChar(255)
-  user_lastname    String? @db.VarChar(255)
-  user_email       String  @db.VarChar(255)
-  user_password    String  @db.VarChar(255)
-  user_type        String  @db.VarChar(255)
-  user_jobposition String  @db.VarChar(255)
+  user_id          Int            @id @db.UnsignedInt
+  user_fullname    String?        @db.VarChar(255)
+  user_name        String         @db.VarChar(255)
+  user_lastname    String?        @db.VarChar(255)
+  user_email       String         @db.VarChar(255)
+  user_password    String         @db.VarChar(255)
+  user_type        String         @db.VarChar(255)
+  user_jobposition String         @db.VarChar(255)
   lab_id           Int
-
-  lendings tab_lendings[]
+  lendings         tab_lendings[]
 }

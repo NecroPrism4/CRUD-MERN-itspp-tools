@@ -1,0 +1,97 @@
+.ShowedInfo.Lendings {
+	grid-template-columns: 1fr auto;
+}
+
+.ShowedInfo.Lendings div {
+	display: block;
+}
+
+.ShowedInfo.Lendings h4 {
+	font-weight: 100;
+}
+
+.ReturnedIndicator {
+	height: fit-content;
+	padding: 5px 20px 5px 20px;
+	border-radius: 25px;
+	color: var(--active-fg);
+}
+
+.CenterRow {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: start;
+}
+
+.CenterRow div:nth-child(1) {
+	box-sizing: border-box;
+	padding-right: 30px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+.CenterRow div:nth-child(1) div {
+	background: var(--secundary-bg);
+	border-radius: 25px;
+	padding: 10px;
+}
+
+.CenterRow div:nth-child(2) {
+	align-self: flex-start;
+}
+
+.ItemsList ul {
+	padding-left: 10px;
+	max-height: 105px;
+	gap: 10px;
+	overflow: hidden;
+	transition: all 0.5s ease-in-out;
+}
+
+.ItemsList .ShowMore {
+	max-height: unset;
+}
+
+.ItemsList ul li {
+	width: fit-content;
+}
+
+.AuthorizedBy span {
+	font-weight: 400;
+}
+
+.ShowMoreButton {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	background: none;
+	outline: none;
+	border: none;
+	color: var(--active-fg);
+	border-radius: 10px;
+	padding: 0 5px 0 5px;
+	margin: 5px 0 5px 0;
+	cursor: pointer;
+}
+
+.ShowMoreButton:hover {
+	background: var(--gradient-accent);
+}
+
+.InteractiveButtons.Lendings {
+	display: grid;
+	grid-template-columns: auto auto;
+	justify-content: end;
+}
+
+.InteractiveButtons.Lendings button {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.InteractiveButtons.Lendings div:last-child button:hover {
+	background: var(--gradient-accent);
+}
+
+.TableRow.Expand .Expandible {
+	animation: ShowExpandible 1.5s forwards;
+}

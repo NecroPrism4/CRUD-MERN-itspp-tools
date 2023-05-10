@@ -6,12 +6,13 @@
 	--secundary-bg: #d0d1da;
 	--tertiary-bg: #eeeefb;
 	--logo-color: #bdc1c7;
+	--error-fg: #ff0000;
 	font-size: 16px;
 }
 
 [data-theme='dark'] {
 	--gradient-accent: linear-gradient(226.32deg, #337ff6 31%, #739bd9 78.06%);
-	--inactive-fg: #a3a3a3;
+	--inactive-fg: #cfcfcf;
 	--active-fg: #ffffff;
 	--primary-bg: #292d32;
 	--secundary-bg: #353840;
@@ -39,6 +40,8 @@
 body {
 	background: var(--primary-bg);
 	min-width: 300px;
+	direction: ltr;
+	text-shadow: none !important;
 }
 
 @media screen and (min-width: 768px) {

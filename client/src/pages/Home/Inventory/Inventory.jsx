@@ -1,142 +1,125 @@
 import './Inventory.css';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
+import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
-import { useEffect, useContext, useState, useRef, useCallback } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
-import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
+import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
+import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
+import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 
 function Inventory() {
+	//Maneja el título de la barra de navegación superior
+	//Handles the title for the upper navbar
 	const { handleTitle } = useContext(SectionContext);
-	const [query, setQuery] = useState('');
-	const [identifier, setIdentifier] = useState('item_id');
-	const [queryRoute, SetQueryroute] = useState('/api/inventory/get');
-	const [method, SetMethod] = useState('get');
-	const [pageNumber, setPagenumber] = useState(1);
-
-	const { loading, error, tableData, hasMore } = usePopulateTable(
-		query,
-		identifier,
-		queryRoute,
-		method,
-		pageNumber
-	);
-
-	const observer = useRef();
-	const lastElementRef = useCallback(
-		loading
-			? null
-			: (node) => {
-					if (observer.current) observer.current.disconnect();
-					observer.current = new IntersectionObserver((entries) => {
-						if (entries[0].isIntersecting && hasMore) {
-							setPagenumber((prevPageNumber) => prevPageNumber + 1);
-						}
-					});
-					if (node) observer.current.observe(node);
-			  }
-	);
-
-	function handleSearch(e) {
-		setQuery(e.target.value);
-		setPagenumber(1);
-	}
-
 	useEffect(() => {
 		handleTitle('Inventario');
+		setPageNumber(1);
 	}, []);
+
+	//Variables que utiliza el hook personalizado que se encarga de pupular la tableview
+	//Varibles used by the personalized hook that is in charge of pupulating the tableview
+	const [pageNumber, setPageNumber] = useState(1);
+	const [isAvailable, setIsAvailable] = useState('');
+	const [queryOption, setQueryOption] = useState('item_type');
+	const [query, setQuery] = useState('');
+
+	//Se encarga de las solicitudes http al servidor para completar la tabla
+	//Takes care of the http requests to the server to pupulate the table
+	const { loading, error, tableData, hasMore } = usePopulateTable(
+		'get',
+		'/api/inventory/get',
+		pageNumber,
+		isAvailable,
+		queryOption,
+		query
+	);
+
+	//se ocupa del último elemento representado en la lista, por lo que una vez que choca con la parte visible del navegador, envía una señal para enviar otra solicitud al servidor
+	//Takes care of the las element rendered on the list so once it collides with the viewable part of the browser sends a signal to send another request to the server
+	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
+
+	//Maneja las funciones de busqueda
+	//Handles search when te user types into the input component
+	function handleSearch(e) {
+		setQuery(e.target.value);
+		setPageNumber(1);
+	}
+
+	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
+	//Handles the search option (for example: search by ID, by BorrowerName, etc)
+	const handleQueryOption = (e) => {
+		setQueryOption(e.target.value);
+		setPageNumber(1);
+	};
+
+	//Maneja los materiales disponibles y no disponibles, para que el usuario pueda elegir qué lista quiere ver
+	//Handles the available and non-available items, so the user can choose which list wants to see
+	const handleAvailability = (e) => {
+		setIsAvailable(e.target.value);
+		setPageNumber(1);
+	};
+
+	//Arreglos de opciones que alimenta al componente de selección #SelectComponent
+	//Arrays of options that feed the #SelectComponent
+	const queryOptions = [
+		{ value: 'item_type', label: 'Nombre' },
+		{ value: 'item_brand', label: 'Marca' },
+		{ value: 'item_model', label: 'Modelo' },
+		{ value: 'item_description', label: 'Descripción' },
+		{ value: 'item_remarks', label: 'Notas' },
+	];
+
+	const availabityOptions = [
+		{ value: '', label: 'Todos' },
+		{ value: 'true', label: 'Disponibles' },
+		{ value: 'false', label: 'No Disponibles' },
+	];
 
 	return (
 		<div className='HomeChildContainer'>
 			<div className='tableHeader'>
 				<h2>Materiales</h2>
-				<input
-					placeholder='Buscar...'
-					type='text'
-					className='tableSearchBar'
-					onChange={handleSearch}
-				></input>
+				<div>
+					<p>Buscar por</p>
+					<SelectComponent
+						options={availabityOptions}
+						handler={handleAvailability}
+					/>
+					<SelectComponent options={queryOptions} handler={handleQueryOption} />
+					<input
+						placeholder='Buscar...'
+						type='text'
+						className='tableSearchBar'
+						onChange={handleSearch}
+					></input>
+				</div>
 			</div>
-			<div className='tableContainer'>
-				<table className='table '>
-					<thead>
-						<tr>
-							<th>
-								<div className='tableDivAction '>Acción</div>
-							</th>
-							<th>
-								<div>ID</div>
-							</th>
-							<th>
-								<div>Material</div>
-							</th>
-							<th>
-								<div>Marca</div>
-							</th>
-							<th>
-								<div>Modelo</div>
-							</th>
-							<th>
-								<div>Descripción</div>
-							</th>
-							<th>
-								<div>Disponible</div>
-							</th>
-							<th>
-								<div>Notas</div>
-							</th>
-							<th>
-								<div>Laboratorio</div>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tableData.map((object) => {
-							if (tableData.length === tableData.lastIndexOf(object) + 1) {
-								return (
-									<tr key={object[identifier]} ref={lastElementRef}>
-										<td data-label='Acción'>
-											<button>
-												<FontAwesomeIcon icon={faEdit} />
-											</button>
-										</td>
-										<td data-label='ID'>{object.item_id}</td>
-										<td data-label='Material'>{object.item_type}</td>
-										<td data-label='Marca'>{object.item_brand}</td>
-										<td data-label='Modelo'>{object.item_model}</td>
-										<td data-label='Descripción'>{object.item_description}</td>
-										<td data-label='Disponible'>{object.item_available}</td>
-										<td data-label='Notas'>{object.item_remarks}</td>
-										<td data-label='Laboratorio'>{object.item_lab_id}</td>
-									</tr>
-								);
-							} else {
-								return (
-									<tr key={object[identifier]}>
-										<td data-label='Acción'>
-											<button>
-												<FontAwesomeIcon icon={faEdit} />
-											</button>
-										</td>
-										<td data-label='ID'>{object.item_id}</td>
-										<td data-label='Material'>{object.item_type}</td>
-										<td data-label='Marca'>{object.item_brand}</td>
-										<td data-label='Modelo'>{object.item_model}</td>
-										<td data-label='Descripción'>{object.item_description}</td>
-										<td data-label='Disponible'>{object.item_available}</td>
-										<td data-label='Notas'>{object.item_remarks}</td>
-										<td data-label='Laboratorio'>{object.item_lab_id}</td>
-									</tr>
-								);
-							}
-						})}
-					</tbody>
-				</table>
+			<div
+				className={`tableContainer ShowTableAnim ${
+					tableData.length > 0 ? 'Active' : ''
+				}`}
+			>
+				{tableData.map((object) => {
+					if (tableData.length === tableData.lastIndexOf(object) + 1) {
+						return (
+							<div key={object.item_id} ref={lastElementRef}>
+								<InventoryTableRow data={object} />
+							</div>
+						);
+					} else {
+						return <InventoryTableRow key={object.item_id} data={object} />;
+					}
+				})}
+
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>
+				<div>
+					{!loading && !error && tableData.length < 1 && (
+						<Error noResults={tableData.length < 1} />
+					)}
+				</div>
 			</div>
 		</div>
 	);

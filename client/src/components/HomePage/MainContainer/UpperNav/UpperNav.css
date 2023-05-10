@@ -26,9 +26,11 @@
 	align-items: center;
 	padding: 10px 0 10px 0;
 	transition: color 2s cubic-bezier(0.23, 1, 0.32, 1);
+	cursor: pointer;
 }
 
-.toggle-button:hover {
+.toggle-button:hover,
+.ShowMenu:hover {
 	color: var(--active-fg);
 }
 

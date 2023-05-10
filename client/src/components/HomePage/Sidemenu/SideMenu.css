@@ -60,6 +60,9 @@
 	margin: 20px 0 10px 0;
 	font-size: 0.8em;
 }
+.menuHeader:nth-child(1) {
+	margin-top: 0;
+}
 
 li span::before {
 	content: '';
@@ -138,10 +141,20 @@ li {
 		border-radius: 25px;
 		border: solid 2px;
 	}
+
+	.hideMenuButton {
+		position: absolute;
+		right: -12px;
+		top: 5%;
+	}
+
+	.hideMenuButton .ico {
+		font-size: 1.5em;
+	}
 }
 
 @media screen and (max-height: 820px) {
 	.menuUserSection {
-		padding: 0px 0 0px 0;
+		padding: 10px 0 10px 0;
 	}
 }

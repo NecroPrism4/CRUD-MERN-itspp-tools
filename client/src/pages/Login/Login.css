@@ -202,7 +202,7 @@ text {
 		animation: SlideUpWave 4s cubic-bezier(0.23, 1, 0.32, 1) none;
 		animation-delay: var(--desktop-intro-delay);
 	}
-	.WaveBackground:hover {
+	.LoginDesignContainer:hover .WaveBackground {
 		transition: all 4s cubic-bezier(0.23, 1, 0.32, 1);
 		transform: translateY(-120vh);
 	}
@@ -256,7 +256,8 @@ text {
 		width: auto;
 	}
 	.LoginFooter img {
-		width: 4vw;
+		width: 65px;
+		height: auto;
 	}
 	.LoginFooter p {
 		font-size: 2vh;

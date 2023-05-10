@@ -8,31 +8,36 @@
 	display: flex;
 	flex-direction: column;
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-	backdrop-filter: blur(5px);
+	/*backdrop-filter: blur(5px);*/
 	grid-template-rows: auto 1fr;
 	width: 50%;
+	height: 100%;
 	transform: translateX(-120%);
+	z-index: 3;
 }
 
 .HomeMainContainer {
-	padding: 25px 25px 0 25px;
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 	overflow: hidden;
+	display: grid;
+	padding: 10px;
+	box-sizing: border-box;
+	grid-template-rows: auto 1fr;
+	background: var(--primary-bg);
 }
 
 .HomeChildContainer {
 	position: relative;
 	box-sizing: border-box;
 	background: var(--secundary-bg);
-	margin: 20px 0 1px 0;
-	padding: 0px 20px 20px 20px;
+	padding: 0px 20px 0px 20px;
 	border-radius: 25px;
 	color: var(--inactive-fg);
 	border: 2px solid hsla(0, 0%, 0%, 0.1);
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-	font-size: 0.5em;
+	font-size: 0.7em;
 	overflow: auto;
-	height: 90%;
+	height: 90vh;
 }
 
 .HomeChildContainer::-webkit-scrollbar-thumb:hover {
@@ -49,9 +54,17 @@
 }
 .HomeRighSideContainer input {
 	width: auto;
+	margin: 10px;
+	background: var(--tertiary-bg);
+	border: none;
+	border-radius: 15px;
+	color: var(--active-fg);
+}
+.HomeRighSideContainer input:focus {
+	outline: var(--tertiary-bg);
 }
 
-/* @media only screen and (min-width: 400px) {
+/* @media only screen and (max-width: 400px) {
 	.SideMenuContainer {
 		transform: translateX(-120%);
 	}
@@ -81,14 +94,15 @@
 	}
 	.HomeMainContainer {
 		grid-area: main;
+		gap: 20px;
+		padding: 20px;
 	}
-
 	.HomeChildContainer {
-		font-size: 0.8em;
+		font-size: 1em;
 	}
 
-	.HomeRighSideContainer {
-	}
+	/* .HomeRighSideContainer {
+	} */
 }
 
 @media only screen and (min-width: 1375px) {
