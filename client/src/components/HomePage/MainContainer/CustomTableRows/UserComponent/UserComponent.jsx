@@ -1,9 +1,7 @@
 import './UserComponent.css';
-import { useEffect, useState, useMemo } from 'react';
+import { useState } from 'react';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
-
-import { API_URL } from '../../../../../../config';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,8 +10,7 @@ import {
 	faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
-function UserComponent({ data }) {
-	const [labsData, setLabsData] = useState([]);
+function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 	const [expand, setExpand] = useState(false);
 	const [isEditable, setIsEditable] = useState(false);
 	const [rowData, setRowData] = useState(data);
@@ -38,27 +35,6 @@ function UserComponent({ data }) {
 	function handleExpand() {
 		setExpand(!expand);
 	}
-
-	useEffect(() => {
-		fetch(`${API_URL}/api/labs/get`)
-			.then((res) => res.json())
-			.then((data) => {
-				setLabsData(data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
-
-	const labOptions = useMemo(() => {
-		return labsData.map((lab) => {
-			return { value: lab.lab_name, label: lab.lab_name };
-		});
-	}, [labsData]);
-
-	useEffect(() => {
-		console.log(labOptions);
-	}, [labOptions]);
 
 	/* 	const labOptions = [
 		{ value: 'Redes', label: 'Redes' },
@@ -102,17 +78,22 @@ function UserComponent({ data }) {
 			</div>
 			<div className='CardBody'>
 				<div>
-					<p>Rol: {rowData.user_jobposition}</p>
+					<p>Rol: </p>
+					<SelectComponent
+						options={userTypeDistincts && userTypeDistincts}
+						handler={''}
+						disable={!isEditable}
+						defaultSelected={rowData.user_type}
+					/>
 				</div>
 				<div>
-					<p>{!isEditable && lab}</p>
-					{isEditable && (
-						<SelectComponent
-							options={labOptions}
-							handler={''}
-							disable={!isEditable}
-						/>
-					)}
+					<p>lab: </p>
+					<SelectComponent
+						options={labNameDistincts && labNameDistincts}
+						handler={''}
+						disable={!isEditable}
+						defaultSelected={rowData.lab_id}
+					/>
 				</div>
 			</div>
 

@@ -45,6 +45,7 @@ function usePopulateTable(
 				});
 				setHasMore(res.data.length > 0);
 				setLoading(false);
+				console.log(hasMore);
 			})
 			.catch((e) => {
 				if (axios.isCancel(e)) return;

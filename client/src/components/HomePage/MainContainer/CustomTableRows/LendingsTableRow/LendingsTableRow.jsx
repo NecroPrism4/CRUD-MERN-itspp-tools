@@ -59,7 +59,6 @@ function LendingsTableRow({ data }) {
 			onMouseLeave={() => {
 				setExpand(false);
 			}}
-			onClick={handleExpand}
 		>
 			<div className='ShowedInfo Lendings'>
 				<div>

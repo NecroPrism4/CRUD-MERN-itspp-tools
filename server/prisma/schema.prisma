@@ -64,7 +64,7 @@ model tab_borrower {
 
 model tab_labs {
   lab_id       Int             @id @default(autoincrement()) @db.UnsignedInt
-  lab_name     String          @db.VarChar(255)
+  lab_name     String          @unique(map: "lab_name") @db.VarChar(255)
   lab_location String          @db.VarChar(255)
   inventory    tab_inventory[]
   users        tab_users[]

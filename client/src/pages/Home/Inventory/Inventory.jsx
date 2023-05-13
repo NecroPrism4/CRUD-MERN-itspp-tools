@@ -9,7 +9,6 @@ import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.
 import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar';
-import { text } from '@fortawesome/fontawesome-svg-core';
 
 function Inventory() {
 	//Maneja el título de la barra de navegación superior

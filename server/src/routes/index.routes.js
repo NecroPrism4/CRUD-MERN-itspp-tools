@@ -7,7 +7,7 @@ import {
 	getLendings,
 	getLendingsCount,
 } from '../controllers/lendings.controllers.js';
-import { getUsers } from '../controllers/users.controllers.js';
+import { getUsers, getUserTypes } from '../controllers/users.controllers.js';
 import {
 	getPersonas,
 	getPersonasTabOptions,
@@ -31,6 +31,7 @@ router.get('/api/personas/get', getPersonas);
 
 //USERS ROUTES
 router.get('/api/users/get', getUsers);
+router.get('/api/users/getUserTypes', getUserTypes);
 
 //LABS ROUTES
 router.get('/api/labs/get', getLabs);

@@ -1,8 +1,9 @@
 import './UsersManagement.css';
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState, useMemo } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 import usePopulateTable from '../../../hooks/usePopulateTable';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling';
+import useGetDistincts from '../../../hooks/useGetDistincts';
 
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading';
@@ -12,11 +13,13 @@ function UsersManagement() {
 	const { handleTitle } = useContext(SectionContext);
 	useEffect(() => {
 		handleTitle('Manejo de usuarios');
+		setPageNumber(1);
 	}, []);
 
 	//Variables que utiliza el hook personalizado que se encarga de pupular la tableview
 	//Varibles used by the personalized hook that is in charge of pupulating the tableview
 	const [pageNumber, setPageNumber] = useState(1);
+	const [conditional, setConditional] = useState('user_type');
 	const [queryOption, setQueryOption] = useState('user_name');
 	const [query, setQuery] = useState('');
 
@@ -49,25 +52,48 @@ function UsersManagement() {
 		setPageNumber(1);
 	};
 
-	useEffect(() => {
-		console.log();
-	}, []);
+	const { distincts: labNameDistincts } = useGetDistincts(
+		'/api/labs/get',
+		'lab_id',
+		'lab_name'
+	);
+	const { distincts: userTypeDistincts } = useGetDistincts(
+		'/api/users/getUserTypes',
+		'user_type',
+		'user_type'
+	);
 
 	return (
 		<div className='HomeChildContainer'>
 			<div className='Users TableHeader'>
 				<h1>Table Header</h1>
 			</div>
-			<div className='Users TableContainer'>
+			<div
+				className={`Users tableContainer ShowTableAnim ${
+					tableData.length > 0 ? 'Active' : ''
+				}`}
+			>
 				{tableData.map((user) => {
 					if (tableData.length === tableData.lastIndexOf(user) + 1) {
 						return (
-							<div key={user.user_id} ref={lastElementRef}>
-								<UserComponent data={user} />
+							<div key={user.user_id} ref={lastElementRef} className='RefDiv'>
+								<UserComponent
+									key={user.user_id}
+									data={user}
+									labNameDistincts={labNameDistincts}
+									userTypeDistincts={userTypeDistincts}
+								/>
 							</div>
 						);
 					} else {
-						return <UserComponent key={user.user_id} data={user} />;
+						return (
+							<UserComponent
+								key={user.user_id}
+								data={user}
+								labNameDistincts={labNameDistincts}
+								userTypeDistincts={userTypeDistincts}
+							/>
+						);
 					}
 				})}
 			</div>

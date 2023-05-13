@@ -17,6 +17,7 @@ function Personas() {
 	const { handleTitle } = useContext(SectionContext);
 	useEffect(() => {
 		handleTitle('Personas');
+		setPageNumber(1);
 	}, []);
 
 	//Variables que utiliza el hook personalizado que se encarga de pupular la tableview
@@ -75,13 +76,6 @@ function Personas() {
 		setUserTypeQuery(['borrower_type', e.target.value]);
 		setPageNumber(1);
 	};
-
-	useEffect(() => {
-		/* console.log(userTypeQuery);
-		console.log(Boolean(userTypeQuery)); */
-		/* console.log(tableData); */
-		/* console.log(queryOption); */
-	}, [queryOption]);
 
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
 	//Handles the search option (for example: search by ID, by BorrowerName, etc)
