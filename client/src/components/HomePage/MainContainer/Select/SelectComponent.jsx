@@ -1,12 +1,16 @@
 import './SelectComponent.css';
 
-function SelectComponent({ options, handler }) {
+function SelectComponent({ options, handler, disable }) {
 	return (
-		<select className='SelectSearch' onChange={(e) => handler(e)}>
+		<select
+			className={`RoundedRect SelectCombo ${disable ? 'Disabled' : ''}`}
+			onChange={(e) => handler(e)}
+			disabled={disable}
+		>
 			{options &&
-				options.map((option) => {
+				options.map((option, index) => {
 					return (
-						<option key={option.value} value={option.value}>
+						<option key={index} value={option.value} disabled={disable}>
 							{option.label}
 						</option>
 					);

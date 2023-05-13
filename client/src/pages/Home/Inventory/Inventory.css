@@ -1,37 +1,12 @@
 .tableHeader {
 	display: block;
-	height: auto;
 	justify-content: space-between;
-	padding: 10px 10px 40px 10px;
+	padding: 0px 0px 40px 0px;
 	position: sticky;
 	top: 0;
-	background: linear-gradient(to top, transparent, var(--secundary-bg) 25%);
+	background: linear-gradient(to top, transparent, var(--secundary-bg) 20%);
 	z-index: 1;
 	color: var(--active-fg);
-}
-
-.tableHeader h2,
-.ShowedInfo h2 {
-	font-size: 1.8em;
-}
-
-.tableHeader input,
-.tableHeader select {
-	box-sizing: border-box;
-	border-radius: 15px;
-	height: auto;
-	background: var(--tertiary-bg);
-	color: var(--active-fg);
-	outline: none;
-	border: none;
-	margin: 5px;
-	font-size: 1.5em;
-	height: 100%;
-}
-
-.tableHeader input {
-	width: auto;
-	padding: 0 10px 0 10px;
 }
 
 .tableHeader div {
@@ -45,14 +20,12 @@
 	font-size: 1.5em;
 }
 
-.tableHeader .tableSearchBar:focus {
-	outline: none;
-	caret-color: var(--primary-bg); /* Cambiar el color de la línea del cursor */
-}
-
 .tableContainer {
 	width: 100%;
 	color: var(--inactive-fg);
+	display: grid;
+	grid-template-rows: auto;
+	gap: 20px;
 }
 
 .tableContainer.ShowTableAnim.Active {
@@ -124,11 +97,7 @@ td div {
 @media screen and (min-width: 768px) {
 	.tableHeader div {
 		display: flex;
-	}
-
-	.tableHeader input,
-	.tableHeader select {
-		font-size: 1em;
+		flex-wrap: wrap;
 	}
 
 	.tableHeader div p {

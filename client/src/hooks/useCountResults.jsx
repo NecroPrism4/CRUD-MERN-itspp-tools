@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../config.js';
 
-function useCountResults(api, conditional, queryOption, query) {
+function useCountResults(api, conditional, queryOption, query, dateFilter) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [countData, setCountData] = useState();
@@ -10,7 +10,7 @@ function useCountResults(api, conditional, queryOption, query) {
 	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
 	useEffect(() => {
 		setCountData(0);
-	}, [query, conditional, queryOption]);
+	}, [query, conditional, queryOption, dateFilter]);
 
 	/* The logic for querying the database dinamically */
 	useEffect(() => {
@@ -24,6 +24,7 @@ function useCountResults(api, conditional, queryOption, query) {
 				conditional: conditional,
 				queryOption: queryOption,
 				searchTerm: query,
+				dateFilter: dateFilter,
 			},
 			cancelToken: new axios.CancelToken((c) => (cancel = c)),
 		})
@@ -37,7 +38,7 @@ function useCountResults(api, conditional, queryOption, query) {
 				setError(true);
 			});
 		return () => cancel();
-	}, [api, query, queryOption, conditional]);
+	}, [api, query, queryOption, conditional, dateFilter]);
 
 	return { loading, error, countData };
 }

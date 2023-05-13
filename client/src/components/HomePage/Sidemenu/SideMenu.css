@@ -113,7 +113,7 @@ li span::before {
 	font-size: 0.8em;
 }
 
-img {
+.menuUserSection img {
 	justify-self: center;
 	grid-area: img;
 	width: 4em;

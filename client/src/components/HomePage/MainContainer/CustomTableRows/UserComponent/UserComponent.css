@@ -1,0 +1,110 @@
+.UserCard {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	min-width: 100%;
+	box-sizing: border-box;
+	background: var(--tertiary-bg);
+	border-radius: 25px;
+	padding: 10px;
+	gap: 10px;
+	height: fit-content;
+	align-self: flex-start;
+}
+
+@media (min-width: 1000px) {
+	.Users.TableContainer .UserCard {
+		min-width: unset;
+		max-width: calc(100% - 5px);
+		flex-basis: calc(50% - 5px);
+	}
+}
+
+.UserCard .CardHeader {
+	box-sizing: border-box;
+	display: flex;
+	gap: 20px;
+}
+
+.UserNameArea {
+	box-sizing: border-box;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.UserCard .UserPhoto {
+	box-sizing: border-box;
+	height: 85px;
+	width: 110px;
+	object-fit: cover;
+	border-radius: 25px;
+	box-shadow: 10px 4px 25px rgba(0, 0, 0, 0.25);
+}
+
+.UserCard .Email,
+.UserCard .EmpNumb {
+	font-size: 0.8em;
+}
+
+.CardBody {
+	padding-left: 10px;
+}
+
+.CardBody div {
+	display: flex;
+}
+
+.CardBody > div:nth-child(2) > p {
+	margin-right: -5px;
+}
+
+.UserCard .WeekBitacora {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	max-height: 0;
+	opacity: 0;
+	transition: all 1s ease;
+}
+
+.UserCard .WeekBitacora.Expand {
+	opacity: 1;
+	max-height: 1000px;
+}
+
+.UserCard .WeekBitacora div {
+	background: var(--secundary-bg);
+	padding: 5px;
+	border-radius: 15px;
+}
+
+.UserCard .EditButtons {
+	display: flex;
+	justify-items: end;
+}
+
+/* ExpandBar Area */
+.UserCard .ExpandBar {
+	translate: unset;
+	bottom: 0;
+}
+
+.TableRow:hover .ExpandBar.Show {
+	opacity: 1;
+	display: flex;
+	cursor: pointer;
+}
+/* END ExpandBar Area */
+
+#root
+	> div
+	> div.HomeMainContainer
+	> div
+	> div.Users.TableContainer
+	> div:nth-child(1)
+	> div.CardBody
+	> div:nth-child(2)
+	> select {
+	font-size: 1em !important;
+}

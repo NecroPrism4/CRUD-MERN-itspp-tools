@@ -1,11 +1,13 @@
 import './InventoryTableRow.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 function InventoryTableRow({ data }) {
+	const [expand, setExpand] = useState(false);
 	const [isEditable, setIsEditable] = useState(false);
 	const [rowData, setRowData] = useState(data);
-	const [actualBorrower, setActualBorrower] = useState();
 
 	function handleEditData(field, e) {
 		setRowData(
@@ -17,26 +19,32 @@ function InventoryTableRow({ data }) {
 		setRowData((prev) => (prev = data));
 	}
 
-	useEffect(() => {
-		console.log(rowData);
-	}, []);
+	function handleExpand() {
+		setExpand(!expand);
+	}
 
 	return (
-		<div className='TableRow Expand'>
+		<div
+			className='TableRow Expand'
+			onMouseLeave={() => {
+				setExpand(false);
+			}}
+			onClick={handleExpand}
+		>
 			<div className='ShowedInfo'>
 				<div>
-					<h4>ID: {rowData.item_id}</h4>
-					<h2
+					<p>ID: {rowData.item_id}</p>
+					<h3
 						contentEditable={isEditable}
 						onBlur={(e) => handleEditData('item_type', e)}
 						suppressContentEditableWarning
 					>
 						{rowData.item_type}
-					</h2>
+					</h3>
 				</div>
 				<div className='BrandModel'>
 					<div>
-						<h4>Marca: </h4>
+						<h5>Marca: </h5>
 						<p
 							contentEditable={isEditable}
 							onBlur={(e) => handleEditData('item_brand', e)}
@@ -46,7 +54,7 @@ function InventoryTableRow({ data }) {
 						</p>
 					</div>
 					<div>
-						<h4>Modelo: </h4>
+						<h5>Modelo: </h5>
 						<p
 							contentEditable={isEditable}
 							onBlur={(e) => handleEditData('item_model', e)}
@@ -56,17 +64,17 @@ function InventoryTableRow({ data }) {
 						</p>
 					</div>
 				</div>
-				<h3
+				<h4
 					className='itemAvailable'
 					style={{ color: rowData.item_available ? '#00c69f' : '#e56552' }}
 					data-tooltip={rowData.item_available ? '' : 'Revise notas..'}
 				>
 					{rowData.item_available ? 'Disponible' : 'No Disponible'}
-				</h3>
+				</h4>
 			</div>
-			<div className='Expandible'>
+			<div className={`Expandible ${expand || isEditable ? 'Show' : ''}`}>
 				<div>
-					<h3>Descripción</h3>
+					<h4>Descripción</h4>
 					<p
 						contentEditable={isEditable}
 						onBlur={(e) => handleEditData('item_description', e)}
@@ -76,7 +84,7 @@ function InventoryTableRow({ data }) {
 					</p>
 				</div>
 				<div>
-					<h3>Notas</h3>
+					<h4>Notas</h4>
 					<p
 						contentEditable={isEditable}
 						onBlur={(e) => handleEditData('item_remarks', e)}
@@ -109,6 +117,13 @@ function InventoryTableRow({ data }) {
 						cancelEdit={handleCancelEdit}
 					></OnEditButtons>
 				</div>
+			</div>
+
+			<div
+				className={`ExpandBar ${expand || isEditable ? '' : 'Show'}`}
+				onClick={handleExpand}
+			>
+				<FontAwesomeIcon icon={faCaretDown} />
 			</div>
 		</div>
 	);

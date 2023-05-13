@@ -27,6 +27,8 @@
 }
 
 .HomeChildContainer {
+	display: flex;
+	flex-direction: column;
 	position: relative;
 	box-sizing: border-box;
 	background: var(--secundary-bg);
@@ -35,9 +37,9 @@
 	color: var(--inactive-fg);
 	border: 2px solid hsla(0, 0%, 0%, 0.1);
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-	font-size: 0.7em;
 	overflow: auto;
 	height: 90vh;
+	gap: 15px;
 }
 
 .HomeChildContainer::-webkit-scrollbar-thumb:hover {

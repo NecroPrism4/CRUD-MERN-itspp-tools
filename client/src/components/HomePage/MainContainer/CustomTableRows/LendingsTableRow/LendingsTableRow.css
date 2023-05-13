@@ -1,5 +1,14 @@
 .ShowedInfo.Lendings {
-	grid-template-columns: 1fr auto;
+	display: grid;
+	grid-template-rows: auto auto;
+	grid-template-columns: auto;
+	gap: 0;
+}
+
+.ShowedInfo.Lendings .ReturnedIndicator {
+	grid-row: 2;
+	justify-self: end;
+	font-size: 0.8em;
 }
 
 .ShowedInfo.Lendings div {
@@ -8,6 +17,12 @@
 
 .ShowedInfo.Lendings h4 {
 	font-weight: 100;
+	font-size: 1em;
+}
+
+.ShowedInfo.Lendings div h2,
+.ShowedInfo.Lendings div h4 {
+	line-height: auto;
 }
 
 .ReturnedIndicator {
@@ -15,11 +30,13 @@
 	padding: 5px 20px 5px 20px;
 	border-radius: 25px;
 	color: var(--active-fg);
+	font-weight: 600;
+	font-size: 1em !important;
 }
 
 .CenterRow {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-rows: auto 1fr;
 	align-items: start;
 }
 
@@ -28,11 +45,11 @@
 	padding-right: 30px;
 	padding-bottom: 10px;
 	padding-left: 10px;
+	grid-row: 2;
 }
 .CenterRow div:nth-child(1) div {
 	background: var(--secundary-bg);
 	border-radius: 25px;
-	padding: 10px;
 }
 
 .CenterRow div:nth-child(2) {
@@ -91,7 +108,30 @@
 .InteractiveButtons.Lendings div:last-child button:hover {
 	background: var(--gradient-accent);
 }
-
+/* 
 .TableRow.Expand .Expandible {
 	animation: ShowExpandible 1.5s forwards;
+} */
+
+@media screen and (min-width: 768px) {
+	.ShowedInfo.Lendings {
+		display: grid;
+		grid-template-rows: auto;
+		grid-template-columns: 1fr auto;
+		gap: 0;
+		padding-bottom: 15px;
+	}
+
+	.ShowedInfo.Lendings .ReturnedIndicator {
+		grid-row: 1;
+		grid-column: 2;
+	}
+
+	.CenterRow {
+		grid-template-columns: 1fr 1.4fr;
+	}
+
+	.CenterRow div:nth-child(1) {
+		grid-row: 1;
+	}
 }

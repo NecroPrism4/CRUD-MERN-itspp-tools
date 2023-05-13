@@ -8,6 +8,8 @@ import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
+import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 function Inventory() {
 	//Maneja el título de la barra de navegación superior
@@ -79,7 +81,7 @@ function Inventory() {
 
 	return (
 		<div className='HomeChildContainer'>
-			<div className='tableHeader'>
+			<div className='tableHeader SearchOptions'>
 				<h2>Materiales</h2>
 				<div>
 					<p>Buscar por</p>
@@ -88,12 +90,7 @@ function Inventory() {
 						handler={handleAvailability}
 					/>
 					<SelectComponent options={queryOptions} handler={handleQueryOption} />
-					<input
-						placeholder='Buscar...'
-						type='text'
-						className='tableSearchBar'
-						onChange={handleSearch}
-					></input>
+					<SearchBar handler={handleSearch} validInput={true} />
 				</div>
 			</div>
 			<div

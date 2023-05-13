@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getUsers } from '../controllers/users.controllers.js';
 import {
 	getInventory,
 	getInventoryById,
@@ -8,7 +7,12 @@ import {
 	getLendings,
 	getLendingsCount,
 } from '../controllers/lendings.controllers.js';
-
+import { getUsers } from '../controllers/users.controllers.js';
+import {
+	getPersonas,
+	getPersonasTabOptions,
+} from '../controllers/personas.controller.js';
+import { getLabs } from '../controllers/labs.controller.js';
 import cors from 'cors';
 import { corsOptions } from '../config.js';
 
@@ -21,7 +25,14 @@ router.get('/api/inventory/getById', getInventoryById);
 router.get('/api/lendings/getCount', getLendingsCount);
 router.get('/api/lendings/get', getLendings);
 
+//PERSONAS ROUTES
+router.get('/api/personas/getTabs', getPersonasTabOptions);
+router.get('/api/personas/get', getPersonas);
+
 //USERS ROUTES
 router.get('/api/users/get', getUsers);
+
+//LABS ROUTES
+router.get('/api/labs/get', getLabs);
 
 export default router;

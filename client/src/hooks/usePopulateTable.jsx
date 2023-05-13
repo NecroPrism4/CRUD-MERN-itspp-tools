@@ -8,7 +8,8 @@ function usePopulateTable(
 	pageNumber,
 	conditional,
 	queryOption,
-	query
+	query,
+	dateFilter
 ) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
@@ -18,7 +19,7 @@ function usePopulateTable(
 	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
 	useEffect(() => {
 		setTableData([]);
-	}, [query, conditional, queryOption]);
+	}, [query, conditional, dateFilter, queryOption]);
 
 	/* The logic for querying the database dinamically */
 	useEffect(() => {
@@ -34,6 +35,7 @@ function usePopulateTable(
 				conditional: conditional,
 				queryOption: queryOption,
 				searchTerm: query,
+				dateFilter: dateFilter,
 			},
 			cancelToken: new axios.CancelToken((c) => (cancel = c)),
 		})
@@ -50,7 +52,7 @@ function usePopulateTable(
 				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber, api, method, queryOption, conditional]);
+	}, [query, pageNumber, api, method, conditional, dateFilter, queryOption]);
 
 	return { loading, error, tableData, hasMore };
 }

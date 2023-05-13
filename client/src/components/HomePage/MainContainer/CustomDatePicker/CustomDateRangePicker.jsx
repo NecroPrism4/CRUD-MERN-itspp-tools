@@ -4,13 +4,17 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../../../context/ThemeContext';
 import { CustomProvider, DateRangePicker } from 'rsuite';
 
-function CustomDateRangePicker() {
+function CustomDateRangePicker({ handleRange }) {
 	const { theme } = useContext(ThemeContext);
-	console.log(theme);
+
 	return (
 		<>
 			<CustomProvider theme={theme}>
-				<DateRangePicker />
+				<DateRangePicker
+					placeholder='Seleccione fecha'
+					showOneCalendar
+					onChange={(e) => handleRange(e)}
+				/>
 			</CustomProvider>
 		</>
 	);

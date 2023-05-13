@@ -11,6 +11,7 @@ import Loading from '../../../components/HomePage/MainContainer/Loading/Loading'
 import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import CustomDateRangePicker from '../../../components/HomePage/MainContainer/CustomDatePicker/CustomDateRangePicker.jsx';
+import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar';
 
 function Lendings() {
 	//Maneja el título de la barra de navegación superior
@@ -21,14 +22,14 @@ function Lendings() {
 		setPageNumber(1);
 	}, []);
 
-	const [invalid, setInvalid] = useState(false);
-
 	//Variables que utiliza el hook personalizado que se encarga de pupular la tableview
 	//Varibles used by the personalized hook that is in charge of pupulating the tableview
+	const [validInput, setvalidInput] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
-	const [isActive, setIsActive] = useState('true');
+	const [isActive, setIsActive] = useState('false');
 	const [queryOption, setQueryOption] = useState('lending_id');
 	const [query, setQuery] = useState('');
+	const [datesToFilter, setDatesToFilter] = useState([]);
 
 	//Obtiene la cantidad de resultados posibles
 	//Gets the amount of results posible
@@ -36,7 +37,13 @@ function Lendings() {
 		loading: countLoading,
 		error: countError,
 		countData: countData,
-	} = useCountResults('/api/lendings/getCount', isActive, queryOption, query);
+	} = useCountResults(
+		'/api/lendings/getCount',
+		isActive,
+		queryOption,
+		query,
+		datesToFilter
+	);
 
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
@@ -46,7 +53,8 @@ function Lendings() {
 		pageNumber,
 		isActive,
 		queryOption,
-		query
+		query,
+		datesToFilter
 	);
 
 	//se ocupa del último elemento representado en la lista, por lo que una vez que choca con la parte visible del navegador, envía una señal para enviar otra solicitud al servidor
@@ -55,33 +63,29 @@ function Lendings() {
 
 	//Maneja las funciones de busqueda
 	//Handles search when te user types into the input component
-	function handleSearch(e) {
+	const handleSearch = (e) => {
 		const value = e.target.value;
 		const onlyNumbers = /^[0-9\b]+$/; // Expresión regular para aceptar solo números
 
 		// Las siguientes declaraciones if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
 		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
 		if (queryOption != 'lending_id') {
-			console.log('primer if');
-			console.log(query + queryOption);
-			setInvalid(false);
+			setvalidInput(true);
 			setQuery(value);
 		} else if (!onlyNumbers.test(value)) {
-			console.log('segundo if');
-			setInvalid(true);
+			setvalidInput(false);
 			setQuery('');
 		} else {
 			setQuery(value);
-			setInvalid(false);
+			setvalidInput(true);
 		}
 
 		if (value == '') {
-			console.log('tercer if');
-			setInvalid(false);
+			setvalidInput(true);
 		}
 
 		setPageNumber(1);
-	}
+	};
 
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
 	//Handles the search option (for example: search by ID, by BorrowerName, etc)
@@ -90,12 +94,19 @@ function Lendings() {
 		setPageNumber(1);
 	};
 
+	//Maneja los rangos de fechas seccionados
+	//Handles the range of dates selected
+	const handleDateRanges = (e) => {
+		setDatesToFilter(e);
+		setPageNumber(1);
+	};
+
 	//Maneja los préstamos activos e inactivos, para que el usuario pueda elegir qué lista quiere ver
 	//Handles the active and inactive lendings, so the user can choose which list wants to see
-	function handleTabActive(value) {
+	const handleTabActive = (value) => {
 		setIsActive(value);
 		setPageNumber(1);
-	}
+	};
 
 	//Arreglo de opciones que alimenta al componente de selección #SelectComponent
 	//Array of options that feed the #SelectComponent
@@ -111,14 +122,14 @@ function Lendings() {
 			<div className='tableHeader Lendings'>
 				<div className='TabOptions'>
 					<h2
-						className={isActive == 'true' ? 'active' : ''}
-						onClick={() => handleTabActive('true')}
-					>
-						Vigentes
-					</h2>
-					<h2
 						className={isActive == 'false' ? 'active' : ''}
 						onClick={() => handleTabActive('false')}
+					>
+						Activos
+					</h2>
+					<h2
+						className={isActive == 'true' ? 'active' : ''}
+						onClick={() => handleTabActive('true')}
 					>
 						Inactivos
 					</h2>
@@ -128,27 +139,22 @@ function Lendings() {
 						<p>
 							{!countError && !countLoading && countData
 								? `${countData} resultado(s)`
-								: ``}
+								: `					`}
 						</p>
 					</div>
 					<div>
-						<CustomDateRangePicker />
+						<CustomDateRangePicker handleRange={handleDateRanges} />
 						<SelectComponent
 							options={queryOptions}
 							handler={handleQueryOption}
 						/>
-						<input
-							placeholder='Buscar...'
-							type='text'
-							className={`tableSearchBar ${invalid ? 'InvalidInput' : ''}`}
-							onChange={handleSearch}
-						></input>
+						<SearchBar handler={handleSearch} validInput={validInput} />
 					</div>
 				</div>
 			</div>
 			<div className='tableContainer'>
 				<div
-					className={`ActiveLendingsRows ${
+					className={`LendingsRows ActiveLendingsRows ${
 						isActive == 'true' && tableData.length > 0 ? 'Active' : ''
 					}`}
 				>
@@ -166,7 +172,7 @@ function Lendings() {
 				</div>
 
 				<div
-					className={`ReturnedLendingsRows ${
+					className={`LendingsRows ReturnedLendingsRows ${
 						isActive == 'false' && tableData.length > 0 ? 'Active' : ''
 					}`}
 				>
@@ -182,6 +188,7 @@ function Lendings() {
 						}
 					})}
 				</div>
+
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>
 				<div>

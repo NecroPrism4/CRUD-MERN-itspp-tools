@@ -2,19 +2,19 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
-	res.send(await prisma.tab_users.findMany());
-};
-
-/*async function get() {
-	console.log(
-		await prisma.tab_inventory.findMany({
-			where: {
-				item_lab_id: {
-					equals: 33,
+	try {
+		const users = await prisma.tab_users.findMany({
+			include: {
+				lab: {
+					select: {
+						lab_name: true,
+					},
 				},
 			},
-		})
-	);
-}
-
-get();*/
+		});
+		res.send(users);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: 'Error al obtener los usuarios' });
+	}
+};

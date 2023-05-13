@@ -1,6 +1,7 @@
 .rs-picker-default .rs-picker-toggle {
 	border: none !important;
 	border-radius: 25px;
+	max-height: 30px;
 }
 
 .rs-picker-has-value .rs-btn .rs-picker-toggle-value,
@@ -22,4 +23,8 @@
 	> div
 	> div {
 	background: var(--tertiary-bg) !important;
+}
+
+.rs-picker-toggle-textbox {
+	margin-top: -2px !important;
 }

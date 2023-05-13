@@ -1,5 +1,5 @@
 import './LendingsTableRow.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useDateFormater from '../../../../../hooks/useDateFormater';
 
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +9,10 @@ import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 
 function LendingsTableRow({ data }) {
 	//Guarda los estados de las variables representadas en los componentes
-	//Saves the states for the variables rendered i the components
-	const [showMore, setShowMore] = useState(false);
+	//Saves the states for the variables rendered in the components
+	const [expand, setExpand] = useState(false); //This one is to expand the row itself
+	const [isEditable, setIsEditable] = useState(false);
+	const [showMore, setShowMore] = useState(false); //This one is to expand the list of items insite the rows
 	const [rowData, setRowData] = useState(data);
 
 	//Se encarga de que las fechas de la base de datos sean más comprensibles para los humanos
@@ -21,9 +23,29 @@ function LendingsTableRow({ data }) {
 	//Igual que el anterior pero esto es para la fecha de devolución del préstamo
 	//Same as the above one but this is for the return date of the lending
 	const {
-		relativeDate: returnedRelativeDate,
+		/* relativeDate: returnedRelativeDate, */ //Not used variable from the custom hook
 		formatedDate: returnedFormatedDate,
 	} = useDateFormater(rowData.lending_returneddate);
+
+	//Maneja la función de edición de los campos relevantes
+	//Handles the edit function to the relevant fields
+	function handleEditData(field, e) {
+		setRowData(
+			(prev) => (prev = { ...rowData, [field]: e.target.textContent })
+		);
+	}
+
+	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
+	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
+	function handleCancelEdit() {
+		setRowData((prev) => (prev = data));
+	}
+
+	//Maneja la funcionalidad de expandir la tarjeta de información
+	//Handles the expand functionality of the row
+	function handleExpand() {
+		setExpand(!expand);
+	}
 
 	//Maneja mostrar más elementos de los artículos en el préstamo
 	//Handles showmore elements of the items in the lending
@@ -31,17 +53,18 @@ function LendingsTableRow({ data }) {
 		setShowMore(!showMore);
 	}
 
-	useEffect(() => {
-		//console.log(rowData.items[0] != undefined ? rowData.items.length : '');
-		console.log(rowData.items.length);
-	}, [rowData]);
-
 	return (
-		<div className='TableRow Expand'>
+		<div
+			className='TableRow Expand'
+			onMouseLeave={() => {
+				setExpand(false);
+			}}
+			onClick={handleExpand}
+		>
 			<div className='ShowedInfo Lendings'>
 				<div>
-					<h4>{borrowRelativeDate}</h4>
-					<h2>{`${rowData.borrower.borrower_name} ${rowData.borrower.borrower_lastname}`}</h2>
+					<p>{borrowRelativeDate}</p>
+					<h3>{`${rowData.borrower.borrower_name} ${rowData.borrower.borrower_lastname}`}</h3>
 				</div>
 				<div
 					className='ReturnedIndicator'
@@ -51,7 +74,7 @@ function LendingsTableRow({ data }) {
 							: { background: 'var(--secundary-bg)' }
 					}
 				>
-					<h3>{rowData.returned ? 'Devuelto' : 'Pendiente'}</h3>
+					<p>{rowData.returned ? 'Devuelto' : 'Pendiente'}</p>
 				</div>
 			</div>
 
@@ -104,17 +127,36 @@ function LendingsTableRow({ data }) {
 				</div>
 			</div>
 
-			<div className='Expandible'>
+			<div className={`Expandible ${expand || isEditable ? 'Show' : ''}`}>
 				<div>
 					<h3>Notas</h3>
-					<p>{rowData.lending_remarks}</p>
+					<p
+						contentEditable={isEditable}
+						onBlur={(e) => handleEditData('lending_remarks', e)}
+						suppressContentEditableWarning
+					>
+						{rowData.lending_remarks}
+					</p>
 				</div>
 				<div className='InteractiveButtons Lendings'>
-					<OnEditButtons></OnEditButtons>
+					<OnEditButtons
+						handleEditField={(value) => {
+							setIsEditable(value);
+						}}
+						isEditing={isEditable}
+						cancelEdit={handleCancelEdit}
+					/>
 					<div className='EditButtons Lendings'>
 						{rowData.returned ? null : <button>Confirmar Devolución</button>}
 					</div>
 				</div>
+			</div>
+
+			<div
+				className={`ExpandBar ${expand || isEditable ? '' : 'Show'}`}
+				onClick={handleExpand}
+			>
+				<FontAwesomeIcon icon={faCaretDown} />
 			</div>
 		</div>
 	);

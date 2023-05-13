@@ -14,3 +14,20 @@ if (ipv4Interfaces.length > 0) {
 export default ipAddress; */
 
 export const API_URL = `http://${window.location.hostname}:3000`;
+
+/* 
+fetch(api)
+			.then((response) => {
+				if (response.ok) {
+					console.log('response ok');
+					return response.json();
+				}
+				throw response;
+			})
+			.then((data) => {
+				console.log(data);
+				//setTableTitle(data);
+			})
+			.catch((error) => {
+				console.error('Error fetching data: ', error);
+			}); */
