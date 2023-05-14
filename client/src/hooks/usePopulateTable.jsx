@@ -31,7 +31,7 @@ function usePopulateTable(
 			url: `${API_URL}${api}`,
 			params: {
 				page: pageNumber,
-				pageSize: 10,
+				pageSize: 20,
 				conditional: conditional,
 				queryOption: queryOption,
 				searchTerm: query,

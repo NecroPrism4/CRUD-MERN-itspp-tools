@@ -95,7 +95,7 @@ function Personas() {
 		<div className='HomeChildContainer Personas'>
 			<div className='Personas TableHeader'>
 				<h2>Prestatarios</h2>
-				{/* <div className='Personas SearchOptions'>
+				<div className='Personas SearchOptions'>
 					<TabOptionsComponent
 						handler={handleUserType}
 						api='/api/personas/getTabs'
@@ -116,7 +116,7 @@ function Personas() {
 							<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
 						</button>
 					</div>
-				</div> */}
+				</div>
 			</div>
 			<div
 				className={`tableContainer ShowTableAnim ${
