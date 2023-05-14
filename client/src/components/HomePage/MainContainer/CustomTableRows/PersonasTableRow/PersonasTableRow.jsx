@@ -26,7 +26,7 @@ function PersonasTableRow({ data, keepExpand }) {
 
 	return (
 		<div
-			className=' Persona TableRow Expand'
+			className='Persona TableRow'
 			onMouseLeave={() => {
 				setExpand(false);
 			}}

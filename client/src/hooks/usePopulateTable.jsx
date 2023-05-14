@@ -45,7 +45,6 @@ function usePopulateTable(
 				});
 				setHasMore(res.data.length > 0);
 				setLoading(false);
-				console.log(hasMore);
 			})
 			.catch((e) => {
 				if (axios.isCancel(e)) return;
@@ -53,7 +52,7 @@ function usePopulateTable(
 				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber, api, method, conditional, dateFilter, queryOption]);
+	}, [query, pageNumber, api, method, dateFilter, queryOption]);
 
 	return { loading, error, tableData, hasMore };
 }

@@ -1,5 +1,5 @@
 import './UserComponent.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
 
@@ -19,10 +19,12 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
 	function handleEditData(field, e) {
-		setRowData(
-			(prev) => (prev = { ...rowData, [field]: e.target.textContent })
-		);
+		setRowData((prev) => (prev = { ...rowData, [field]: e.target.value }));
 	}
+
+	useEffect(() => {
+		console.log(rowData);
+	}, [rowData]);
 
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
@@ -84,6 +86,8 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 						handler={''}
 						disable={!isEditable}
 						defaultSelected={rowData.user_type}
+						handleEditData={handleEditData}
+						field={'user_type'}
 					/>
 				</div>
 				<div>
@@ -93,6 +97,8 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 						handler={''}
 						disable={!isEditable}
 						defaultSelected={rowData.lab_id}
+						handleEditData={handleEditData}
+						field={'lab_id'}
 					/>
 				</div>
 			</div>

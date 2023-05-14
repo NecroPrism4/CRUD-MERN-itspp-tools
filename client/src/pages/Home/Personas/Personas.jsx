@@ -95,7 +95,7 @@ function Personas() {
 		<div className='HomeChildContainer Personas'>
 			<div className='Personas TableHeader'>
 				<h2>Prestatarios</h2>
-				<div className='Personas SearchOptions'>
+				{/* <div className='Personas SearchOptions'>
 					<TabOptionsComponent
 						handler={handleUserType}
 						api='/api/personas/getTabs'
@@ -116,30 +116,30 @@ function Personas() {
 							<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
 						</button>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<div
 				className={`tableContainer ShowTableAnim ${
 					tableData.length > 0 ? 'Active' : ''
 				}`}
 			>
-				{tableData.map((object) => {
-					if (tableData.length === tableData.lastIndexOf(object) + 1) {
-						return (
-							<div key={object.borrower_id} ref={lastElementRef}>
-								<PersonasTableRow data={object} keepExpand={keepExpand} />
-							</div>
-						);
-					} else {
-						return (
-							<PersonasTableRow
-								key={object.borrower_id}
-								data={object}
-								keepExpand={keepExpand}
-							/>
-						);
-					}
-				})}
+				{tableData.length > 0 &&
+					tableData.map((object) => {
+						if (tableData.length === tableData.lastIndexOf(object) + 1) {
+							return (
+								<div key={object.borrower_id} ref={lastElementRef}>
+									<PersonasTableRow data={object} keepExpand={keepExpand} />
+								</div>
+							);
+						} else {
+							return (
+								<div key={object.borrower_id}>
+									<PersonasTableRow data={object} keepExpand={keepExpand} />
+								</div>
+							);
+						}
+					})}
+
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>
 				<div>

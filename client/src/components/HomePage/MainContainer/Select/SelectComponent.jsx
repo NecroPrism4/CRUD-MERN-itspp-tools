@@ -1,12 +1,18 @@
 import './SelectComponent.css';
 
-function SelectComponent({ options, handler, disable, defaultSelected }) {
+function SelectComponent({
+	options,
+	handleEditData,
+	field,
+	disable,
+	defaultSelected,
+}) {
 	/* 	console.log(options);
 	console.log(defaultSelected); */
 	return (
 		<select
 			className={`RoundedRect SelectCombo ${disable ? 'Disabled' : ''}`}
-			/* onChange={(e) => handler(e)} */
+			onChange={(e) => handleEditData(field, e)}
 			disabled={disable}
 			defaultValue={`${defaultSelected}`}
 		>
