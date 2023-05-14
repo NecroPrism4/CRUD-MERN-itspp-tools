@@ -31,7 +31,7 @@ function usePopulateTable(
 			url: `${API_URL}${api}`,
 			params: {
 				page: pageNumber,
-				pageSize: 20,
+				pageSize: 10,
 				conditional: conditional,
 				queryOption: queryOption,
 				searchTerm: query,
@@ -52,7 +52,7 @@ function usePopulateTable(
 				setError(true);
 			});
 		return () => cancel();
-	}, [query, pageNumber, api, method, dateFilter, queryOption]);
+	}, [query, pageNumber, api, method, conditional, dateFilter, queryOption]);
 
 	return { loading, error, tableData, hasMore };
 }
