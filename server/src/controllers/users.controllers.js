@@ -1,0 +1,62 @@
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+export const getUserTypes = async (req, res) => {
+	try {
+		const userTypes = await prisma.tab_users.findMany({
+			select: {
+				user_type: true,
+			},
+			distinct: 'user_type',
+		});
+		res.send(userTypes);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send('Internal server error');
+	}
+};
+
+export const getUsers = async (req, res) => {
+	const page = parseInt(req.query.page) || 1; // Establecer un valor predeterminado para page
+	const pageSize = parseInt(req.query.pageSize) || 10; // Establecer un valor predeterminado para pageSize
+	const offset = (page - 1) * pageSize; // Calcular el valor de offset
+
+	try {
+		const users = await prisma.tab_users.findMany({
+			skip: offset,
+			take: pageSize,
+			include: {
+				lab: {
+					select: {
+						lab_name: true,
+					},
+				},
+			},
+		});
+		res.send(users);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: 'Error al obtener los usuarios' });
+	}
+};
+
+export const updateUser = async (req, res) => {
+	const oldUser_id = req.params.oldUser_id;
+	const newUser_id = req.data.newUser_id;
+	try {
+		const updateUser = prisma.tab_users.update({
+			where: {
+				user_id: Number(oldUser_id),
+			},
+			data: {
+				user_id: Number(newUser_id),
+				user_name: req.body.user_name,
+				user_lastname: req.body.user_lastname,
+				user_jobposition: req.body.user_jobposition,
+				user_email: req.body.user_email,
+				user_password: req.body.user_password,
+				user_type: req.body.user_type,
+			},
+		});
+	} catch (err) {}
+};

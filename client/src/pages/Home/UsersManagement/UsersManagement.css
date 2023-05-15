@@ -1,0 +1,9 @@
+.Users.tableContainer {
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.Users.tableContainer .RefDiv {
+	width: 100%;
+}

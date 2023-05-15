@@ -1,0 +1,43 @@
+.ShowedInfo.Personas {
+	display: block;
+}
+
+.HeaderPersonaCard {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.HeaderPersonaCard .PersonaInfo {
+	grid-column: 1;
+}
+
+.HeaderPersonaCard .PersonaInfo h3 {
+	font-size: 1.3em;
+}
+
+.HeaderPersonaCard .PersonaMoreInfo {
+	grid-column: 2;
+	justify-self: end;
+	width: 100%;
+}
+
+.HeaderPersonaCard .PersonaMoreInfo p,
+.HeaderPersonaCard .PersonaMoreInfo h5 {
+	display: flex;
+	justify-content: end;
+}
+
+.Personas.Expandible div p:last-of-type {
+	background: var(--secundary-bg);
+	width: fit-content;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+	.HeaderPersonaCard .PersonaInfo h3 {
+		font-size: 1.3em;
+		line-height: unset;
+	}
+}
