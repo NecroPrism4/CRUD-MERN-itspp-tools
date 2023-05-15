@@ -1,24 +1,55 @@
 import './InventoryTableRow.css';
 import { useState } from 'react';
+import UpdateReq from '../../../../../apis/UpdateReq';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
+import { ModalAlert } from '../../../../Alerts/Alerts';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 function InventoryTableRow({ data }) {
+	//Guarda los estados de las variables representadas en los componentes
+	//Saves the states for the variables rendered in the components
 	const [expand, setExpand] = useState(false);
 	const [isEditable, setIsEditable] = useState(false);
 	const [rowData, setRowData] = useState(data);
+	const [edited, setEdited] = useState(false);
 
+	//Maneja la función de edición de los campos relevantes
+	//Handles the edit function to the relevant fields
 	function handleEditData(field, e) {
 		setRowData(
+			//Combina el campo editado con los datos anterioress
+			//Merges the edited field with the previous data
 			(prev) => (prev = { ...rowData, [field]: e.target.textContent })
 		);
+		setEdited(true);
 	}
 
+	const handleUpdateReq = async () => {
+		console.log(edited);
+		if (!edited) {
+			setEdited(false);
+			return;
+		}
+		const resData = await UpdateReq('/api/inventory/updateItem', rowData);
+		if (resData) {
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			ModalAlert('success', '¡Guardado!', true);
+		} else {
+			ModalAlert('error', '¡No se pudo guardar!', true);
+		}
+	};
+
+	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
+	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
 		setRowData((prev) => (prev = data));
+		setEdited(false);
 	}
 
+	//Maneja la funcionalidad de expandir la tarjeta de información
+	//Handles the expand functionality of the row
 	function handleExpand() {
 		setExpand(!expand);
 	}
@@ -29,7 +60,6 @@ function InventoryTableRow({ data }) {
 			onMouseLeave={() => {
 				setExpand(false);
 			}}
-			onClick={handleExpand}
 		>
 			<div className='ShowedInfo'>
 				<div>
@@ -110,6 +140,7 @@ function InventoryTableRow({ data }) {
 						</div>
 					)}
 					<OnEditButtons
+						handleUpdateReq={handleUpdateReq}
 						handleEditField={(value) => {
 							setIsEditable(value);
 						}}

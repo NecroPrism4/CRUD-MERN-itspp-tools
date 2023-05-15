@@ -1,15 +1,20 @@
 import './OnEditButtons.css';
-import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function OnEditButtons({ handleEditField, isEditing, cancelEdit }) {
+function OnEditButtons({
+	handleUpdateReq,
+	handleEditField,
+	isEditing,
+	cancelEdit,
+}) {
 	function handleEdit() {
 		handleEditField(true);
 	}
 
 	function handleAcceptEdit() {
 		handleEditField(false);
+		handleUpdateReq();
 	}
 
 	function handleCancelEdit() {

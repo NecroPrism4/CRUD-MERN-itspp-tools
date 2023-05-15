@@ -61,12 +61,12 @@ function Lendings() {
 	//Takes care of the las element rendered on the list so once it collides with the viewable part of the browser sends a signal to send another request to the server
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
 
+	const onlyNumbers = /^[0-9\b]+$/; // Expresión regular para aceptar solo números
+
 	//Maneja las funciones de busqueda
 	//Handles search when te user types into the input component
 	const handleSearch = (e) => {
 		const value = e.target.value;
-		const onlyNumbers = /^[0-9\b]+$/; // Expresión regular para aceptar solo números
-
 		// Las siguientes declaraciones if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
 		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
 		if (queryOption != 'lending_id') {
@@ -90,8 +90,21 @@ function Lendings() {
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
 	//Handles the search option (for example: search by ID, by BorrowerName, etc)
 	const handleQueryOption = (e) => {
-		setQueryOption(e.target.value);
-		setPageNumber(1);
+		if (
+			e.target.value == 'lending_id' &&
+			!onlyNumbers.test(query) &&
+			query != ''
+		) {
+			alert('No puede buscar ID con letras, use números');
+			e.target.value = 'borrower_name';
+		} else {
+			setQueryOption((prev) => {
+				if (prev === 'lending_id') {
+					setvalidInput(true);
+				}
+				return e.target.value;
+			});
+		}
 	};
 
 	//Maneja los rangos de fechas seccionados
@@ -152,42 +165,22 @@ function Lendings() {
 					</div>
 				</div>
 			</div>
-			<div className='tableContainer'>
-				<div
-					className={`LendingsRows ActiveLendingsRows ${
-						isActive == 'true' && tableData.length > 0 ? 'Active' : ''
-					}`}
-				>
-					{tableData.map((object) => {
-						if (tableData.length === tableData.lastIndexOf(object) + 1) {
-							return (
-								<div key={object.lending_id} ref={lastElementRef}>
-									<LendingsTableRow data={object} />
-								</div>
-							);
-						} else {
-							return <LendingsTableRow key={object.lending_id} data={object} />;
-						}
-					})}
-				</div>
-
-				<div
-					className={`LendingsRows ReturnedLendingsRows ${
-						isActive == 'false' && tableData.length > 0 ? 'Active' : ''
-					}`}
-				>
-					{tableData.map((object) => {
-						if (tableData.length === tableData.lastIndexOf(object) + 1) {
-							return (
-								<div key={object.lending_id} ref={lastElementRef}>
-									<LendingsTableRow data={object} />
-								</div>
-							);
-						} else {
-							return <LendingsTableRow key={object.lending_id} data={object} />;
-						}
-					})}
-				</div>
+			<div
+				className={`tableContainer ShowTableAnim ${
+					tableData.length > 0 ? 'Active' : ''
+				}`}
+			>
+				{tableData.map((object) => {
+					if (tableData.length === tableData.lastIndexOf(object) + 1) {
+						return (
+							<div key={object.lending_id} ref={lastElementRef}>
+								<LendingsTableRow data={object} />
+							</div>
+						);
+					} else {
+						return <LendingsTableRow key={object.lending_id} data={object} />;
+					}
+				})}
 
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>

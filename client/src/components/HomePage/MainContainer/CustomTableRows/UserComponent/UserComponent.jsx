@@ -22,10 +22,6 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		setRowData((prev) => (prev = { ...rowData, [field]: e.target.value }));
 	}
 
-	useEffect(() => {
-		console.log(rowData);
-	}, [rowData]);
-
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {

@@ -40,10 +40,10 @@ function UsersManagement() {
 
 	//Maneja las funciones de busqueda
 	//Handles search when te user types into the input component
-	function handleSearch(e) {
+	const handleSearch = (e) => {
 		setQuery(e.target.value);
 		setPageNumber(1);
-	}
+	};
 
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del usuario, etc.)
 	//Handles the search option (for example: search by ID, by UserName, etc)

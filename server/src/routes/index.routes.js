@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
 	getInventory,
 	getInventoryById,
+	UpdateItem,
 } from '../controllers/inventory.controllers.js';
 import {
 	getLendings,
@@ -20,6 +21,7 @@ const router = Router();
 //INVENTORY ROUTES
 router.get('/api/inventory/get', getInventory);
 router.get('/api/inventory/getById', getInventoryById);
+router.put('/api/inventory/updateItem', UpdateItem);
 
 //LENDINGS ROUTES
 router.get('/api/lendings/getCount', getLendingsCount);

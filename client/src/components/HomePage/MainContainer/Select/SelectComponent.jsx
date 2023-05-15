@@ -2,7 +2,7 @@ import './SelectComponent.css';
 
 function SelectComponent({
 	options,
-	handleEditData,
+	handler,
 	field,
 	disable,
 	defaultSelected,
@@ -12,7 +12,7 @@ function SelectComponent({
 	return (
 		<select
 			className={`RoundedRect SelectCombo ${disable ? 'Disabled' : ''}`}
-			onChange={(e) => handleEditData(field, e)}
+			onChange={(e) => handler(e)}
 			disabled={disable}
 			defaultValue={`${defaultSelected}`}
 		>

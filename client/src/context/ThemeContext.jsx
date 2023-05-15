@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 export const ThemeContext = createContext();
 
 //Get the theme from the local storage
-const currentTheme = localStorage.getItem('theme')
+export const currentTheme = localStorage.getItem('theme')
 	? localStorage.getItem('theme')
 	: 'dark';
 

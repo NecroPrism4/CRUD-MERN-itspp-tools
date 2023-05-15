@@ -89,43 +89,6 @@
 	margin-left: unset;
 }
 
-@media screen and (max-width: 1000px) {
-	.TableRow .ShowedInfo {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 20px;
-	}
-}
-@media screen and (max-width: 768px) {
-	.TableRow {
-		font-size: 1em;
-	}
-
-	.TableRow h4,
-	.TableRow h3,
-	.TableRow h2 {
-		font-size: 1.5em;
-	}
-
-	.TableRow .ShowedInfo {
-		display: inline;
-	}
-
-	.TableRow .ShowedInfo div {
-		width: fit-content;
-	}
-
-	.itemAvailable::before {
-		display: none;
-	}
-
-	.TableRow:active .Expandible {
-		border-top: 1px dashed var(--inactive-fg);
-		max-height: 300px;
-		opacity: 1 !important;
-	}
-}
-
 .TableRow.Expand .Expandible {
 	animation: ShowExpandible 1.5s forwards;
 }
@@ -166,3 +129,38 @@
 	cursor: pointer;
 }
 /* END ExpandBar Area */
+
+@media screen and (max-width: 1000px) {
+	.TableRow .ShowedInfo {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+	}
+}
+@media screen and (max-width: 768px) {
+	.TableRow {
+		font-size: 1em;
+	}
+
+	.TableRow h4,
+	.TableRow h3,
+	.TableRow h2 {
+		font-size: 1.5em;
+	}
+
+	.TableRow .ShowedInfo {
+		display: inline;
+	}
+
+	.TableRow .ShowedInfo div {
+		width: fit-content;
+	}
+
+	.itemAvailable::before {
+		display: none;
+	}
+
+	.ExpandBar {
+		translate: 0 -10px;
+	}
+}

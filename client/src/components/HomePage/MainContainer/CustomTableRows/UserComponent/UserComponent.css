@@ -97,12 +97,11 @@
 }
 /* END ExpandBar Area */
 
-.CardBody > div > p {
+.CardBody div p {
 	display: flex;
 	align-items: end;
 }
-.CardBody > div > select {
+.CardBody div select {
 	font-size: 1em !important;
 	padding: 0%;
-	background: none;
 }
