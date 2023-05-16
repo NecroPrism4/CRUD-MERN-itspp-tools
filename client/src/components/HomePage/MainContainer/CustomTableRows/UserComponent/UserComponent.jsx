@@ -12,7 +12,7 @@ import {
 
 function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 	const [expand, setExpand] = useState(false);
-	const [isEditable, setIsEditable] = useState(false);
+	const [isEditing, setIsEditing] = useState(false);
 	const [rowData, setRowData] = useState(data);
 	const [lab, setLab] = useState(data.lab.lab_name);
 
@@ -80,7 +80,7 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 					<SelectComponent
 						options={userTypeDistincts && userTypeDistincts}
 						handler={''}
-						disable={!isEditable}
+						disable={!isEditing}
 						defaultSelected={rowData.user_type}
 						handleEditData={handleEditData}
 						field={'user_type'}
@@ -91,7 +91,7 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 					<SelectComponent
 						options={labNameDistincts && labNameDistincts}
 						handler={''}
-						disable={!isEditable}
+						disable={!isEditing}
 						defaultSelected={rowData.lab_id}
 						handleEditData={handleEditData}
 						field={'lab_id'}
@@ -102,9 +102,9 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 			<div className='EditButtons'>
 				<OnEditButtons
 					handleEditField={(value) => {
-						setIsEditable(value);
+						setIsEditing(value);
 					}}
-					isEditing={isEditable}
+					isEditing={isEditing}
 					cancelEdit={handleCancelEdit}
 				/>
 			</div>
@@ -117,7 +117,7 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 				<div>Prestamo hecho a hace 3 hora</div>
 			</div>
 			<div
-				className={`ExpandBar ${expand || isEditable ? '' : 'Show'}`}
+				className={`ExpandBar ${expand || isEditing ? '' : 'Show'}`}
 				onClick={handleExpand}
 			>
 				<FontAwesomeIcon icon={faCaretDown} />

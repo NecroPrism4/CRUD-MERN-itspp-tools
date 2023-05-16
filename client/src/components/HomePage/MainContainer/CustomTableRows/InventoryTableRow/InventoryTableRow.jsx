@@ -26,8 +26,9 @@ function InventoryTableRow({ data }) {
 		setEdited(true);
 	}
 
+	//Maneja la solicitud de API para actualizar el registro en la base de datos
+	//Handles the api request to update the record in the database
 	const handleUpdateReq = async () => {
-		console.log(edited);
 		if (!edited) {
 			setEdited(false);
 			return;

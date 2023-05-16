@@ -17,8 +17,10 @@
 
 .HeaderPersonaCard .PersonaMoreInfo {
 	grid-column: 2;
-	justify-self: end;
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
 }
 
 .HeaderPersonaCard .PersonaMoreInfo p,

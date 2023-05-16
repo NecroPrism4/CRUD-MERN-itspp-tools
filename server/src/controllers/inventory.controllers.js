@@ -71,26 +71,30 @@ export const getInventoryById = async (req, res) => {
 	}
 };
 
-export const UpdateItem = async (req, res) => {
-	const item_id = parseInt(req.query.item_id);
-	const item_type = req.query.item_type;
-	const item_brand = req.query.item_brand;
-	const item_model = req.query.item_model;
-	const item_description = req.query.item_description;
-	const item_remarks = req.query.item_remarks;
+export const updateItem = async (req, res) => {
+	const item_id = parseInt(req.query.item_id) || null;
+	const item_type = req.query.item_type || '';
+	const item_brand = req.query.item_brand || '';
+	const item_model = req.query.item_model || '';
+	const item_description = req.query.item_description || '';
+	const item_remarks = req.query.item_remarks || '';
 
 	try {
-		const updateResponse = await prisma.tab_inventory.update({
-			where: { item_id: item_id },
-			data: {
-				item_type: item_type,
-				item_brand: item_brand,
-				item_model: item_model,
-				item_description: item_description,
-				item_remarks: item_remarks,
-			},
-		});
-		res.send(updateResponse);
+		if (item_id != null) {
+			const updateResponse = await prisma.tab_inventory.update({
+				where: { item_id: item_id },
+				data: {
+					item_type: item_type,
+					item_brand: item_brand,
+					item_model: item_model,
+					item_description: item_description,
+					item_remarks: item_remarks,
+				},
+			});
+			res.send(updateResponse);
+		} else {
+			res.status(404).send('Item not found');
+		}
 	} catch (err) {
 		console.log(err);
 		res.status(500).send('Internal server error');

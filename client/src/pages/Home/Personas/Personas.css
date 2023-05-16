@@ -16,7 +16,7 @@
 	align-items: center;
 }
 
-.Personas.SearchOptions button:last-child {
+.Personas.SearchOptions .buttonKeepExpand {
 	display: flex;
 	color: var(--inactive-fg);
 	background: transparent;
@@ -25,12 +25,12 @@
 	border-radius: 10px;
 }
 
-.Personas.SearchOptions button:last-child:hover {
+.Personas.SearchOptions .buttonKeepExpand:hover {
 	color: var(--active-fg);
 	border: 1px solid var(--active-fg);
 	background: var(--gradient-accent);
 }
 
-.Personas.SearchOptions button.Active {
+.Personas.SearchOptions .buttonKeepExpand.Active {
 	background: var(--gradient-accent);
 }

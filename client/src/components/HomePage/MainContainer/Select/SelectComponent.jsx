@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './SelectComponent.css';
 
 function SelectComponent({
@@ -7,12 +8,14 @@ function SelectComponent({
 	disable,
 	defaultSelected,
 }) {
-	/* 	console.log(options);
-	console.log(defaultSelected); */
+	useEffect(() => {
+		console.log(field);
+	}, [field]);
+
 	return (
 		<select
 			className={`RoundedRect SelectCombo ${disable ? 'Disabled' : ''}`}
-			onChange={(e) => handler(e)}
+			onChange={(e) => handler(e, field)}
 			disabled={disable}
 			defaultValue={`${defaultSelected}`}
 		>

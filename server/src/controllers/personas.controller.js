@@ -59,3 +59,23 @@ export const getPersonasTabOptions = async (req, res) => {
 		res.status(500).send('Internal server error');
 	}
 };
+
+export const updatePersona = async (req, res) => {
+	const borrower_id = parseInt(req.query.borrower_id) || null;
+	const borrower_name = req.query.borrower_name || '';
+	const borrower_lastname = req.query.borrower_lastname || '';
+	const borrower_type = req.query.borrower_type || '';
+	const borrower_career = req.query.borrower_career || '';
+	const borrower_notes = req.query.borrower_notes || '';
+
+	try {
+		console.log(borrower_id);
+		/* const updateResponse = await prisma.tab_borrower.update({
+			where: {},
+		}); */
+		res.send('Persona actualizada');
+	} catch (err) {
+		console.log(err);
+		res.status(500).send('Internal server error');
+	}
+};

@@ -1,7 +1,10 @@
 import './Alerts.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import Swal from 'sweetalert2';
-import { currentTheme } from '../../context/ThemeContext';
+
+function getTheme() {
+	return localStorage.getItem('theme');
+}
 
 export function ModalAlert(icon, title, toast) {
 	Swal.fire({
@@ -13,9 +16,9 @@ export function ModalAlert(icon, title, toast) {
 		timer: 1500,
 
 		didOpen: () => {
+			const currentTheme = getTheme();
 			const container = Swal.getContainer();
 			container.setAttribute('data-theme', `${currentTheme}`);
-			console.log(container);
 		},
 
 		customClass: {

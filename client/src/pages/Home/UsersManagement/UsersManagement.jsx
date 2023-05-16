@@ -57,6 +57,7 @@ function UsersManagement() {
 		'lab_id',
 		'lab_name'
 	);
+
 	const { distincts: userTypeDistincts } = useGetDistincts(
 		'/api/users/getUserTypes',
 		'user_type',

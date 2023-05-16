@@ -1,28 +1,67 @@
 import './PersonasTableRow.css';
 import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import UpdateReq from '../../../../../apis/UpdateReq';
 
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
+import SelectComponent from '../../Select/SelectComponent';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 function PersonasTableRow({ data, keepExpand }) {
+	//Guarda los estados de las variables representadas en los componentes
+	//Saves the states for the variables rendered in the components
 	const [expand, setExpand] = useState(false);
-	const [isEditable, setIsEditable] = useState(false);
+	const [isEditing, setIsEditing] = useState(false);
 	const [rowData, setRowData] = useState(data);
+	const [edited, setEdited] = useState(false);
 
-	function handleEditData(field, e) {
-		setRowData(
-			(prev) => (prev = { ...rowData, [field]: e.target.textContent })
-		);
+	//Maneja la función de edición de los campos relevantes
+	//Handles the edit function to the relevant fields
+	function handleEditData(e, field) {
+		setRowData((prev) => (prev = { ...rowData, [field]: e.target.value }));
+		setEdited(true);
 	}
 
+	useEffect(() => {
+		console.log(rowData);
+	}, [rowData]);
+
+	//Maneja la solicitud de API para actualizar el registro en la base de datos
+	//Handles the api request to update the record in the database
+	const handleUpdateReq = async () => {
+		console.log(edited);
+		if (!edited) {
+			setEdited(false);
+			return;
+		}
+		const resData = await UpdateReq('/api/personas/updatePersona', rowData);
+		if (resData) {
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			ModalAlert('success', '¡Guardado!', true);
+		} else {
+			ModalAlert('error', '¡No se pudo guardar!', true);
+		}
+	};
+
+	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
+	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
 		setRowData((prev) => (prev = data));
 	}
 
+	//Maneja la funcionalidad de expandir la tarjeta de información
+	//Handles the expand functionality of the row
 	function handleExpand() {
 		setExpand(!expand);
 	}
+
+	const borrower_type_Options = [
+		{ value: 'Estudiante', label: 'Estudiante' },
+		{ value: 'Docente', label: 'Docente' },
+		{ value: 'Administrativo', label: 'Administrativo' },
+		{ value: 'Externo', label: 'Externo' },
+	];
 
 	return (
 		<div
@@ -30,7 +69,6 @@ function PersonasTableRow({ data, keepExpand }) {
 			onMouseLeave={() => {
 				setExpand(false);
 			}}
-			onClick={handleExpand}
 		>
 			<div className='ShowedInfo Personas'>
 				<div className='HeaderPersonaCard'>
@@ -48,20 +86,29 @@ function PersonasTableRow({ data, keepExpand }) {
 							{rowData.borrower_type == 'Externo' && `ID:`}{' '}
 							{rowData.borrower_id}
 						</p>
-						<h5>{rowData.borrower_type}</h5>
+						{/* <h5>{rowData.borrower_type}</h5> */}
+						<SelectComponent
+							options={borrower_type_Options}
+							defaultSelected={rowData.borrower_type}
+							handler={(field, value) => {
+								handleEditData(field, value);
+							}}
+							field={'borrower_type'}
+							disable={!isEditing}
+						/>
 					</div>
 				</div>
 			</div>
 
 			<div
 				className={`Personas Expandible ${
-					keepExpand || expand || isEditable ? 'Show' : ''
+					keepExpand || expand || isEditing ? 'Show' : ''
 				}`}
 			>
 				<div>
 					<h3>Notas</h3>
 					<p
-						contentEditable={isEditable}
+						contentEditable={isEditing}
 						onBlur={(e) => handleEditData('lending_remarks', e)}
 						suppressContentEditableWarning
 					></p>
@@ -72,10 +119,11 @@ function PersonasTableRow({ data, keepExpand }) {
 				</div>
 				<div className='InteractiveButtons Lendings'>
 					<OnEditButtons
+						handleUpdateReq={handleUpdateReq}
 						handleEditField={(value) => {
-							setIsEditable(value);
+							setIsEditing(value);
 						}}
-						isEditing={isEditable}
+						isEditing={isEditing}
 						cancelEdit={handleCancelEdit}
 					/>
 				</div>
@@ -83,7 +131,7 @@ function PersonasTableRow({ data, keepExpand }) {
 
 			<div
 				className={`ExpandBar ${
-					keepExpand || expand || isEditable ? '' : 'Show'
+					keepExpand || expand || isEditing ? '' : 'Show'
 				}`}
 				onClick={handleExpand}
 			>

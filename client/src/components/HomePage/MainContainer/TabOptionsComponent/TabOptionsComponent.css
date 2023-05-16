@@ -18,6 +18,7 @@
 	white-space: nowrap;
 	background: none;
 	font-size: 0.9em;
+	height: fit-content;
 }
 
 .TabOption.Card:hover {

@@ -6,6 +6,8 @@ import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import useCountResults from '../../../hooks/useCountResults';
 
+import { onlyNumbers } from '../../../helpers/regexes';
+
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading';
 import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
@@ -61,30 +63,23 @@ function Lendings() {
 	//Takes care of the las element rendered on the list so once it collides with the viewable part of the browser sends a signal to send another request to the server
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
 
-	const onlyNumbers = /^[0-9\b]+$/; // Expresión regular para aceptar solo números
-
 	//Maneja las funciones de busqueda
 	//Handles search when te user types into the input component
 	const handleSearch = (e) => {
 		const value = e.target.value;
-		// Las siguientes declaraciones if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
-		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
-		if (queryOption != 'lending_id') {
-			setvalidInput(true);
-			setQuery(value);
-		} else if (!onlyNumbers.test(value)) {
+		// Las siguiente declaracion if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
+		//The following if statement handles if the user types letters instead of numbers when tries to search by ID
+		if (
+			queryOption == 'lending_id' &&
+			!onlyNumbers.test(value) &&
+			value != ''
+		) {
 			setvalidInput(false);
-			setQuery('');
 		} else {
-			setQuery(value);
 			setvalidInput(true);
 		}
-
-		if (value == '') {
-			setvalidInput(true);
-		}
-
 		setPageNumber(1);
+		setQuery(value);
 	};
 
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
@@ -150,7 +145,7 @@ function Lendings() {
 				<div className='SearchOptions'>
 					<div>
 						<p>
-							{!countError && !countLoading && countData
+							{!countError && !countLoading && countData && validInput
 								? `${countData} resultado(s)`
 								: `					`}
 						</p>

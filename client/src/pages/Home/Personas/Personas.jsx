@@ -108,7 +108,7 @@ function Personas() {
 						/>
 						<SearchBar handler={handleSearch} validInput={validInput} />
 						<button
-							className={keepExpand ? `Active` : ''}
+							className={`buttonKeepExpand ${keepExpand ? `Active` : ''}`}
 							onClick={() => {
 								setKeepExpand(!keepExpand);
 							}}
