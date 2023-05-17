@@ -1,5 +1,5 @@
 import './InventoryTableRow.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import UpdateReq from '../../../../../apis/UpdateReq';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 import { ModalAlert } from '../../../../Alerts/Alerts';
@@ -26,6 +26,9 @@ function InventoryTableRow({ data }) {
 		setEdited(true);
 	}
 
+	useEffect(() => {
+		console.log(rowData);
+	}, [rowData]);
 	//Maneja la solicitud de API para actualizar el registro en la base de datos
 	//Handles the api request to update the record in the database
 	const handleUpdateReq = async () => {

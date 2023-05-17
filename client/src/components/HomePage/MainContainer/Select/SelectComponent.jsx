@@ -17,7 +17,7 @@ function SelectComponent({
 			className={`RoundedRect SelectCombo ${disable ? 'Disabled' : ''}`}
 			onChange={(e) => handler(field, e.target.value, e)}
 			disabled={disable}
-			defaultValue={`${defaultSelected}`}
+			value={defaultSelected}
 		>
 			{options &&
 				options.map((option, index) => {

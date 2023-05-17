@@ -9,7 +9,11 @@ import {
 	getLendingsCount,
 	updateLending,
 } from '../controllers/lendings.controllers.js';
-import { getUsers, getUserTypes } from '../controllers/users.controllers.js';
+import {
+	getUsers,
+	getUserTypes,
+	updateUser,
+} from '../controllers/users.controllers.js';
 import {
 	getPersonas,
 	getPersonasTabOptions,
@@ -39,6 +43,7 @@ router.put('/api/personas/updatePersona', updatePersona);
 //USERS ROUTES
 router.get('/api/users/get', getUsers);
 router.get('/api/users/getUserTypes', getUserTypes);
+router.put('/api/users/updateUser', updateUser);
 
 //LABS ROUTES
 router.get('/api/labs/get', getLabs);

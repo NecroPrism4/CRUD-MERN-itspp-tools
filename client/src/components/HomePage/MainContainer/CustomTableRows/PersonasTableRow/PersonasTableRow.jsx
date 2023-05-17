@@ -39,15 +39,17 @@ function PersonasTableRow({ data, keepExpand }) {
 		if (resData.borrower_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
-		} else if (resData == 409) {
+		} else if (resData.response && resData.response.status == 409) {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡ID existente, verifique!', true, 2500);
-			IDInputRef.current.textContent = rowData.borrower_id;
+			/* 			IDInputRef.current.textContent = rowData.borrower_id;
+			 */
 		} else {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡No se pudo guardar!', true);
-			IDInputRef.current.textContent = rowData.borrower_id;
+			/* IDInputRef.current.textContent = rowData.borrower_id; */
 		}
+		IDInputRef.current.textContent = rowData.borrower_id;
 	};
 
 	useEffect(() => {
@@ -58,6 +60,8 @@ function PersonasTableRow({ data, keepExpand }) {
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
 		setRowData((prev) => (prev = data));
+		setEdited(false);
+		IDInputRef.current.textContent = rowData.borrower_id;
 	}
 
 	//Maneja la funcionalidad de expandir la tarjeta de información
