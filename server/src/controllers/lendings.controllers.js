@@ -30,6 +30,11 @@ const buildWhereQuery = (conditional, queryOption, searchTerm, dateFilter) => {
 					},
 			  }
 			: {}),
+		...(queryOption === 'lending_remarks'
+			? {
+					lending_remarks: { contains: searchTerm },
+			  }
+			: {}),
 
 		...(dateFilter.length > 0
 			? {

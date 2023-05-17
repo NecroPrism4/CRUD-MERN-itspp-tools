@@ -11,7 +11,8 @@ const UpdateReq = async (api, data) => {
 			return res.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			const error = err.response.status;
+			return error;
 		});
 };
 

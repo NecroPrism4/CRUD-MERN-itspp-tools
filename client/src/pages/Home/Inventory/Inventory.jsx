@@ -50,15 +50,15 @@ function Inventory() {
 
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
 	//Handles the search option (for example: search by ID, by BorrowerName, etc)
-	const handleQueryOption = (e) => {
-		setQueryOption(e.target.value);
+	const handleQueryOption = (field, value) => {
+		setQueryOption(value);
 		setPageNumber(1);
 	};
 
 	//Maneja los materiales disponibles y no disponibles, para que el usuario pueda elegir qué lista quiere ver
 	//Handles the available and non-available items, so the user can choose which list wants to see
-	const handleAvailability = (e) => {
-		setIsAvailable(e.target.value);
+	const handleAvailability = (field, value) => {
+		setIsAvailable(value);
 		setPageNumber(1);
 	};
 

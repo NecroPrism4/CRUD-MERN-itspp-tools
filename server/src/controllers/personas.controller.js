@@ -10,6 +10,9 @@ export const getPersonas = async (req, res) => {
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
 
 	try {
+		console.log(conditional);
+		console.log(queryOption);
+		console.log(searchTerm);
 		const personas = await prisma.tab_borrower.findMany({
 			skip: offset,
 			take: pageSize,
@@ -37,7 +40,7 @@ export const getPersonas = async (req, res) => {
 					: {}),
 			},
 		});
-
+		console.log(personas);
 		res.send(personas);
 	} catch (error) {
 		console.error(error);
@@ -62,6 +65,7 @@ export const getPersonasTabOptions = async (req, res) => {
 
 export const updatePersona = async (req, res) => {
 	const borrower_id = parseInt(req.query.borrower_id) || null;
+	const new_borrower_id = parseInt(req.query.new_borrower_id) || borrower_id;
 	const borrower_name = req.query.borrower_name || '';
 	const borrower_lastname = req.query.borrower_lastname || '';
 	const borrower_type = req.query.borrower_type || '';
@@ -70,12 +74,24 @@ export const updatePersona = async (req, res) => {
 
 	try {
 		console.log(borrower_id);
-		/* const updateResponse = await prisma.tab_borrower.update({
-			where: {},
-		}); */
-		res.send('Persona actualizada');
+		const updateResponse = await prisma.tab_borrower.update({
+			where: { borrower_id: borrower_id },
+			data: {
+				borrower_id: new_borrower_id,
+				borrower_name: borrower_name,
+				borrower_lastname: borrower_lastname,
+				borrower_type: borrower_type,
+				borrower_career: borrower_career,
+				borrower_notes: borrower_notes,
+			},
+		});
+		res.send(updateResponse);
 	} catch (err) {
 		console.log(err);
-		res.status(500).send('Internal server error');
+		if (err.code === 'P2002') {
+			res.status(409).send('El ID ya existe');
+		} else {
+			res.status(500).send('Internal server error');
+		}
 	}
 };

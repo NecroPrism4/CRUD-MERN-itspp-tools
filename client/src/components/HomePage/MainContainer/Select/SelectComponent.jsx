@@ -8,14 +8,14 @@ function SelectComponent({
 	disable,
 	defaultSelected,
 }) {
-	useEffect(() => {
+	/* 	useEffect(() => {
 		console.log(field);
-	}, [field]);
+	}, [field]); */
 
 	return (
 		<select
 			className={`RoundedRect SelectCombo ${disable ? 'Disabled' : ''}`}
-			onChange={(e) => handler(e, field)}
+			onChange={(e) => handler(field, e.target.value, e)}
 			disabled={disable}
 			defaultValue={`${defaultSelected}`}
 		>

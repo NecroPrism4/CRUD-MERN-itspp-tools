@@ -1,9 +1,13 @@
 import './PersonasTableRow.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import UpdateReq from '../../../../../apis/UpdateReq';
+
+import { onlyNumbers } from '../../../../../helpers/regexes';
 
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
+import Textbox from '../../Textbox/Textbox';
+import { ModalAlert } from '../../../../Alerts/Alerts';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -18,31 +22,37 @@ function PersonasTableRow({ data, keepExpand }) {
 
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
-	function handleEditData(e, field) {
-		setRowData((prev) => (prev = { ...rowData, [field]: e.target.value }));
+	function handleEditData(field, e) {
+		setRowData((prev) => (prev = { ...rowData, [field]: e }));
 		setEdited(true);
 	}
-
-	useEffect(() => {
-		console.log(rowData);
-	}, [rowData]);
 
 	//Maneja la solicitud de API para actualizar el registro en la base de datos
 	//Handles the api request to update the record in the database
 	const handleUpdateReq = async () => {
-		console.log(edited);
 		if (!edited) {
 			setEdited(false);
 			return;
 		}
 		const resData = await UpdateReq('/api/personas/updatePersona', rowData);
-		if (resData) {
+
+		if (resData.borrower_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
+		} else if (resData == 409) {
+			setRowData((prev) => prev);
+			ModalAlert('error', '¡ID existente, verifique!', true, 2500);
+			IDInputRef.current.textContent = rowData.borrower_id;
 		} else {
+			setRowData((prev) => prev);
 			ModalAlert('error', '¡No se pudo guardar!', true);
+			IDInputRef.current.textContent = rowData.borrower_id;
 		}
 	};
+
+	useEffect(() => {
+		rowData;
+	}, [rowData]);
 
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
@@ -55,6 +65,24 @@ function PersonasTableRow({ data, keepExpand }) {
 	function handleExpand() {
 		setExpand(!expand);
 	}
+
+	//maneja el id introducido por el usuario que intenta editarlo, por lo que solo puede permitir números
+	//handle the id introduced by the user when he tries to edit it, so it can only allow numbers
+	const handleValidId = (e) => {
+		const value = e.target.textContent;
+		if (!onlyNumbers.test(value)) {
+			e.target.textContent = value.replace(/\D/g, '');
+		}
+	};
+	const IDInputRef = useRef(null);
+
+	const borrower_career_Options = [
+		{ value: 'ISC', label: 'Ing. en Sistemas ' },
+		{ value: 'LA', label: 'Lic. en Administración' },
+		{ value: 'ICIV', label: 'Ing. Civil' },
+		{ value: 'IIND', label: 'Ing. Industrial' },
+		{ value: 'N/A', label: 'N/A (No aplica)' },
+	];
 
 	const borrower_type_Options = [
 		{ value: 'Estudiante', label: 'Estudiante' },
@@ -73,8 +101,32 @@ function PersonasTableRow({ data, keepExpand }) {
 			<div className='ShowedInfo Personas'>
 				<div className='HeaderPersonaCard'>
 					<div className='PersonaInfo'>
-						<h3>{rowData.borrower_fullname}</h3>
-						<div>{rowData.borrower_career}</div>
+						{isEditing ? (
+							<div>
+								<Textbox
+									placeHolder={'Nombre(s)'}
+									field={'borrower_name'}
+									defaultValue={rowData.borrower_name}
+									handler={handleEditData}
+								/>
+								<Textbox
+									placeHolder={'Apellido(s)'}
+									field={'borrower_lastname'}
+									defaultValue={rowData.borrower_lastname}
+									handler={handleEditData}
+								/>
+							</div>
+						) : (
+							<h3>{rowData.borrower_fullname}</h3>
+						)}
+						{/* <div>{rowData.borrower_career}</div> */}
+						<SelectComponent
+							options={borrower_career_Options}
+							defaultSelected={rowData.borrower_career}
+							handler={handleEditData}
+							field={'borrower_career'}
+							disable={!isEditing}
+						/>
 					</div>
 
 					<div className='PersonaMoreInfo'>
@@ -84,9 +136,20 @@ function PersonasTableRow({ data, keepExpand }) {
 							{rowData.borrower_type == 'Administrativo' &&
 								`Número de empleado:`}
 							{rowData.borrower_type == 'Externo' && `ID:`}{' '}
-							{rowData.borrower_id}
+							<span
+								onInput={(e) => handleValidId(e)}
+								contentEditable={isEditing}
+								onBlur={(e) => {
+									e.target.textContent == ''
+										? (e.target.textContent = rowData.borrower_id)
+										: handleEditData('new_borrower_id', e.target.textContent);
+								}}
+								suppressContentEditableWarning
+								ref={IDInputRef}
+							>
+								{rowData.borrower_id}
+							</span>
 						</p>
-						{/* <h5>{rowData.borrower_type}</h5> */}
 						<SelectComponent
 							options={borrower_type_Options}
 							defaultSelected={rowData.borrower_type}
@@ -109,7 +172,9 @@ function PersonasTableRow({ data, keepExpand }) {
 					<h3>Notas</h3>
 					<p
 						contentEditable={isEditing}
-						onBlur={(e) => handleEditData('lending_remarks', e)}
+						onBlur={(e) =>
+							handleEditData('borrower_notes', e.target.textContent)
+						}
 						suppressContentEditableWarning
 					></p>
 					<p>

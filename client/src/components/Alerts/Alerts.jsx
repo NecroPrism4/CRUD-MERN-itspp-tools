@@ -6,14 +6,14 @@ function getTheme() {
 	return localStorage.getItem('theme');
 }
 
-export function ModalAlert(icon, title, toast) {
+export function ModalAlert(icon, title, toast, time) {
 	Swal.fire({
 		position: 'top-end',
 		icon: icon,
 		title: title,
 		toast: toast,
 		showConfirmButton: false,
-		timer: 1500,
+		timer: time || 1500,
 
 		didOpen: () => {
 			const currentTheme = getTheme();

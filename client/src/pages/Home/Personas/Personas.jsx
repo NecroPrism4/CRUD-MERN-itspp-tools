@@ -1,8 +1,10 @@
 import './Personas.css';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 import usePopulateTable from '../../../hooks/usePopulateTable';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
+
+import { onlyNumbers } from '../../../helpers/regexes';
 
 import Error from '../../../components/HomePage/MainContainer/Error/Error.jsx';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
@@ -10,6 +12,8 @@ import PersonasTableRow from '../../../components/HomePage/MainContainer/CustomT
 import TabOptionsComponent from '../../../components/HomePage/MainContainer/TabOptionsComponent/TabOptionsComponent';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar.jsx';
+import { ModalAlert } from '../../../components/Alerts/Alerts';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 
@@ -44,32 +48,6 @@ function Personas() {
 	//Takes care of the las element rendered on the list so once it collides with the viewable part of the browser sends a signal to send another request to the server
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
 
-	//Maneja las funciones de busqueda
-	//Handles search when te user types into the input component
-	const handleSearch = (e) => {
-		const value = e.target.value;
-		const onlyNumbers = /^[0-9\b]+$/; // Expresión regular para aceptar solo números
-
-		// Las siguientes declaraciones if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
-		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
-		if (queryOption != 'borrower_id' || queryOption != 'borrower_semester') {
-			setvalidInput(true);
-			setQuery(value);
-		} else if (!onlyNumbers.test(value)) {
-			setvalidInput(false);
-			setQuery('');
-		} else {
-			setQuery(value);
-			setvalidInput(true);
-		}
-
-		if (value == '') {
-			setvalidInput(true);
-		}
-
-		setPageNumber(1);
-	};
-
 	//Maneja la consulta a la base de datos basada en el tipo de usuario
 	//Handles the query to the database based on the user_type
 	const handleUserType = (e) => {
@@ -77,12 +55,44 @@ function Personas() {
 		setPageNumber(1);
 	};
 
+	//Maneja las funciones de busqueda
+	//Handles search when te user types into the input component
+	const handleSearch = (e) => {
+		const value = e.target.value;
+		// Las siguientes declaraciones if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
+		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
+		if (
+			queryOption == 'borrower_id' &&
+			!onlyNumbers.test(value) &&
+			value != ''
+		) {
+			e.target.textContent = value.match(/\d+/g);
+			setvalidInput(false);
+		} else {
+			setvalidInput(true);
+			setPageNumber(1);
+			setQuery(value);
+		}
+	};
+
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
 	//Handles the search option (for example: search by ID, by BorrowerName, etc)
-	const handleQueryOption = (e) => {
-		setQueryOption(e.target.value);
-		setPageNumber(1);
+	const handleQueryOption = (field, value, e) => {
+		if (value == 'borrower_id' && !onlyNumbers.test(query) && query != '') {
+			ModalAlert('error', 'La entrada no es válida', true);
+			setQueryOption((prev) => {
+				e.target.value = prev;
+				return prev;
+			});
+		} else {
+			setvalidInput(true);
+			setPageNumber(1);
+			setQueryOption(value);
+			setQuery(inputSearchRef.current.value);
+		}
 	};
+
+	const inputSearchRef = useRef(null);
 
 	const queryOptions = [
 		{ value: 'borrower_id', label: 'ID' },
@@ -106,7 +116,11 @@ function Personas() {
 							options={queryOptions}
 							handler={handleQueryOption}
 						/>
-						<SearchBar handler={handleSearch} validInput={validInput} />
+						<SearchBar
+							handler={handleSearch}
+							validInput={validInput}
+							refn={inputSearchRef}
+						/>
 						<button
 							className={`buttonKeepExpand ${keepExpand ? `Active` : ''}`}
 							onClick={() => {

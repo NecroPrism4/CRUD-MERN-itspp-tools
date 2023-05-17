@@ -1,6 +1,5 @@
 import './Lendings.css';
-import { useEffect, useContext, useState } from 'react';
-
+import { useEffect, useContext, useState, useRef } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
@@ -10,10 +9,12 @@ import { onlyNumbers } from '../../../helpers/regexes';
 
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading';
+import { ModalAlert } from '../../../components/Alerts/Alerts';
 import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import CustomDateRangePicker from '../../../components/HomePage/MainContainer/CustomDatePicker/CustomDateRangePicker.jsx';
 import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar';
+import { set } from 'date-fns';
 
 function Lendings() {
 	//Maneja el título de la barra de navegación superior
@@ -67,38 +68,36 @@ function Lendings() {
 	//Handles search when te user types into the input component
 	const handleSearch = (e) => {
 		const value = e.target.value;
-		// Las siguiente declaracion if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
-		//The following if statement handles if the user types letters instead of numbers when tries to search by ID
+		// Las siguientes declaraciones if manejan si el usuario escribe letras en lugar de números cuando intenta buscar por ID
+		//The following if statements handles if the user types letters instead of numbers when tries to search by ID
 		if (
 			queryOption == 'lending_id' &&
 			!onlyNumbers.test(value) &&
 			value != ''
 		) {
+			e.target.textContent = value.match(/\d+/g);
 			setvalidInput(false);
 		} else {
 			setvalidInput(true);
+			setPageNumber(1);
+			setQuery(value);
 		}
-		setPageNumber(1);
-		setQuery(value);
 	};
 
 	//Maneja la opción de búsqueda (por ejemplo: buscar por ID, por nombre del prestatario, etc.)
 	//Handles the search option (for example: search by ID, by BorrowerName, etc)
-	const handleQueryOption = (e) => {
-		if (
-			e.target.value == 'lending_id' &&
-			!onlyNumbers.test(query) &&
-			query != ''
-		) {
-			alert('No puede buscar ID con letras, use números');
-			e.target.value = 'borrower_name';
-		} else {
+	const handleQueryOption = (field, value, e) => {
+		if (value == 'lending_id' && !onlyNumbers.test(query) && query != '') {
+			ModalAlert('error', 'La entrada no es válida', true);
 			setQueryOption((prev) => {
-				if (prev === 'lending_id') {
-					setvalidInput(true);
-				}
-				return e.target.value;
+				e.target.value = prev;
+				return prev;
 			});
+		} else {
+			setvalidInput(true);
+			setPageNumber(1);
+			setQueryOption(value);
+			setQuery(inputSearchRef.current.value);
 		}
 	};
 
@@ -115,6 +114,15 @@ function Lendings() {
 		setIsActive(value);
 		setPageNumber(1);
 	};
+
+	const handleValidId = (e) => {
+		const value = e.target.value;
+		if (value == 'lending_id' && !onlyNumbers.test(value)) {
+			e.target.value = value.match(/\d+/g);
+		}
+	};
+
+	const inputSearchRef = useRef(null);
 
 	//Arreglo de opciones que alimenta al componente de selección #SelectComponent
 	//Array of options that feed the #SelectComponent
@@ -156,7 +164,12 @@ function Lendings() {
 							options={queryOptions}
 							handler={handleQueryOption}
 						/>
-						<SearchBar handler={handleSearch} validInput={validInput} />
+						<SearchBar
+							handler={handleSearch}
+							validInput={validInput}
+							idInput={handleValidId}
+							refn={inputSearchRef}
+						/>
 					</div>
 				</div>
 			</div>

@@ -4,11 +4,17 @@
 
 .HeaderPersonaCard {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: auto auto;
 }
 
 .HeaderPersonaCard .PersonaInfo {
 	grid-column: 1;
+}
+
+.HeaderPersonaCard .PersonaInfo div:first-child {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
 }
 
 .HeaderPersonaCard .PersonaInfo h3 {
@@ -17,7 +23,6 @@
 
 .HeaderPersonaCard .PersonaMoreInfo {
 	grid-column: 2;
-	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: end;
@@ -27,6 +32,16 @@
 .HeaderPersonaCard .PersonaMoreInfo h5 {
 	display: flex;
 	justify-content: end;
+}
+
+.PersonaMoreInfo p span {
+	margin-left: 5px;
+	min-width: 10px;
+	z-index: 10;
+}
+
+.HeaderPersonaCard select {
+	font-size: 1em !important;
 }
 
 .Personas.Expandible div p:last-of-type {
