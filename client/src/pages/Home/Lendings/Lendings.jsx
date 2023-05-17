@@ -1,4 +1,5 @@
 import './Lendings.css';
+import { useParams } from 'react-router-dom';
 import { useEffect, useContext, useState, useRef } from 'react';
 import { SectionContext } from '../../../context/SectionContext';
 import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
@@ -14,7 +15,6 @@ import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomT
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import CustomDateRangePicker from '../../../components/HomePage/MainContainer/CustomDatePicker/CustomDateRangePicker.jsx';
 import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar';
-import { set } from 'date-fns';
 
 function Lendings() {
 	//Maneja el título de la barra de navegación superior
@@ -25,13 +25,15 @@ function Lendings() {
 		setPageNumber(1);
 	}, []);
 
+	const { id } = useParams();
+
 	//Variables que utiliza el hook personalizado que se encarga de pupular la tableview
 	//Varibles used by the personalized hook that is in charge of pupulating the tableview
 	const [validInput, setvalidInput] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [isActive, setIsActive] = useState('false');
 	const [queryOption, setQueryOption] = useState('lending_id');
-	const [query, setQuery] = useState('');
+	const [query, setQuery] = useState(id);
 	const [datesToFilter, setDatesToFilter] = useState([]);
 
 	//Obtiene la cantidad de resultados posibles
@@ -169,6 +171,7 @@ function Lendings() {
 							validInput={validInput}
 							idInput={handleValidId}
 							refn={inputSearchRef}
+							defaultValue={id || ''}
 						/>
 					</div>
 				</div>

@@ -131,8 +131,41 @@ export const getLendingById = async (req, res) => {
 };
 
 export const returnLending = async (req, res) => {
+	const lending_id = parseInt(req.query.lending_id) || null;
+	console.log(lending_id);
+	console.log(Boolean(lending_id));
 	try {
-		throw new Error('Not implemented');
+		if (lending_id) {
+			const returnedResponse = await prisma.tab_lendings.update({
+				where: {
+					lending_id: lending_id,
+				},
+				data: {
+					returned: true,
+					/* items: {
+						updateMany: {
+							// Puedes especificar las condiciones aquí
+							data: {
+								item_available: true,
+							},
+						},
+					}, */
+					items: {
+						updateMany: {
+							where: {
+								id_lending: lending_id,
+							},
+							data: {
+								item_available: true,
+							},
+						},
+					},
+				},
+			});
+			res.send(returnedResponse);
+		} else {
+			res.status(404).send('Item not found');
+		}
 	} catch (err) {
 		console.log(err);
 		res.status(500).send('Internal server error');

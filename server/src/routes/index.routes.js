@@ -8,6 +8,7 @@ import {
 	getLendings,
 	getLendingsCount,
 	updateLending,
+	returnLending,
 } from '../controllers/lendings.controllers.js';
 import {
 	getUsers,
@@ -34,6 +35,7 @@ router.put('/api/inventory/updateItem', updateItem);
 router.get('/api/lendings/getCount', getLendingsCount);
 router.get('/api/lendings/get', getLendings);
 router.put('/api/lendings/updateLending', updateLending);
+router.put('/api/lendings/returnLending', returnLending);
 
 //PERSONAS ROUTES
 router.get('/api/personas/getTabs', getPersonasTabOptions);

@@ -1,6 +1,13 @@
 import './SearchBar.css';
 
-function SearchBar({ handler, validInput, handlerTextbox, idInput, refn }) {
+function SearchBar({
+	handler,
+	validInput,
+	handlerTextbox,
+	idInput,
+	refn,
+	defaultValue,
+}) {
 	return (
 		<input
 			placeholder='Buscar...'
@@ -10,6 +17,7 @@ function SearchBar({ handler, validInput, handlerTextbox, idInput, refn }) {
 			onInput={idInput}
 			onBlur={handlerTextbox}
 			ref={refn}
+			defaultValue={defaultValue}
 		></input>
 	);
 }

@@ -54,6 +54,19 @@ function LendingsTableRow({ data }) {
 		}
 	};
 
+	const handleReturnLending = async () => {
+		console.log({ lending_id: rowData.lending_id });
+		const resData = await UpdateReq('/api/lendings/returnLending', {
+			lending_id: rowData.lending_id,
+		});
+		if (resData) {
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			ModalAlert('success', '¡Hecho!', true);
+		} else {
+			ModalAlert('error', '¡Hubo un error!', true);
+		}
+	};
+
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
@@ -166,7 +179,11 @@ function LendingsTableRow({ data }) {
 						cancelEdit={handleCancelEdit}
 					/>
 					<div className='EditButtons Lendings'>
-						{rowData.returned ? null : <button>Confirmar Devolución</button>}
+						{rowData.returned ? null : (
+							<button onClick={handleReturnLending}>
+								Confirmar Devolución
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,9 @@
 import './InventoryTableRow.css';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import UpdateReq from '../../../../../apis/UpdateReq';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
+
 import { ModalAlert } from '../../../../Alerts/Alerts';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,9 +28,9 @@ function InventoryTableRow({ data }) {
 		setEdited(true);
 	}
 
-	useEffect(() => {
+	/* useEffect(() => {
 		console.log(rowData);
-	}, [rowData]);
+	}, [rowData]); */
 	//Maneja la solicitud de API para actualizar el registro en la base de datos
 	//Handles the api request to update the record in the database
 	const handleUpdateReq = async () => {
@@ -140,7 +142,13 @@ function InventoryTableRow({ data }) {
 				<div className='InteractiveButtons'>
 					{rowData.lendings[0] && (
 						<div className='EditButtons Lendings'>
-							<button>Ver Prestamo</button>
+							<button>
+								<Link
+									to={`../lendings/${rowData.lendings[0].lendings.lending_id}`}
+								>
+									Ver Prestamo
+								</Link>
+							</button>
 						</div>
 					)}
 					<OnEditButtons

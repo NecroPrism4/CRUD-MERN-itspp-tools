@@ -1,4 +1,5 @@
 import './PersonasTableRow.css';
+import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import UpdateReq from '../../../../../apis/UpdateReq';
 
@@ -42,12 +43,9 @@ function PersonasTableRow({ data, keepExpand }) {
 		} else if (resData.response && resData.response.status == 409) {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡ID existente, verifique!', true, 2500);
-			/* 			IDInputRef.current.textContent = rowData.borrower_id;
-			 */
 		} else {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡No se pudo guardar!', true);
-			/* IDInputRef.current.textContent = rowData.borrower_id; */
 		}
 		IDInputRef.current.textContent = rowData.borrower_id;
 	};
@@ -181,10 +179,14 @@ function PersonasTableRow({ data, keepExpand }) {
 						}
 						suppressContentEditableWarning
 					></p>
-					<p>
-						{rowData.lendings.length > 0 &&
-							`Prestamos pendientes: ${rowData.lendings.length}`}
-					</p>
+					{rowData.lendings.length > 0 && (
+						<p>
+							<Link to={`../lendings/${rowData.lendings[0].lending_id}`}>
+								{rowData.lendings.length > 0 &&
+									`Prestamos pendientes: ${rowData.lendings.length}`}
+							</Link>
+						</p>
+					)}
 				</div>
 				<div className='InteractiveButtons Lendings'>
 					<OnEditButtons

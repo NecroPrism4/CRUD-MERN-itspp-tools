@@ -111,7 +111,8 @@ function Personas() {
 						api='/api/personas/getTabs'
 						tabOption='borrower_type'
 					/>
-					<div>
+
+					<div className='SearchOptionsRigtside'>
 						<SelectComponent
 							options={queryOptions}
 							handler={handleQueryOption}

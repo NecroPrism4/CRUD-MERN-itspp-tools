@@ -80,7 +80,7 @@ export const updateItem = async (req, res) => {
 	const item_remarks = req.query.item_remarks || '';
 
 	try {
-		if (item_id != null) {
+		if (item_id) {
 			const updateResponse = await prisma.tab_inventory.update({
 				where: { item_id: item_id },
 				data: {

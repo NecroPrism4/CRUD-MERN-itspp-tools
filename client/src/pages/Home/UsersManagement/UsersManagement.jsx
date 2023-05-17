@@ -66,9 +66,7 @@ function UsersManagement() {
 
 	return (
 		<div className='HomeChildContainer'>
-			<div className='Users TableHeader'>
-				<h1>Table Header</h1>
-			</div>
+			<div className='Users TableHeader'>{/* <h1>Table Header</h1> */}</div>
 			<div
 				className={`Users tableContainer ShowTableAnim ${
 					tableData.length > 0 ? 'Active' : ''
