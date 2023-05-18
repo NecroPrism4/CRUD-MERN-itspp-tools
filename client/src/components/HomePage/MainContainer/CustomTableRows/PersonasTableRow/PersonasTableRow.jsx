@@ -36,7 +36,10 @@ function PersonasTableRow({ data, keepExpand }) {
 			return;
 		}
 		const resData = await UpdateReq('/api/personas/updatePersona', rowData);
-
+		if (resData.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
 		if (resData.borrower_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
@@ -49,10 +52,6 @@ function PersonasTableRow({ data, keepExpand }) {
 		}
 		IDInputRef.current.textContent = rowData.borrower_id;
 	};
-
-	useEffect(() => {
-		rowData;
-	}, [rowData]);
 
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content

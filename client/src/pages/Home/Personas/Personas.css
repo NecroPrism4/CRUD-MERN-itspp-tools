@@ -22,13 +22,6 @@
 	align-items: center;
 }
 
-/* .Personas.SearchOptions div:last-child {
-	display: flex;
-	height: fit-content;
-	align-items: center;
-}
- */
-
 .Personas.SearchOptions .buttonKeepExpand {
 	display: flex;
 	color: var(--inactive-fg);
@@ -46,4 +39,16 @@
 
 .Personas.SearchOptions .buttonKeepExpand.Active {
 	background: var(--gradient-accent);
+}
+
+@media screen and (max-width: 768px) {
+	.Personas.SearchOptions {
+		flex-direction: column;
+	}
+	.Personas.SearchOptions .RollContainer {
+		width: 100%;
+	}
+	.Personas.SearchOptions .SearchOptionsRigtside .SearchBar {
+		width: 50%;
+	}
 }

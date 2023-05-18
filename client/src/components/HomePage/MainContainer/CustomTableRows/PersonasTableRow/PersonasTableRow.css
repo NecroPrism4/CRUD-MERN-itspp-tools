@@ -3,12 +3,13 @@
 }
 
 .HeaderPersonaCard {
-	display: grid;
-	grid-template-columns: auto auto;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
 .HeaderPersonaCard .PersonaInfo {
-	grid-column: 1;
+	grid-row: 1;
 }
 
 .HeaderPersonaCard .PersonaInfo div:first-child {
@@ -22,7 +23,7 @@
 }
 
 .HeaderPersonaCard .PersonaMoreInfo {
-	grid-column: 2;
+	grid-row: 2;
 	display: flex;
 	flex-direction: column;
 	align-items: end;
@@ -53,6 +54,19 @@
 }
 
 @media screen and (min-width: 768px) {
+	.HeaderPersonaCard {
+		display: grid;
+		grid-template-columns: auto auto;
+	}
+	.HeaderPersonaCard .PersonaInfo {
+		grid-column: 1;
+		grid-row: inherit;
+	}
+	.HeaderPersonaCard .PersonaMoreInfo {
+		grid-column: 2;
+		grid-row: inherit;
+	}
+
 	.HeaderPersonaCard .PersonaInfo h3 {
 		font-size: 1.3em;
 		line-height: unset;

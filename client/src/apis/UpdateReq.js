@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL } from '../../config';
+import { API_URL } from '../../config.js';
 
 const UpdateReq = async (api, data) => {
 	return axios({
@@ -11,8 +11,7 @@ const UpdateReq = async (api, data) => {
 			return res.data;
 		})
 		.catch((err) => {
-			const error = err || err;
-			return error;
+			return err;
 		});
 };
 

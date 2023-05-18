@@ -181,17 +181,22 @@ function Lendings() {
 					tableData.length > 0 ? 'Active' : ''
 				}`}
 			>
-				{tableData.map((object) => {
-					if (tableData.length === tableData.lastIndexOf(object) + 1) {
-						return (
-							<div key={object.lending_id} ref={lastElementRef}>
-								<LendingsTableRow data={object} />
-							</div>
-						);
-					} else {
-						return <LendingsTableRow key={object.lending_id} data={object} />;
-					}
-				})}
+				{tableData
+					.sort(
+						(a, b) =>
+							new Date(b.lending_borrowdate) - new Date(a.lending_borrowdate)
+					)
+					.map((object) => {
+						if (tableData.length === tableData.lastIndexOf(object) + 1) {
+							return (
+								<div key={object.lending_id} ref={lastElementRef}>
+									<LendingsTableRow data={object} />
+								</div>
+							);
+						} else {
+							return <LendingsTableRow key={object.lending_id} data={object} />;
+						}
+					})}
 
 				<div>{loading && <Loading />}</div>
 				<div>{error && <Error />}</div>

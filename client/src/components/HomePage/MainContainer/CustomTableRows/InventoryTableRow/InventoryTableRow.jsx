@@ -1,7 +1,7 @@
 import './InventoryTableRow.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import UpdateReq from '../../../../../apis/UpdateReq';
+import UpdateReq from '../../../../../apis/UpdateReq.js';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 
 import { ModalAlert } from '../../../../Alerts/Alerts';
@@ -28,9 +28,6 @@ function InventoryTableRow({ data }) {
 		setEdited(true);
 	}
 
-	/* useEffect(() => {
-		console.log(rowData);
-	}, [rowData]); */
 	//Maneja la solicitud de API para actualizar el registro en la base de datos
 	//Handles the api request to update the record in the database
 	const handleUpdateReq = async () => {
@@ -38,7 +35,14 @@ function InventoryTableRow({ data }) {
 			setEdited(false);
 			return;
 		}
+
+		//Envía la solicitud de actualización al servidor
+		//Sends the update request to the server
 		const resData = await UpdateReq('/api/inventory/updateItem', rowData);
+		if (resData.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
 		if (resData) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);

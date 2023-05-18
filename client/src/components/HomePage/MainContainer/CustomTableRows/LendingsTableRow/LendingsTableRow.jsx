@@ -16,6 +16,7 @@ function LendingsTableRow({ data }) {
 	const [showMore, setShowMore] = useState(false); //This one is to expand the list of items insite the rows
 	const [rowData, setRowData] = useState(data);
 	const [edited, setEdited] = useState(false);
+	const [resData, setResData] = useState();
 
 	//Se encarga de que las fechas de la base de datos sean más comprensibles para los humanos
 	//Takes care of making the dates from the database more comprehensible for humans
@@ -46,6 +47,10 @@ function LendingsTableRow({ data }) {
 			return;
 		}
 		const resData = await UpdateReq('/api/lendings/updateLending', rowData);
+		if (resData.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
 		if (resData) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
@@ -55,13 +60,37 @@ function LendingsTableRow({ data }) {
 	};
 
 	const handleReturnLending = async () => {
-		console.log({ lending_id: rowData.lending_id });
 		const resData = await UpdateReq('/api/lendings/returnLending', {
 			lending_id: rowData.lending_id,
+			id_items: rowData.items.map((item) => item.items.item_id),
 		});
+		if (resData.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
+		if (resData) {
+			console.log('if 1');
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			setResData(resData);
+			ModalAlert('success', '¡Hecho!', true);
+		} else {
+			ModalAlert('error', '¡Hubo un error!', true);
+		}
+	};
+
+	const handleCancelReturn = async () => {
+		const resData = await UpdateReq('/api/lendings/cancelReturnLending', {
+			lending_id: rowData.lending_id,
+			id_items: rowData.items.map((item) => item.items.item_id),
+		});
+		if (resData.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
 		if (resData) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
-			ModalAlert('success', '¡Hecho!', true);
+			setResData(resData);
+			ModalAlert('info', 'Operación cancelada', true);
 		} else {
 			ModalAlert('error', '¡Hubo un error!', true);
 		}
@@ -70,7 +99,7 @@ function LendingsTableRow({ data }) {
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
-		setRowData((prev) => (prev = data));
+		setRowData((prev) => (prev = { ...prev, ...resData }));
 	}
 
 	//Maneja la funcionalidad de expandir la tarjeta de información
@@ -145,8 +174,12 @@ function LendingsTableRow({ data }) {
 						<p>{borrowFormatedDate}</p>
 					</div>
 					<div className='ReturnedDate'>
-						<h4>Devuelto: </h4>
-						<p>{returnedFormatedDate}</p>
+						{rowData.lending_returneddate && (
+							<>
+								<h4>Devuelto: </h4>
+								<p>{returnedFormatedDate}</p>
+							</>
+						)}
 					</div>
 
 					<div className='AuthorizedBy'>
@@ -184,6 +217,11 @@ function LendingsTableRow({ data }) {
 								Confirmar Devolución
 							</button>
 						)}
+						{rowData.returned && !data.returned ? (
+							<button className='CancelButton' onClick={handleCancelReturn}>
+								Cancelar
+							</button>
+						) : null}
 					</div>
 				</div>
 			</div>

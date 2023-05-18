@@ -9,6 +9,7 @@ import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.
 import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar';
+import OnCreateButton from '../../../components/HomePage/MainContainer/Buttons/OnCreateButton/OnCreateButton';
 
 function Inventory() {
 	//Maneja el título de la barra de navegación superior
@@ -117,6 +118,8 @@ function Inventory() {
 					)}
 				</div>
 			</div>
+
+			<OnCreateButton />
 		</div>
 	);
 }

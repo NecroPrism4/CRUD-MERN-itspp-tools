@@ -28,11 +28,6 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		setEdited(true);
 	}
 
-	useEffect(() => {
-		console.log(rowData);
-		console.log(labNameDistincts);
-	}, [rowData]);
-
 	//Maneja la solicitud de API para actualizar el registro en la base de datos
 	//Handles the api request to update the record in the database
 	const handleUpdateReq = async () => {
@@ -42,7 +37,10 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		}
 
 		const resData = await UpdateReq('/api/users/updateUser', rowData);
-		console.log(resData);
+		if (resData.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
 		if (resData.user_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
