@@ -1,14 +1,14 @@
 import './PersonasTableRow.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import UpdateReq from '../../../../../apis/UpdateReq';
+import { UpdateReq } from '../../../../../apis/ApiReqests';
 
 import { onlyNumbers } from '../../../../../helpers/regexes';
 
+import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
 import Textbox from '../../Textbox/Textbox';
-import { ModalAlert } from '../../../../Alerts/Alerts';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';

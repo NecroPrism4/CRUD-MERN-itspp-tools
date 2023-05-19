@@ -4,6 +4,7 @@ import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState } from 'react';
 
+import { FormDialog } from '../../../components/Modals/FormDialogs/FormDialogs';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
@@ -63,6 +64,11 @@ function Inventory() {
 		setPageNumber(1);
 	};
 
+	const handleCreate = () => {
+		const element = FormDialog();
+		console.log(element);
+	};
+
 	//Arreglos de opciones que alimenta al componente de selección #SelectComponent
 	//Arrays of options that feed the #SelectComponent
 	const queryOptions = [
@@ -80,47 +86,51 @@ function Inventory() {
 	];
 
 	return (
-		<div className='HomeChildContainer'>
-			<div className='tableHeader SearchOptions'>
-				<h2>Materiales</h2>
-				<div>
-					<p>Buscar por</p>
-					<SelectComponent
-						options={availabityOptions}
-						handler={handleAvailability}
-					/>
-					<SelectComponent options={queryOptions} handler={handleQueryOption} />
-					<SearchBar handler={handleSearch} validInput={true} />
+		<>
+			<div className='HomeChildContainer'>
+				<div className='tableHeader SearchOptions'>
+					<h2>Materiales</h2>
+					<div>
+						<p>Buscar por</p>
+						<SelectComponent
+							options={availabityOptions}
+							handler={handleAvailability}
+						/>
+						<SelectComponent
+							options={queryOptions}
+							handler={handleQueryOption}
+						/>
+						<SearchBar handler={handleSearch} validInput={true} />
+					</div>
+				</div>
+				<div
+					className={`tableContainer ShowTableAnim ${
+						tableData.length > 0 ? 'Active' : ''
+					}`}
+				>
+					{tableData.map((object) => {
+						if (tableData.length === tableData.lastIndexOf(object) + 1) {
+							return (
+								<div key={object.item_id} ref={lastElementRef}>
+									<InventoryTableRow data={object} />
+								</div>
+							);
+						} else {
+							return <InventoryTableRow key={object.item_id} data={object} />;
+						}
+					})}
+
+					<div>{loading && <Loading />}</div>
+					<div>{error && <Error />}</div>
+					<div>
+						{!loading && !error && tableData.length < 1 && (
+							<Error noResults={tableData.length < 1} />
+						)}
+					</div>
 				</div>
 			</div>
-			<div
-				className={`tableContainer ShowTableAnim ${
-					tableData.length > 0 ? 'Active' : ''
-				}`}
-			>
-				{tableData.map((object) => {
-					if (tableData.length === tableData.lastIndexOf(object) + 1) {
-						return (
-							<div key={object.item_id} ref={lastElementRef}>
-								<InventoryTableRow data={object} />
-							</div>
-						);
-					} else {
-						return <InventoryTableRow key={object.item_id} data={object} />;
-					}
-				})}
-
-				<div>{loading && <Loading />}</div>
-				<div>{error && <Error />}</div>
-				<div>
-					{!loading && !error && tableData.length < 1 && (
-						<Error noResults={tableData.length < 1} />
-					)}
-				</div>
-			</div>
-
-			<OnCreateButton />
-		</div>
+			<OnCreateButton handler={handleCreate} />
+		</>
 	);
 }
 

@@ -6,13 +6,13 @@ import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 
 import { onlyNumbers } from '../../../helpers/regexes';
 
+import { ModalAlert } from '../../../components/Modals/Alerts/Alerts';
 import Error from '../../../components/HomePage/MainContainer/Error/Error.jsx';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 import PersonasTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/PersonasTableRow/PersonasTableRow.jsx';
 import TabOptionsComponent from '../../../components/HomePage/MainContainer/TabOptionsComponent/TabOptionsComponent';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import SearchBar from '../../../components/HomePage/MainContainer/SearchBar/SearchBar.jsx';
-import { ModalAlert } from '../../../components/Alerts/Alerts';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';

@@ -8,9 +8,9 @@ import useCountResults from '../../../hooks/useCountResults';
 
 import { onlyNumbers } from '../../../helpers/regexes';
 
+import { ModalAlert } from '../../../components/Modals/Alerts/Alerts';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading';
-import { ModalAlert } from '../../../components/Alerts/Alerts';
 import LendingsTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/LendingsTableRow/LendingsTableRow';
 import SelectComponent from '../../../components/HomePage/MainContainer/Select/SelectComponent';
 import CustomDateRangePicker from '../../../components/HomePage/MainContainer/CustomDatePicker/CustomDateRangePicker.jsx';

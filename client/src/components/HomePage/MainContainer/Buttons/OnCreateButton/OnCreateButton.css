@@ -1,46 +1,17 @@
-/* .OnCreateButton {
-	position: absolute;
-	color: var(--inactive-fg);
-	background: var(--tertiary-bg);
-	filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25));
-
-	align-content: baseline;
-	font-size: 1.8em;
-	padding: 10px;
-	border-radius: 15px;
-
-	bottom: 30px;
-	right: 30px;
-}
-
-.OnCreateButton .icon {
-	font-size: 1em;
-}
-
-.OnCreateButton .text {
-	opacity: 1;
-
-	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.OnCreateButton:hover .text {
-	opacity: 1;
-}
- */
-
 .OnCreateButton {
 	position: absolute;
 	color: var(--inactive-fg);
-	background: var(--tertiary-bg);
+	background: var(--secundary-bg);
 	filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25));
-
-	align-content: baseline;
-	font-size: 1.4em;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
 	padding: 10px;
 	border-radius: 15px;
-
-	bottom: 30px;
-	right: 30px;
+	max-width: fit-content;
+	bottom: 20px;
+	right: 40px;
+	font-size: 1.2em;
 
 	/* Establece el tamaño inicial del botón */
 	transform: scale(1);
@@ -51,6 +22,7 @@
 .OnCreateButton:hover {
 	/* Aumenta el tamaño del botón al pasar el cursor sobre él */
 	transform: scale(1.1);
+	color: var(--active-fg);
 }
 
 .OnCreateButton .icon {

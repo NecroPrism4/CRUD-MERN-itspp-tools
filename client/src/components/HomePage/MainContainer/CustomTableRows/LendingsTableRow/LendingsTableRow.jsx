@@ -1,10 +1,11 @@
 import './LendingsTableRow.css';
 import { useState, useEffect } from 'react';
 import useDateFormater from '../../../../../hooks/useDateFormater';
-import UpdateReq from '../../../../../apis/UpdateReq';
+import { UpdateReq } from '../../../../../apis/ApiReqests';
 
+import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
-import { ModalAlert } from '../../../../Alerts/Alerts';
+
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

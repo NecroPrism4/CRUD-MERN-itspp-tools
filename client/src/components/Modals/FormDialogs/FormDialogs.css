@@ -1,0 +1,4 @@
+.SwalHtmlContainer input {
+	color: var(--active-fg) !important;
+	border-radius: 10px;
+}

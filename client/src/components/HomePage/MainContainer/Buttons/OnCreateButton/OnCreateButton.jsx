@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './OnCreateButton.css';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-function OnCreateButton() {
+function OnCreateButton({ handler }) {
 	return (
-		<button className='OnCreateButton'>
+		<button className='OnCreateButton' onClickCapture={handler}>
 			<span className='icon'>
 				<FontAwesomeIcon icon={faPlus} />{' '}
 			</span>

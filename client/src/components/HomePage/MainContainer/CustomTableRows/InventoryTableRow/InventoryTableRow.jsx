@@ -1,10 +1,10 @@
 import './InventoryTableRow.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import UpdateReq from '../../../../../apis/UpdateReq.js';
-import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
+import { UpdateReq } from '../../../../../apis/ApiReqests.js';
 
-import { ModalAlert } from '../../../../Alerts/Alerts';
+import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
+import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';

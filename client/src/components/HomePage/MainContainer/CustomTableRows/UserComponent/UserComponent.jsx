@@ -2,11 +2,11 @@ import './UserComponent.css';
 import { useEffect, useState, useRef } from 'react';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
-import UpdateReq from '../../../../../apis/UpdateReq';
+import { UpdateReq } from '../../../../../apis/ApiReqests';
 
 import { onlyNumbers } from '../../../../../helpers/regexes';
 
-import { ModalAlert } from '../../../../Alerts/Alerts';
+import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

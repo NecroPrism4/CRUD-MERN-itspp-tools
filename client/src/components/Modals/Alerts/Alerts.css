@@ -1,5 +1,6 @@
 .SwalPopup {
 	background: var(--tertiary-bg) !important;
+	border-radius: 25px !important;
 }
 
 .SwalTitle {
