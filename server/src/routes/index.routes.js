@@ -3,6 +3,7 @@ import {
 	getInventory,
 	getInventoryById,
 	updateItem,
+	createItem,
 } from '../controllers/inventory.controllers.js';
 import {
 	getLendings,
@@ -20,6 +21,7 @@ import {
 	getPersonas,
 	getPersonasTabOptions,
 	updatePersona,
+	createPersona,
 } from '../controllers/personas.controller.js';
 import { getLabs } from '../controllers/labs.controller.js';
 
@@ -31,6 +33,7 @@ const router = Router();
 router.get('/api/inventory/get', getInventory);
 router.get('/api/inventory/getById', getInventoryById);
 router.put('/api/inventory/updateItem', updateItem);
+router.post('/api/inventory/createItem', createItem);
 
 //LENDINGS ROUTES
 router.get('/api/lendings/getCount', getLendingsCount);
@@ -43,6 +46,7 @@ router.put('/api/lendings/cancelReturnLending', cancelReturnLending);
 router.get('/api/personas/getTabs', getPersonasTabOptions);
 router.get('/api/personas/get', getPersonas);
 router.put('/api/personas/updatePersona', updatePersona);
+router.post('/api/personas/createPersona', createPersona);
 
 //USERS ROUTES
 router.get('/api/users/get', getUsers);

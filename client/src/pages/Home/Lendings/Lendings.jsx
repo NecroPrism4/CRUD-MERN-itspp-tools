@@ -117,6 +117,8 @@ function Lendings() {
 		setPageNumber(1);
 	};
 
+	//Maneja la función de validación de ID
+	//Handles the ID validation function
 	const handleValidId = (e) => {
 		const value = e.target.value;
 		if (value == 'lending_id' && !onlyNumbers.test(value)) {
@@ -137,74 +139,85 @@ function Lendings() {
 
 	return (
 		<div className='HomeChildContainer'>
-			<div className='tableHeader Lendings'>
-				<div className='TabOptions'>
-					<h2
-						className={isActive == 'false' ? 'active' : ''}
-						onClick={() => handleTabActive('false')}
-					>
-						Activos
-					</h2>
-					<h2
-						className={isActive == 'true' ? 'active' : ''}
-						onClick={() => handleTabActive('true')}
-					>
-						Inactivos
-					</h2>
-				</div>
-				<div className='SearchOptions'>
-					<div>
-						<p>
-							{!countError && !countLoading && countData && validInput
-								? `${countData} resultado(s)`
-								: `					`}
-						</p>
+			<div className='ChildMaster'>
+				<div className='tableHeader Lendings'>
+					<div className='TabOptions'>
+						<h2
+							className={isActive == 'false' ? 'active' : ''}
+							onClick={() => handleTabActive('false')}
+						>
+							Activos
+						</h2>
+						<h2
+							className={isActive == 'true' ? 'active' : ''}
+							onClick={() => handleTabActive('true')}
+						>
+							Inactivos
+						</h2>
 					</div>
-					<div>
-						<CustomDateRangePicker handleRange={handleDateRanges} />
-						<SelectComponent
-							options={queryOptions}
-							handler={handleQueryOption}
-						/>
-						<SearchBar
-							handler={handleSearch}
-							validInput={validInput}
-							idInput={handleValidId}
-							refn={inputSearchRef}
-							defaultValue={id || ''}
-						/>
-					</div>
-				</div>
-			</div>
-			<div
-				className={`tableContainer ShowTableAnim ${
-					tableData.length > 0 ? 'Active' : ''
-				}`}
-			>
-				{tableData
-					.sort(
-						(a, b) =>
-							new Date(b.lending_borrowdate) - new Date(a.lending_borrowdate)
-					)
-					.map((object) => {
-						if (tableData.length === tableData.lastIndexOf(object) + 1) {
-							return (
-								<div key={object.lending_id} ref={lastElementRef}>
-									<LendingsTableRow data={object} />
-								</div>
-							);
-						} else {
-							return <LendingsTableRow key={object.lending_id} data={object} />;
-						}
-					})}
+					<div className='SearchOptions'>
+						<div>
+							<p>
+								{!countError && !countLoading && countData && validInput
+									? `${countData} resultado(s)`
+									: `					`}
+							</p>
+						</div>
 
-				<div>{loading && <Loading />}</div>
-				<div>{error && <Error />}</div>
-				<div>
-					{!loading && !error && tableData.length < 1 && (
-						<Error noResults={tableData.length < 1} />
-					)}
+						<div>
+							<CustomDateRangePicker handleRange={handleDateRanges} />
+							<SelectComponent
+								options={queryOptions}
+								handler={handleQueryOption}
+							/>
+							<SearchBar
+								handler={handleSearch}
+								validInput={validInput}
+								idInput={handleValidId}
+								refn={inputSearchRef}
+								defaultValue={id || ''}
+								visible={true}
+							/>
+						</div>
+					</div>
 				</div>
+
+				<div className='TableScroll'>
+					<div
+						className={`tableContainer ShowTableAnim ${
+							tableData.length > 0 ? 'Active' : ''
+						}`}
+					>
+						{tableData
+							.sort(
+								(a, b) =>
+									new Date(b.lending_borrowdate) -
+									new Date(a.lending_borrowdate)
+							)
+							.map((object) => {
+								if (tableData.length === tableData.lastIndexOf(object) + 1) {
+									return (
+										<div key={object.lending_id} ref={lastElementRef}>
+											<LendingsTableRow data={object} />
+										</div>
+									);
+								} else {
+									return (
+										<LendingsTableRow key={object.lending_id} data={object} />
+									);
+								}
+							})}
+
+						<div>{loading && <Loading />}</div>
+						<div>{error && <Error />}</div>
+						<div>
+							{!loading && !error && tableData.length < 1 && (
+								<Error noResults={tableData.length < 1} />
+							)}
+						</div>
+					</div>
+				</div>
+				<div style={{ height: '100px' }}></div>
 			</div>
 		</div>
 	);

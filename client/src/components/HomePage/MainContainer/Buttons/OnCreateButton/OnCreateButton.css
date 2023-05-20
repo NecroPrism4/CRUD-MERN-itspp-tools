@@ -9,14 +9,13 @@
 	padding: 10px;
 	border-radius: 15px;
 	max-width: fit-content;
-	bottom: 20px;
-	right: 40px;
+	right: 30px;
+	bottom: 30px;
 	font-size: 1.2em;
-
-	/* Establece el tamaño inicial del botón */
 	transform: scale(1);
-
-	transition: transform 0.3s ease;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	animation: ButtonApears 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+	z-index: 10;
 }
 
 .OnCreateButton:hover {
@@ -27,4 +26,15 @@
 
 .OnCreateButton .icon {
 	font-size: 1em;
+}
+
+@keyframes ButtonApears {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
 }

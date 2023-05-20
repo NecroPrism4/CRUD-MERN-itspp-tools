@@ -1,10 +1,14 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
 const useInfinitScrolling = (loading, hasMore, setPageNumber) => {
 	const observer = useRef();
 
 	const lastElementRef = useCallback(
 		(node) => {
+			if (observer.current) {
+				observer.current.disconnect(); // Desconecta el observer anterior antes de crear uno nuevo
+			}
+
 			loading
 				? null
 				: (observer.current = new IntersectionObserver((entries) => {
@@ -16,6 +20,15 @@ const useInfinitScrolling = (loading, hasMore, setPageNumber) => {
 		},
 		[hasMore, setPageNumber]
 	);
+
+	useEffect(() => {
+		return () => {
+			// Limpia el observer cuando el componente es desmontado
+			if (observer.current) {
+				observer.current.disconnect();
+			}
+		};
+	}, []);
 
 	return lastElementRef;
 };

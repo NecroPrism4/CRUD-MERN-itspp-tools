@@ -111,6 +111,7 @@ export const getLendings = async (req, res) => {
 						borrower_lastname: true,
 					},
 				},
+				id_borrower: true,
 				items: {
 					select: { items: { select: { item_id: true, item_type: true } } },
 				},
@@ -236,21 +237,14 @@ export const deleteLending = async (req, res) => {
 };
 
 export const createLending = async (req, res) => {
+	const user_id = parseInt(req.query.user_id) || null;
+	const borrower_id = parseInt(req.query.borrower_id) || null;
+	const items = req.query.items || [];
+
 	try {
 		throw new Error('Not implemented');
-		const newLending = await prisma.tabla.create({
-			data: {
-				fechaColumna: {
-					create: {
-						fecha: {
-							now: true,
-						},
-					},
-				},
-				// Otros campos del registro
-				// ...
-			},
-		});
+
+		const newLending = await prisma.tabla.create({});
 		res.send('Registro creado');
 	} catch (err) {
 		console.log(err);

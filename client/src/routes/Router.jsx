@@ -29,6 +29,7 @@ export const router = createBrowserRouter([
 			{ path: 'lendings/', element: <Lendings /> },
 			{ path: 'lendings/:id', element: <Lendings /> },
 			{ path: 'personas', element: <Personas /> },
+			{ path: 'personas/:items', element: <Personas /> },
 			{ path: 'usersmanagement', element: <UsersManagement /> },
 			{ path: 'reports', element: <Reports /> },
 		],

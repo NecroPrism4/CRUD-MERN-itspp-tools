@@ -5,6 +5,7 @@
 
 .SwalTitle {
 	color: var(--active-fg) !important;
+	font-size: 1.4em !important;
 }
 
 .SwalIcon,

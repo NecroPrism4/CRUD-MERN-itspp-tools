@@ -13,7 +13,7 @@ import Textbox from '../../Textbox/Textbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-function PersonasTableRow({ data, keepExpand }) {
+function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 	//Guarda los estados de las variables representadas en los componentes
 	//Saves the states for the variables rendered in the components
 	const [expand, setExpand] = useState(false);
@@ -75,6 +75,24 @@ function PersonasTableRow({ data, keepExpand }) {
 			e.target.textContent = value.replace(/\D/g, '');
 		}
 	};
+
+	//Maneja la función de pegar texto plano en los campos editables del item
+	//Handles the paste function to the editable fields of the item
+	const handlePaste = (e) => {
+		e.preventDefault();
+
+		useEffect(() => {
+			console.log(`keepExpand: ${keepExpand}`);
+			console.log(`expand: ${expand}`);
+			console.log(`isEditing: ${isEditing}`);
+			console.log(keepExpand);
+		}, [keepExpand, expand, isEditing]);
+
+		// Obtener el texto plano pegado sin formato
+		const plainText = e.clipboardData.getData('text/plain');
+		e.target.textContent = plainText;
+	};
+
 	const IDInputRef = useRef(null);
 
 	const borrower_career_Options = [
@@ -94,11 +112,23 @@ function PersonasTableRow({ data, keepExpand }) {
 
 	return (
 		<div
-			className='Persona TableRow'
+			className={`Persona TableRow`}
 			onMouseLeave={() => {
 				setExpand(false);
 			}}
 		>
+			{lend && !isEditing && (
+				<div className='EditButtons Lendings ConfirmDiv'>
+					<button
+						className='ConfirmLending'
+						onClick={() => {
+							handleConfirmLending(rowData.borrower_id);
+						}}
+					>
+						Confirmar para prestar
+					</button>
+				</div>
+			)}
 			<div className='ShowedInfo Personas'>
 				<div className='HeaderPersonaCard'>
 					<div className='PersonaInfo'>
@@ -147,6 +177,7 @@ function PersonasTableRow({ data, keepExpand }) {
 								}}
 								suppressContentEditableWarning
 								ref={IDInputRef}
+								onPaste={handlePaste}
 							>
 								{rowData.borrower_id}
 							</span>
@@ -177,7 +208,13 @@ function PersonasTableRow({ data, keepExpand }) {
 							handleEditData('borrower_notes', e.target.textContent)
 						}
 						suppressContentEditableWarning
-					></p>
+						onPaste={handlePaste}
+					>
+						{rowData.borrower_notes}
+					</p>
+				</div>
+
+				<div className='InteractiveButtons Lendings'>
 					{rowData.lendings.length > 0 && (
 						<p>
 							<Link to={`../lendings/${rowData.lendings[0].lending_id}`}>
@@ -186,8 +223,6 @@ function PersonasTableRow({ data, keepExpand }) {
 							</Link>
 						</p>
 					)}
-				</div>
-				<div className='InteractiveButtons Lendings'>
 					<OnEditButtons
 						handleUpdateReq={handleUpdateReq}
 						handleEditField={(value) => {

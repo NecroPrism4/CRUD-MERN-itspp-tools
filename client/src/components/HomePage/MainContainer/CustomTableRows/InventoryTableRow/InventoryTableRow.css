@@ -7,6 +7,15 @@
 	overflow: hidden;
 }
 
+.SelectItem {
+	border-radius: 50%;
+	opacity: 0.5;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.SelectItem:checked {
+	opacity: 1;
+}
+
 .TableRow p,
 .TableRow h3 {
 	word-break: break-all;
@@ -107,6 +116,7 @@
 
 /* ExpandBar Area */
 .ExpandBar {
+	box-sizing: border-box;
 	opacity: 0;
 	display: flex;
 	position: absolute;

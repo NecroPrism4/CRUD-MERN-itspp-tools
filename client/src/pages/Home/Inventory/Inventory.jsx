@@ -3,7 +3,15 @@ import usePopulateTable from '../../../hooks/usePopulateTable.jsx';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import { CreateReq } from '../../../apis/ApiReqests';
+
+import {
+	ItemForm,
+	ItemFields,
+} from '../../../components/Modals/FormDialogs/HtmlForms/ItemHtml';
+import { ModalAlert } from '../../../components/Modals/Alerts/Alerts';
 import { FormDialog } from '../../../components/Modals/FormDialogs/FormDialogs';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
@@ -27,6 +35,8 @@ function Inventory() {
 	const [isAvailable, setIsAvailable] = useState('');
 	const [queryOption, setQueryOption] = useState('item_type');
 	const [query, setQuery] = useState('');
+	const [selectedItems, setSelectedItems] = useState([]);
+	const [showSelected, setShowSelected] = useState(false);
 
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
@@ -64,10 +74,50 @@ function Inventory() {
 		setPageNumber(1);
 	};
 
-	const handleCreate = () => {
-		const element = FormDialog();
-		console.log(element);
+	//Maneja la creación de un nuevo material
+	//Handles the creation of a new item
+	const handleCreate = async () => {
+		try {
+			const element = await FormDialog('Nuevo Material', ItemForm, ItemFields);
+			const resData = await CreateReq('/api/inventory/createItem', element);
+			if (resData.code == 'ERR_NETWORK') {
+				ModalAlert('error', '¡No se pudo conectar!', true);
+				return;
+			}
+			if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
+				ModalAlert('success', '¡Guardado!', true);
+			} else {
+				ModalAlert('error', '¡No se pudo guardar!', true);
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	};
+
+	//Maneja la selección de los materiales
+	//Handles the selection of the items
+	const handleSelectedItem = (e, value) => {
+		if (e.target.checked) {
+			setSelectedItems((prev) => [...prev, value]);
+		} else {
+			setSelectedItems((prev) => {
+				if (prev.length === 1) {
+					setShowSelected(false);
+				}
+				return prev.filter((item) => item !== value);
+			});
+		}
+	};
+
+	const handleLendItems = () => {
+		console.log(selectedItems);
+	};
+
+	/* 	useEffect(() => {
+		console.log(showSelected);
+		console.log(selectedItems);
+		console.log(Boolean(selectedItems));
+	}, [showSelected, selectedItems]); */
 
 	//Arreglos de opciones que alimenta al componente de selección #SelectComponent
 	//Arrays of options that feed the #SelectComponent
@@ -78,7 +128,6 @@ function Inventory() {
 		{ value: 'item_description', label: 'Descripción' },
 		{ value: 'item_remarks', label: 'Notas' },
 	];
-
 	const availabityOptions = [
 		{ value: '', label: 'Todos' },
 		{ value: 'true', label: 'Disponibles' },
@@ -86,11 +135,23 @@ function Inventory() {
 	];
 
 	return (
-		<>
-			<div className='HomeChildContainer'>
+		<div className='HomeChildContainer'>
+			<div className='ChildMaster'>
 				<div className='tableHeader SearchOptions'>
 					<h2>Materiales</h2>
-					<div>
+					<div className='SearchSelects'>
+						{selectedItems.length > 0 && (
+							<button
+								className={`RoundedRect LookSelected ${
+									showSelected ? 'Active' : ''
+								}`}
+								onClick={() => {
+									setShowSelected(!showSelected);
+								}}
+							>
+								Ver seleccionados
+							</button>
+						)}
 						<p>Buscar por</p>
 						<SelectComponent
 							options={availabityOptions}
@@ -100,37 +161,75 @@ function Inventory() {
 							options={queryOptions}
 							handler={handleQueryOption}
 						/>
-						<SearchBar handler={handleSearch} validInput={true} />
+						<SearchBar
+							handler={handleSearch}
+							validInput={true}
+							visible={true}
+						/>
 					</div>
 				</div>
-				<div
-					className={`tableContainer ShowTableAnim ${
-						tableData.length > 0 ? 'Active' : ''
-					}`}
-				>
-					{tableData.map((object) => {
-						if (tableData.length === tableData.lastIndexOf(object) + 1) {
-							return (
-								<div key={object.item_id} ref={lastElementRef}>
-									<InventoryTableRow data={object} />
-								</div>
-							);
-						} else {
-							return <InventoryTableRow key={object.item_id} data={object} />;
-						}
-					})}
 
-					<div>{loading && <Loading />}</div>
-					<div>{error && <Error />}</div>
-					<div>
-						{!loading && !error && tableData.length < 1 && (
-							<Error noResults={tableData.length < 1} />
-						)}
+				<div className='TableScroll'>
+					<div
+						className={`tableContainer ShowTableAnim ${
+							tableData.length > 0 ? 'Active' : ''
+						}`}
+					>
+						{!showSelected &&
+							tableData.map((object) => {
+								if (tableData.length === tableData.lastIndexOf(object) + 1) {
+									return (
+										<div key={object.item_id} ref={lastElementRef}>
+											<InventoryTableRow
+												data={object}
+												handleSelected={handleSelectedItem}
+												selectedItems={selectedItems}
+											/>
+										</div>
+									);
+								} else {
+									return (
+										<InventoryTableRow
+											key={object.item_id}
+											data={object}
+											handleSelected={handleSelectedItem}
+											selectedItems={selectedItems}
+										/>
+									);
+								}
+							})}
+
+						{showSelected &&
+							tableData
+								.filter((object) => selectedItems.includes(object.item_id))
+								.map((object) => (
+									<InventoryTableRow
+										key={object.item_id}
+										data={object}
+										handleSelected={handleSelectedItem}
+										selectedItems={selectedItems}
+									/>
+								))}
+
+						<div>{loading && <Loading />}</div>
+						<div>{error && <Error />}</div>
+						<div>
+							{!loading && !error && tableData.length < 1 && (
+								<Error noResults={tableData.length < 1} />
+							)}
+						</div>
 					</div>
 				</div>
+
+				<div style={{ height: '100px' }}></div>
 			</div>
-			<OnCreateButton handler={handleCreate} />
-		</>
+			{selectedItems.length > 0 && (
+				<button className='OnCreateButton LendButton' onClick={handleLendItems}>
+					<Link to={`../personas/${selectedItems}`}>Prestar Materiales</Link>
+				</button>
+			)}
+			{!error && <OnCreateButton handler={handleCreate} />}
+		</div>
 	);
 }
 
