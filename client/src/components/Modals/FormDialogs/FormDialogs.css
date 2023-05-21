@@ -4,6 +4,9 @@
 	color: var(--active-fg) !important;
 	border-radius: 10px;
 	background: var(--tertiary-bg);
+	outline: none !important;
+	border: 1px solid var(--inactive-fg);
+	padding: 0 5px 0 5px;
 }
 
 .SwalHtmlContainer .InputError {

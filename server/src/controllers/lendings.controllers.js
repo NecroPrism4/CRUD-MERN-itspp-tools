@@ -239,14 +239,39 @@ export const deleteLending = async (req, res) => {
 export const createLending = async (req, res) => {
 	const user_id = parseInt(req.query.user_id) || null;
 	const borrower_id = parseInt(req.query.borrower_id) || null;
-	const items = req.query.items || [];
+	const lending_remarks = req.query.lending_remarks || '';
+	const items = req.query.items.split(',').map((item) => parseInt(item)) || [];
 
 	try {
-		throw new Error('Not implemented');
+		const newLending = await prisma.tab_lendings.create({
+			data: {
+				id_user: user_id,
+				id_borrower: borrower_id,
+				lending_borrowdate: new Date(),
+				lending_remarks: lending_remarks,
+			},
+		});
 
-		const newLending = await prisma.tabla.create({});
-		res.send('Registro creado');
+		await prisma.tab_inventory.updateMany({
+			where: {
+				item_id: { in: items },
+			},
+			data: { item_available: false },
+		});
+
+		await prisma.lendingsToInventory.createMany({
+			data: items.map((item) => ({
+				id_item: parseInt(item),
+				id_lending: newLending.lending_id,
+			})),
+		});
+
+		console.log(newLending);
+		res.send(newLending);
 	} catch (err) {
+		if (err.code === 'P2002') {
+			res.status(400).send('Lending already exists');
+		}
 		console.log(err);
 		res.status(500).send('Internal server error: ' + err);
 	}

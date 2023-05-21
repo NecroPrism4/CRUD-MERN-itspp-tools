@@ -220,7 +220,7 @@ function LendingsTableRow({ data }) {
 						) : null}
 						{rowData.returned && !data.returned ? (
 							<button className='CancelButton' onClick={handleCancelReturn}>
-								Cancelar
+								Cancelar devolución
 							</button>
 						) : null}
 					</div>

@@ -25,7 +25,6 @@ import OnCreateButton from '../../../components/HomePage/MainContainer/Buttons/O
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
-import { set } from 'date-fns';
 
 function Personas() {
 	const { handleTitle } = useContext(SectionContext);
@@ -147,41 +146,57 @@ function Personas() {
 	};
 
 	const handleConfirmLending = async (borrower_id) => {
-		console.log(borrower_id);
-		console.log(items);
+		const html = `<input id="lending_remarks" placeholder="Notas del prestamo"></input>`;
 
-		const object = {
-			user_id: localStorage.getItem('user_id') || 1,
-			borrower_id: borrower_id,
-			items: items,
-		};
-
-		const confirm = await ConfirmModal('info', 'Confirmar el préstamo');
-
-		if (confirm.isConfirmed) {
+		const confirm = await ConfirmModal(
+			'info',
+			'Confirmar el préstamo',
+			'Confirmar',
+			'Cancelar'
+		);
+		console.log(confirm);
+		if (confirm) {
+			const notes = await ConfirmModal(
+				'info',
+				'¿Desea agregar alguna nota?',
+				'ok',
+				'',
+				html,
+				'lending_remarks'
+			);
 			console.log(confirm);
-			try {
-				const resData = await CreateReq(
-					'/api/prestamos/createPrestamo',
-					object
-				);
-				if (resData.code == 'ERR_NETWORK') {
-					ModalAlert('error', '¡No se pudo conectar!', true);
-					return;
-				}
-				if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
+			const object = {
+				user_id: localStorage.getItem('user_id') || 1,
+				borrower_id: borrower_id,
+				items: items,
+				lending_remarks: notes || '',
+			};
+
+			if (confirm) {
+				console.log(confirm);
+				try {
+					const resData = await CreateReq(
+						'/api/lendings/createLending',
+						object
+					);
+					if (resData.code == 'ERR_NETWORK') {
+						ModalAlert('error', '¡No se pudo conectar!', true);
+						return;
+					}
+					if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
+						console.log(resData);
+						ModalAlert('success', '¡Guardado!', true);
+					} else {
+						ModalAlert('error', '¡No se pudo guardar!', true);
+					}
 					console.log(resData);
-					ModalAlert('success', '¡Guardado!', true);
-				} else {
-					ModalAlert('error', '¡No se pudo guardar!', true);
+				} catch (error) {
+					console.log(err);
+					ModalAlert('error', '¡Hubo un error!', true);
 				}
-				console.log(resData);
-			} catch (error) {
-				console.log(err);
-				ModalAlert('error', '¡Hubo un error!', true);
+			} else {
+				console.log(confirm);
 			}
-		} else {
-			console.log(confirm);
 		}
 	};
 

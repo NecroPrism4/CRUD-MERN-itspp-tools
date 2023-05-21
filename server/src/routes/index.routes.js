@@ -11,6 +11,7 @@ import {
 	updateLending,
 	returnLending,
 	cancelReturnLending,
+	createLending,
 } from '../controllers/lendings.controllers.js';
 import {
 	getUsers,
@@ -41,6 +42,7 @@ router.get('/api/lendings/get', getLendings);
 router.put('/api/lendings/updateLending', updateLending);
 router.put('/api/lendings/returnLending', returnLending);
 router.put('/api/lendings/cancelReturnLending', cancelReturnLending);
+router.post('/api/lendings/createLending', createLending);
 
 //PERSONAS ROUTES
 router.get('/api/personas/getTabs', getPersonasTabOptions);

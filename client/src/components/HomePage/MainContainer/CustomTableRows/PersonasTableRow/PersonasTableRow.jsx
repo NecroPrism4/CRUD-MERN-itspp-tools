@@ -80,14 +80,6 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 	//Handles the paste function to the editable fields of the item
 	const handlePaste = (e) => {
 		e.preventDefault();
-
-		useEffect(() => {
-			console.log(`keepExpand: ${keepExpand}`);
-			console.log(`expand: ${expand}`);
-			console.log(`isEditing: ${isEditing}`);
-			console.log(keepExpand);
-		}, [keepExpand, expand, isEditing]);
-
 		// Obtener el texto plano pegado sin formato
 		const plainText = e.clipboardData.getData('text/plain');
 		e.target.textContent = plainText;
@@ -117,10 +109,10 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 				setExpand(false);
 			}}
 		>
-			{lend && !isEditing && (
+			{lend && (
 				<div className='EditButtons Lendings ConfirmDiv'>
 					<button
-						className='ConfirmLending'
+						className={isEditing ? 'DisabledConfirmLending' : 'ConfirmLending'}
 						onClick={() => {
 							handleConfirmLending(rowData.borrower_id);
 						}}

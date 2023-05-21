@@ -6,48 +6,60 @@ function getTheme() {
 	return localStorage.getItem('theme');
 }
 
-export async function ConfirmModal(icon, title) {
-	const confirm = await Swal.fire({
-		icon: icon,
-		title: title,
-		toast: false,
-		timer: false,
-		showConfirmButton: true,
-		showCancelButton: true,
-		confirmButtonText: 'Confirmar',
-		cancelButtonText: 'Cancelar',
-		allowOutsideClick: false,
-		allowEscapeKey: false,
+export function ConfirmModal(icon, title, acceptBtn, cancelBtn, html, id) {
+	return new Promise((resolve, reject) => {
+		Swal.fire({
+			icon: icon,
+			title: title,
+			toast: false,
+			timer: false,
+			showConfirmButton: acceptBtn ? true : false,
+			showCancelButton: cancelBtn ? true : false,
+			confirmButtonText: acceptBtn,
+			cancelButtonText: cancelBtn,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			html: html,
 
-		didOpen: () => {
-			const currentTheme = getTheme();
-			const container = Swal.getContainer();
-			container.setAttribute('data-theme', `${currentTheme}`);
-		},
+			didOpen: () => {
+				const currentTheme = getTheme();
+				const container = Swal.getContainer();
+				container.setAttribute('data-theme', `${currentTheme}`);
+			},
 
-		customClass: {
-			container: 'SwalContainer ',
-			popup: 'SwalPopup',
-			header: 'SwalHeader',
-			title: 'SwalTitle',
-			confirmButton: 'SwalConfirmButton',
-			closeButton: 'SwalCloseButton',
+			preConfirm: () => {
+				if (html != null) {
+					const notas = document.getElementById(id);
+					resolve(notas.value);
+				} else {
+					resolve(true);
+				}
+			},
 
-			/* closeButton: '...', */
-			icon: 'SwalIcon',
-			image: 'SwalImage',
-			/* htmlContainer: '...',
-			input: '...',
+			customClass: {
+				container: 'SwalContainer ',
+				popup: 'SwalPopup',
+				header: 'SwalHeader',
+				title: 'SwalTitle',
+				icon: 'SwalIcon',
+				image: 'SwalImage',
+				input: 'SwalInput',
+				confirmButton: 'SwalConfirmButton',
+				htmlContainer: 'SwalHtmlContainer',
+				cancelButton: 'SwalCancelButton',
+				/* closeButton: '...', */
+				/* 
 			inputLabel: '...',
 			validationMessage: '...',
 			actions: '...',
-			confirmButton: '...',
+			
 			denyButton: '...',
-			cancelButton: '...',
+			
 			loader: '...',
 			footer: '....',
 			timerProgressBar: '....', */
-		},
+			},
+		});
+		return confirm;
 	});
-	return confirm;
 }
