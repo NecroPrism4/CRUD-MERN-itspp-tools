@@ -32,18 +32,11 @@
 	position: relative;
 	box-sizing: border-box;
 	background: var(--secundary-bg);
-	padding: 0px 20px 0px 20px;
 	border-radius: 25px;
 	color: var(--inactive-fg);
 	border: 2px solid hsla(0, 0%, 0%, 0.1);
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-	overflow: auto;
 	height: 90vh;
-	gap: 15px;
-}
-
-.HomeChildContainer::-webkit-scrollbar-thumb:hover {
-	background: var(--inactive-fg);
 }
 
 .HomeRighSideContainer {

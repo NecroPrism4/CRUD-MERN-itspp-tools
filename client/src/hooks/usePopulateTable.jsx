@@ -54,7 +54,7 @@ function usePopulateTable(
 		return () => cancel();
 	}, [query, pageNumber, api, method, conditional, dateFilter, queryOption]);
 
-	return { loading, error, tableData, hasMore };
+	return { loading, error, tableData, hasMore, setTableData };
 }
 
 export default usePopulateTable;

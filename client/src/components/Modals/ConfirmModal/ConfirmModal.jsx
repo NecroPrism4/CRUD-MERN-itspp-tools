@@ -1,22 +1,25 @@
-import './FormDialogs.css';
+import '../FormDialogs/FormDialogs.css';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import Swal from 'sweetalert2';
 
 function getTheme() {
 	return localStorage.getItem('theme');
 }
 
-export function FormDialog(title, Form, Fields) {
+export function ConfirmModal(icon, title, acceptBtn, cancelBtn, html, id) {
 	return new Promise((resolve, reject) => {
 		Swal.fire({
+			icon: icon,
 			title: title,
-			html: Form,
-			icon: 'info',
-			showCancelButton: true,
-			cancelButtonText: 'Cancelar',
-			showCloseButton: true,
+			toast: false,
+			timer: false,
+			showConfirmButton: acceptBtn ? true : false,
+			showCancelButton: cancelBtn ? true : false,
+			confirmButtonText: acceptBtn,
+			cancelButtonText: cancelBtn,
 			allowOutsideClick: false,
 			allowEscapeKey: false,
-			allowEnterKey: false,
+			html: html,
 
 			didOpen: () => {
 				const currentTheme = getTheme();
@@ -25,27 +28,12 @@ export function FormDialog(title, Form, Fields) {
 			},
 
 			preConfirm: () => {
-				const borrowerIdInput = document.getElementById('borrower_id');
-				const borrowerTypeInput = document.getElementById('borrower_type');
-				const borrowerIdValue = borrowerIdInput.value.trim();
-				const borrowerTypeValue = borrowerTypeInput.value;
-
-				if (borrowerTypeValue !== 'Externo' && !/^\d+$/.test(borrowerIdValue)) {
-					borrowerIdInput.setCustomValidity(
-						'Este campo debe contener solo números'
-					);
-					borrowerIdInput.classList.add('InputError');
-					return false;
+				if (html != null) {
+					const notas = document.getElementById(id);
+					resolve(notas.value);
+				} else {
+					resolve(true);
 				}
-
-				borrowerIdInput.setCustomValidity('');
-				borrowerIdInput.classList.remove('error');
-				const formData = {};
-
-				Fields.forEach((element) => {
-					formData[element[0]] = document.getElementById(element[0]).value;
-				});
-				resolve(formData);
 			},
 
 			customClass: {
@@ -72,5 +60,6 @@ export function FormDialog(title, Form, Fields) {
 			timerProgressBar: '....', */
 			},
 		});
+		return confirm;
 	});
 }

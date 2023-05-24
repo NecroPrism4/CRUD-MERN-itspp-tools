@@ -59,6 +59,31 @@ export const getInventoryById = async (req, res) => {
 	const Id = parseInt(req.query.Id) || 1; // Establecer un valor predeterminado para page
 	try {
 		const item = await prisma.tab_inventory.findMany({
+			include: {
+				lendings: {
+					select: {
+						lendings: {
+							select: {
+								lending_id: true,
+								returned: true,
+								borrower: {
+									select: {
+										borrower_id: true,
+										borrower_name: true,
+										borrower_lastname: true,
+										borrower_type: true,
+									},
+								},
+							},
+						},
+					},
+					where: {
+						lendings: {
+							returned: { equals: false },
+						},
+					},
+				},
+			},
 			where: {
 				item_id: Id,
 			},
@@ -95,6 +120,60 @@ export const updateItem = async (req, res) => {
 		} else {
 			res.status(404).send('Item not found');
 		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).send('Internal server error');
+	}
+};
+
+export const createItem = async (req, res) => {
+	const item_type = req.query.item_type || '';
+	const item_brand = req.query.item_brand || '';
+	const item_model = req.query.item_model || '';
+	const item_description = req.query.item_description || '';
+	const item_remarks = req.query.item_remarks || '';
+	const item_available = toBool(req.query.item_available) || true;
+	const item_lab_id = parseInt(req.query.item_lab_id) || 1;
+
+	try {
+		const createResponse = await prisma.tab_inventory.create({
+			data: {
+				item_type: item_type,
+				item_brand: item_brand,
+				item_model: item_model,
+				item_description: item_description,
+				item_remarks: item_remarks,
+				item_available: item_available,
+				item_lab_id: item_lab_id,
+			},
+			include: {
+				lendings: {
+					select: {
+						lendings: {
+							select: {
+								lending_id: true,
+								returned: true,
+								borrower: {
+									select: {
+										borrower_id: true,
+										borrower_name: true,
+										borrower_lastname: true,
+										borrower_type: true,
+									},
+								},
+							},
+						},
+					},
+					where: {
+						lendings: {
+							returned: { equals: false },
+						},
+					},
+				},
+			},
+		});
+		console.log(createResponse);
+		res.send(createResponse);
 	} catch (err) {
 		console.log(err);
 		res.status(500).send('Internal server error');

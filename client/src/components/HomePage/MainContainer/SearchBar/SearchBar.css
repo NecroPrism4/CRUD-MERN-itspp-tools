@@ -19,3 +19,7 @@
 	outline: none;
 	caret-color: var(--primary-bg); /* Cambiar el color de la línea del cursor */
 }
+
+.SearchBar.Hidden {
+	display: none;
+}

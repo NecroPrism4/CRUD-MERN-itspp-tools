@@ -67,6 +67,12 @@ export const updateUser = async (req, res) => {
 				...(lab_id ? { lab_id: lab_id } : {}),
 			},
 		});
+
+		await prisma.tab_lendings.updateMany({
+			where: { id_user: user_id },
+			data: { ...(new_user_id ? { user_id: new_user_id } : {}) },
+		});
+
 		res.send(updateUser);
 	} catch (err) {
 		console.log(err);

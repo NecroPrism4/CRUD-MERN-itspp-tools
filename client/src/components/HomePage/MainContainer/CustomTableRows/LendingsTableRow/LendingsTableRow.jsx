@@ -213,14 +213,14 @@ function LendingsTableRow({ data }) {
 						cancelEdit={handleCancelEdit}
 					/>
 					<div className='EditButtons Lendings'>
-						{rowData.returned ? null : (
+						{!rowData.returned && !isEditable ? (
 							<button onClick={handleReturnLending}>
 								Confirmar Devolución
 							</button>
-						)}
+						) : null}
 						{rowData.returned && !data.returned ? (
 							<button className='CancelButton' onClick={handleCancelReturn}>
-								Cancelar
+								Cancelar devolución
 							</button>
 						) : null}
 					</div>

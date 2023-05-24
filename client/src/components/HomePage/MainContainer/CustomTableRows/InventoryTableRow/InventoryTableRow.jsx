@@ -9,13 +9,16 @@ import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-function InventoryTableRow({ data }) {
+function InventoryTableRow({ data, selectedItems, handleSelected }) {
 	//Guarda los estados de las variables representadas en los componentes
 	//Saves the states for the variables rendered in the components
 	const [expand, setExpand] = useState(false);
 	const [isEditable, setIsEditable] = useState(false);
 	const [rowData, setRowData] = useState(data);
 	const [edited, setEdited] = useState(false);
+	const [isIncluded, setIsIncluded] = useState(
+		selectedItems.includes(data.item_id)
+	);
 
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
@@ -35,10 +38,10 @@ function InventoryTableRow({ data }) {
 			setEdited(false);
 			return;
 		}
-
 		//Envía la solicitud de actualización al servidor
 		//Sends the update request to the server
 		const resData = await UpdateReq('/api/inventory/updateItem', rowData);
+		console.log(resData);
 		if (resData.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
@@ -64,6 +67,16 @@ function InventoryTableRow({ data }) {
 		setExpand(!expand);
 	}
 
+	//Maneja la función de pegar texto plano en los campos editables del item
+	//Handles the paste function to the editable fields of the item
+	const handlePaste = (e) => {
+		e.preventDefault();
+
+		// Obtener el texto plano pegado sin formato
+		const plainText = e.clipboardData.getData('text/plain');
+		e.target.textContent = plainText;
+	};
+
 	return (
 		<div
 			className='TableRow Expand'
@@ -72,16 +85,33 @@ function InventoryTableRow({ data }) {
 			}}
 		>
 			<div className='ShowedInfo'>
-				<div>
-					<p>ID: {rowData.item_id}</p>
-					<h3
-						contentEditable={isEditable}
-						onBlur={(e) => handleEditData('item_type', e)}
-						suppressContentEditableWarning
-					>
-						{rowData.item_type}
-					</h3>
+				<div style={{ display: 'flex', gap: '25px' }}>
+					<input
+						className='SelectItem'
+						type='checkbox'
+						defaultChecked={isIncluded}
+						onClick={(e) => {
+							if (rowData.item_available) {
+								handleSelected(e, rowData.item_id);
+							} else {
+								ModalAlert('error', '¡No disponible!', true);
+								e.target.checked = false;
+							}
+						}}
+					/>
+					<div>
+						<p>ID: {rowData.item_id}</p>
+						<h3
+							contentEditable={isEditable}
+							onBlur={(e) => handleEditData('item_type', e)}
+							suppressContentEditableWarning
+							onPaste={handlePaste}
+						>
+							{rowData.item_type}
+						</h3>
+					</div>
 				</div>
+
 				<div className='BrandModel'>
 					<div>
 						<h5>Marca: </h5>
@@ -89,6 +119,7 @@ function InventoryTableRow({ data }) {
 							contentEditable={isEditable}
 							onBlur={(e) => handleEditData('item_brand', e)}
 							suppressContentEditableWarning
+							onPaste={handlePaste}
 						>
 							{rowData.item_brand}
 						</p>
@@ -99,6 +130,7 @@ function InventoryTableRow({ data }) {
 							contentEditable={isEditable}
 							onBlur={(e) => handleEditData('item_model', e)}
 							suppressContentEditableWarning
+							onPaste={handlePaste}
 						>
 							{rowData.item_model}
 						</p>
@@ -112,6 +144,7 @@ function InventoryTableRow({ data }) {
 					{rowData.item_available ? 'Disponible' : 'No Disponible'}
 				</h4>
 			</div>
+
 			<div className={`Expandible ${expand || isEditable ? 'Show' : ''}`}>
 				<div>
 					<h4>Descripción</h4>
@@ -119,6 +152,7 @@ function InventoryTableRow({ data }) {
 						contentEditable={isEditable}
 						onBlur={(e) => handleEditData('item_description', e)}
 						suppressContentEditableWarning
+						onPaste={handlePaste}
 					>
 						{rowData.item_description}
 					</p>
@@ -129,6 +163,7 @@ function InventoryTableRow({ data }) {
 						contentEditable={isEditable}
 						onBlur={(e) => handleEditData('item_remarks', e)}
 						suppressContentEditableWarning
+						onPaste={handlePaste}
 					>
 						{rowData.item_remarks}
 					</p>

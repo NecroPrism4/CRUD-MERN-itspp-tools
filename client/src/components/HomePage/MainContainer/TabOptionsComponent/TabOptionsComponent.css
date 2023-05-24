@@ -2,11 +2,12 @@
 	display: flex;
 	overflow-x: auto;
 	width: 50%;
-	align-items: center;
+	height: fit-content;
 }
 
 .RollItemsContainer {
 	display: flex;
+	flex-wrap: nowrap !important;
 	gap: 10px;
 }
 
