@@ -1,0 +1,76 @@
+.HomeChildContainer.Dashboard {
+	background: none;
+	border: none;
+}
+
+.DashboardContainer {
+	background: var(--secundary-bg);
+	border-radius: 25px;
+	filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
+.HomeTitle {
+	margin-top: 10px;
+}
+
+.ActionsContainer > div {
+	display: flex;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	flex-direction: row;
+	gap: 40px;
+	padding: 25px 35px 25px 35px;
+}
+
+.RoundedRect.ImageButton {
+	position: relative; /* Asegura que la imagen esté posicionada correctamente dentro del botón */
+	overflow: hidden; /* Evita que la imagen se desborde del botón si tiene dimensiones diferentes */
+	flex-basis: calc(50% - 20px);
+	height: 150px;
+	margin: unset;
+	padding: unset;
+	transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+	color: var(--inactive-fg);
+}
+
+.RoundedRect.ImageButton::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(0deg, rgba(0, 0, 0) -15px, transparent 65%);
+}
+
+.RoundedRect.ImageButton:hover {
+	scale: 1.05;
+	color: var(--active-fg);
+}
+
+.RoundedRect.ImageButton img {
+	z-index: 1;
+	width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor (botón) */
+	height: auto; /* Ajusta la altura de la imagen automáticamente para mantener la proporción */
+	display: block; /* Convierte la imagen en un bloque de nivel para ocupar todo el ancho disponible */
+}
+
+.RoundedRect.ImageButton > div > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	padding-left: 20px;
+	padding-bottom: 10px;
+}
+
+.RoundedRect.ImageButton > div > div h4 {
+	align-self: end;
+}
+
+.Icon {
+	font-size: 2em;
+	position: absolute;
+}
