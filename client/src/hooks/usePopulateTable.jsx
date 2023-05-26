@@ -60,7 +60,7 @@ function usePopulateTable(
 			})
 			.catch((e) => {
 				console.log(e);
-				if (e.response.status == 404) {
+				if (e.response?.status == 404) {
 					dispatch({ type: 'LOGOUT' });
 				}
 				if (axios.isCancel(e)) return;

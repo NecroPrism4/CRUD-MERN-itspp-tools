@@ -18,7 +18,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function SideMenu(props) {
 	const [ShowMenu, setShowMenu] = useState(false);
 
-	const { user } = useAuthContext();
+	const { user, dispatch } = useAuthContext();
+
+	const handleLogout = () => {
+		dispatch({ type: 'LOGOUT' });
+	};
 
 	return (
 		<div className='MenuandUser'>
@@ -92,7 +96,7 @@ function SideMenu(props) {
 					alt='user'
 				/>
 				<div>
-					<p>NombreUsuario</p>
+					<p onClick={handleLogout}>NombreUsuario</p>
 					<span>Puesto Usuario </span>
 				</div>
 			</div>

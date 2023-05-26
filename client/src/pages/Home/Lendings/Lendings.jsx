@@ -33,7 +33,7 @@ function Lendings() {
 	const [pageNumber, setPageNumber] = useState(1);
 	const [isActive, setIsActive] = useState('false');
 	const [queryOption, setQueryOption] = useState(
-		id ? 'borrower_name' : 'lending_id'
+		id ? 'lending_id' : 'borrower_name'
 	);
 	const [query, setQuery] = useState(id);
 	const [datesToFilter, setDatesToFilter] = useState([]);
