@@ -4,6 +4,7 @@ import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
 import { SectionContext } from '../../../context/SectionContext';
 import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import { CreateReq } from '../../../apis/ApiReqests';
 
@@ -37,6 +38,8 @@ function Inventory() {
 	const [query, setQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [showSelected, setShowSelected] = useState(false);
+
+	const { user } = useAuthContext();
 
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
@@ -220,7 +223,6 @@ function Inventory() {
 						</div>
 					</div>
 				</div>
-
 				<div style={{ height: '100px' }}></div>
 			</div>
 			{selectedItems.length > 0 && (
@@ -228,7 +230,9 @@ function Inventory() {
 					<Link to={`../personas/${selectedItems}`}>Prestar Materiales</Link>
 				</button>
 			)}
-			{!error && <OnCreateButton handler={handleCreate} />}
+			{!error && user.user_type == 'normal' && (
+				<OnCreateButton handler={handleCreate} />
+			)}
 		</div>
 	);
 }

@@ -4,6 +4,7 @@ import { SectionContext } from '../../../context/SectionContext';
 import { useParams } from 'react-router-dom';
 import usePopulateTable from '../../../hooks/usePopulateTable';
 import useInfinitScrolling from '../../../hooks/useInfiniteScrolling.jsx';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import { onlyNumbers } from '../../../helpers/regexes';
 import { CreateReq } from '../../../apis/ApiReqests';
@@ -43,6 +44,8 @@ function Personas() {
 	const [userTypeQuery, setUserTypeQuery] = useState([]);
 	const [queryOption, setQueryOption] = useState('borrower_id');
 	const [query, setQuery] = useState('');
+
+	const { user } = useAuthContext();
 
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
@@ -303,7 +306,9 @@ function Personas() {
 
 				<div style={{ height: '100px' }}></div>
 			</div>
-			{!error && <OnCreateButton handler={handleCreate} />}
+			{!error && user.user_type == 'normal' && (
+				<OnCreateButton handler={handleCreate} />
+			)}
 		</div>
 	);
 }

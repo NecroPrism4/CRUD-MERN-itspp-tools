@@ -2,6 +2,7 @@ import './InventoryTableRow.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { UpdateReq } from '../../../../../apis/ApiReqests.js';
+import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
@@ -19,6 +20,12 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 	const [isIncluded, setIsIncluded] = useState(
 		selectedItems.includes(data.item_id)
 	);
+
+	const { user } = useAuthContext();
+
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
 
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
@@ -73,6 +80,7 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 		e.preventDefault();
 
 		// Obtener el texto plano pegado sin formato
+		// Get pasted unformatted plain text
 		const plainText = e.clipboardData.getData('text/plain');
 		e.target.textContent = plainText;
 	};
@@ -86,19 +94,21 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 		>
 			<div className='ShowedInfo'>
 				<div style={{ display: 'flex', gap: '25px' }}>
-					<input
-						className='SelectItem'
-						type='checkbox'
-						defaultChecked={isIncluded}
-						onClick={(e) => {
-							if (rowData.item_available) {
-								handleSelected(e, rowData.item_id);
-							} else {
-								ModalAlert('error', '¡No disponible!', true);
-								e.target.checked = false;
-							}
-						}}
-					/>
+					{user.user_type == 'normal' && (
+						<input
+							className='SelectItem'
+							type='checkbox'
+							defaultChecked={isIncluded}
+							onClick={(e) => {
+								if (rowData.item_available) {
+									handleSelected(e, rowData.item_id);
+								} else {
+									ModalAlert('error', '¡No disponible!', true);
+									e.target.checked = false;
+								}
+							}}
+						/>
+					)}
 					<div>
 						<p>ID: {rowData.item_id}</p>
 						<h3
@@ -190,14 +200,16 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 							</button>
 						</div>
 					)}
-					<OnEditButtons
-						handleUpdateReq={handleUpdateReq}
-						handleEditField={(value) => {
-							setIsEditable(value);
-						}}
-						isEditing={isEditable}
-						cancelEdit={handleCancelEdit}
-					></OnEditButtons>
+					{user.user_type == 'normal' && (
+						<OnEditButtons
+							handleUpdateReq={handleUpdateReq}
+							handleEditField={(value) => {
+								setIsEditable(value);
+							}}
+							isEditing={isEditable}
+							cancelEdit={handleCancelEdit}
+						></OnEditButtons>
+					)}
 				</div>
 			</div>
 

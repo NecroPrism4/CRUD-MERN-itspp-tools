@@ -98,3 +98,16 @@
 		line-height: unset;
 	}
 }
+
+.InteractiveButtons.Lendings p {
+	grid-column: 1;
+}
+.InteractiveButtons.Lendings div {
+	grid-column: 2;
+}
+
+.InteractiveButtons.Lendings a {
+	position: relative;
+	z-index: 10;
+	justify-items: flex-start;
+}

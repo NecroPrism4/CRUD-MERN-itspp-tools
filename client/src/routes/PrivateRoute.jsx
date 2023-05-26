@@ -17,9 +17,6 @@ function PrivateRoute({ element: Element, elementName }) {
 	const validUser =
 		user && (user.user_type == 'admin' || user.user_type == 'normal');
 
-	/* console.log(validUser);
-	console.log(elementName); */
-
 	if (elementName == 'Home' && !user) {
 		console.log('if 1');
 		return <Navigate to='/login' replace />;

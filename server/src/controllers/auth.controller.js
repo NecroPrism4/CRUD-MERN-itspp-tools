@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../config.js';
+import { transporter } from '../helpers/mailer.js';
 
 export const loginUser = async (req, res) => {
 	const user_email = req.body.user_email || '';
@@ -11,6 +12,19 @@ export const loginUser = async (req, res) => {
 	try {
 		const user = await prisma.tab_users.findUnique({
 			where: { user_email },
+			/* select: {
+				user_name: true,
+				user_lastname: true,
+				user_email: true,
+				user_id: true,
+				user_type: true,
+				lab: {
+					select: {
+						lab_id: true,
+						lab_name: true,
+					},
+				},
+			}, */
 			include: {
 				lab: {
 					select: {
@@ -33,7 +47,7 @@ export const loginUser = async (req, res) => {
 			// Contraseña coincidente, el usuario está autenticado
 			//Correct password, user is authenticated
 			const token = jwt.sign({ id: user.user_id }, jwtSecret, {
-				expiresIn: '8h',
+				expiresIn: '8s',
 			});
 			return res.status(200).send({ ...user, token });
 		} else {

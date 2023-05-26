@@ -2,6 +2,7 @@ import './LendingsTableRow.css';
 import { useState, useEffect } from 'react';
 import useDateFormater from '../../../../../hooks/useDateFormater';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
+import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
@@ -18,6 +19,8 @@ function LendingsTableRow({ data }) {
 	const [rowData, setRowData] = useState(data);
 	const [edited, setEdited] = useState(false);
 	const [resData, setResData] = useState();
+
+	const { user } = useAuthContext();
 
 	//Se encarga de que las fechas de la base de datos sean más comprensibles para los humanos
 	//Takes care of making the dates from the database more comprehensible for humans
@@ -202,29 +205,31 @@ function LendingsTableRow({ data }) {
 					>
 						{rowData.lending_remarks}
 					</p>
-				</div>
-				<div className='InteractiveButtons Lendings'>
-					<OnEditButtons
-						handleUpdateReq={handleUpdateReq}
-						handleEditField={(value) => {
-							setIsEditable(value);
-						}}
-						isEditing={isEditable}
-						cancelEdit={handleCancelEdit}
-					/>
-					<div className='EditButtons Lendings'>
-						{!rowData.returned && !isEditable ? (
-							<button onClick={handleReturnLending}>
-								Confirmar Devolución
-							</button>
-						) : null}
-						{rowData.returned && !data.returned ? (
-							<button className='CancelButton' onClick={handleCancelReturn}>
-								Cancelar devolución
-							</button>
-						) : null}
+				</div>{' '}
+				{user.user_type == 'normal' && (
+					<div className='InteractiveButtons Lendings'>
+						<OnEditButtons
+							handleUpdateReq={handleUpdateReq}
+							handleEditField={(value) => {
+								setIsEditable(value);
+							}}
+							isEditing={isEditable}
+							cancelEdit={handleCancelEdit}
+						/>
+						<div className='EditButtons Lendings'>
+							{!rowData.returned && !isEditable ? (
+								<button onClick={handleReturnLending}>
+									Confirmar Devolución
+								</button>
+							) : null}
+							{rowData.returned && !data.returned ? (
+								<button className='CancelButton' onClick={handleCancelReturn}>
+									Cancelar devolución
+								</button>
+							) : null}
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 
 			<div

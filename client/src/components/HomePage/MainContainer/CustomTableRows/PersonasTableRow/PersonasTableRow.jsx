@@ -2,7 +2,7 @@ import './PersonasTableRow.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
-
+import { useAuthContext } from '../../../../../hooks/useAuthContext';
 import { onlyNumbers } from '../../../../../helpers/regexes';
 
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
@@ -20,6 +20,8 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [rowData, setRowData] = useState(data);
 	const [edited, setEdited] = useState(false);
+
+	const { user } = useAuthContext();
 
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
@@ -109,7 +111,7 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 				setExpand(false);
 			}}
 		>
-			{lend && (
+			{user.user_type == 'normal' && lend && (
 				<div className='EditButtons Lendings ConfirmDiv'>
 					<button
 						className={isEditing ? 'DisabledConfirmLending' : 'ConfirmLending'}
@@ -215,14 +217,18 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 							</Link>
 						</p>
 					)}
-					<OnEditButtons
-						handleUpdateReq={handleUpdateReq}
-						handleEditField={(value) => {
-							setIsEditing(value);
-						}}
-						isEditing={isEditing}
-						cancelEdit={handleCancelEdit}
-					/>
+					{user.user_type == 'normal' && (
+						<div>
+							<OnEditButtons
+								handleUpdateReq={handleUpdateReq}
+								handleEditField={(value) => {
+									setIsEditing(value);
+								}}
+								isEditing={isEditing}
+								cancelEdit={handleCancelEdit}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 

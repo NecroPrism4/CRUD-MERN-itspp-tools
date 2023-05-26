@@ -17,7 +17,7 @@ function usePopulateTable(
 	const [tableData, setTableData] = useState([]);
 	const [hasMore, setHasMore] = useState(false);
 
-	const { user } = useAuthContext();
+	const { user, dispatch } = useAuthContext();
 	/* useEffect(() => {
 		if (!user) {
 			// Si no hay usuario, no se realiza la llamada a la API
@@ -59,6 +59,10 @@ function usePopulateTable(
 				setLoading(false);
 			})
 			.catch((e) => {
+				console.log(e);
+				if (e.response.status == 404) {
+					dispatch({ type: 'LOGOUT' });
+				}
 				if (axios.isCancel(e)) return;
 				setLoading(false);
 				setError(true);
