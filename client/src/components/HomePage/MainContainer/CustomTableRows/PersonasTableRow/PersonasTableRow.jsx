@@ -37,7 +37,11 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 			setEdited(false);
 			return;
 		}
-		const resData = await UpdateReq('/api/personas/updatePersona', rowData);
+		const resData = await UpdateReq(
+			'/api/personas/updatePersona',
+			rowData,
+			user.token
+		);
 		if (resData?.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;

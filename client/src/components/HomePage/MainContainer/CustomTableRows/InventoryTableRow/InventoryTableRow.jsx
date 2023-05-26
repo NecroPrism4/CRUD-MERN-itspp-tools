@@ -23,10 +23,6 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 
 	const { user } = useAuthContext();
 
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
-
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
 	function handleEditData(field, e) {
@@ -47,7 +43,11 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 		}
 		//Envía la solicitud de actualización al servidor
 		//Sends the update request to the server
-		const resData = await UpdateReq('/api/inventory/updateItem', rowData);
+		const resData = await UpdateReq(
+			'/api/inventory/updateItem',
+			rowData,
+			user.token
+		);
 		console.log(resData);
 		if (resData.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);

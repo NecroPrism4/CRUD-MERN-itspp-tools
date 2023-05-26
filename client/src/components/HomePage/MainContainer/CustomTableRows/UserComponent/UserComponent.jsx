@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
+import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
 import { onlyNumbers } from '../../../../../helpers/regexes';
 
@@ -21,6 +22,8 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 	const [rowData, setRowData] = useState(data);
 	const [edited, setEdited] = useState(false);
 
+	const { user } = useAuthContext();
+
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
 	function handleEditData(field, e) {
@@ -36,7 +39,11 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 			return;
 		}
 
-		const resData = await UpdateReq('/api/users/updateUser', rowData);
+		const resData = await UpdateReq(
+			'/api/users/updateUser',
+			rowData,
+			user.token
+		);
 		if (resData.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;

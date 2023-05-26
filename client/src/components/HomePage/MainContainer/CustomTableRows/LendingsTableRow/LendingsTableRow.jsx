@@ -50,7 +50,11 @@ function LendingsTableRow({ data }) {
 			setEdited(false);
 			return;
 		}
-		const resData = await UpdateReq('/api/lendings/updateLending', rowData);
+		const resData = await UpdateReq(
+			'/api/lendings/updateLending',
+			rowData,
+			user.token
+		);
 		if (resData.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;

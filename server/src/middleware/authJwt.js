@@ -8,6 +8,7 @@ import { jwtSecret } from '../config.js';
 export const verifyToken = async (req, res, next) => {
 	try {
 		const token = req.headers['x-access-token'];
+
 		if (!token) {
 			return res.status(403).send({
 				message: 'No token provided!',
@@ -39,7 +40,7 @@ export const isAdmin = async (req, res, next) => {
 			where: { user_id: decoded.id },
 		});
 
-		console.log(authorized);
+		console.log(authorized.user_type);
 
 		authorized?.user_type == 'admin'
 			? next()
