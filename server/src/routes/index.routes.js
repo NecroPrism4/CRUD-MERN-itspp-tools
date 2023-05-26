@@ -25,37 +25,53 @@ import {
 	createPersona,
 } from '../controllers/personas.controller.js';
 import { getLabs } from '../controllers/labs.controller.js';
+import { loginUser, createUser } from '../controllers/auth.controller.js';
+
+import { verifyToken, isAdmin, isNormal } from '../middleware/authJwt.js';
 
 import cors from 'cors';
 import { corsOptions } from '../config.js';
 
 const router = Router();
 //INVENTORY ROUTES
-router.get('/api/inventory/get', getInventory);
-router.get('/api/inventory/getById', getInventoryById);
-router.put('/api/inventory/updateItem', updateItem);
-router.post('/api/inventory/createItem', createItem);
+router.get('/api/inventory/get', verifyToken, getInventory);
+router.get('/api/inventory/getById', verifyToken, isNormal, getInventoryById);
+router.put('/api/inventory/updateItem', verifyToken, isNormal, updateItem);
+router.post('/api/inventory/createItem', verifyToken, isNormal, createItem);
 
 //LENDINGS ROUTES
-router.get('/api/lendings/getCount', getLendingsCount);
-router.get('/api/lendings/get', getLendings);
-router.put('/api/lendings/updateLending', updateLending);
-router.put('/api/lendings/returnLending', returnLending);
-router.put('/api/lendings/cancelReturnLending', cancelReturnLending);
-router.post('/api/lendings/createLending', createLending);
+router.get('/api/lendings/getCount', verifyToken, getLendingsCount);
+router.get('/api/lendings/get', verifyToken, getLendings);
+router.put('/api/lendings/updateLending', verifyToken, isNormal, updateLending);
+router.put('/api/lendings/returnLending', verifyToken, isNormal, returnLending);
+router.put(
+	'/api/lendings/cancelReturnLending',
+	verifyToken,
+	cancelReturnLending
+);
+router.post(
+	'/api/lendings/createLending',
+	verifyToken,
+	isNormal,
+	createLending
+);
 
 //PERSONAS ROUTES
-router.get('/api/personas/getTabs', getPersonasTabOptions);
-router.get('/api/personas/get', getPersonas);
-router.put('/api/personas/updatePersona', updatePersona);
-router.post('/api/personas/createPersona', createPersona);
+router.get('/api/personas/getTabs', verifyToken, getPersonasTabOptions);
+router.get('/api/personas/get', verifyToken, getPersonas);
+router.put('/api/personas/updatePersona', verifyToken, updatePersona);
+router.post('/api/personas/createPersona', verifyToken, createPersona);
 
 //USERS ROUTES
-router.get('/api/users/get', getUsers);
-router.get('/api/users/getUserTypes', getUserTypes);
-router.put('/api/users/updateUser', updateUser);
+router.get('/api/users/get', verifyToken, isAdmin, getUsers);
+router.get('/api/users/getUserTypes', verifyToken, isAdmin, getUserTypes);
+router.put('/api/users/updateUser', verifyToken, isAdmin, updateUser);
 
 //LABS ROUTES
-router.get('/api/labs/get', getLabs);
+router.get('/api/labs/get', verifyToken, isAdmin, getLabs);
+
+//AUTH ROUTES
+router.post('/api/auth/login', loginUser);
+router.post('/api/auth/signup', createUser);
 
 export default router;

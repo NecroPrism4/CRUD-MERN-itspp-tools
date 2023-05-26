@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import './SideMenu.css';
 
+import { useAuthContext } from '../../../hooks/useAuthContext.jsx';
+import ButtonMenu from '../MainContainer/Buttons/SideMenuButton/ButtonMenu.jsx';
+
 import {
 	faAngleLeft,
 	faBoxOpen,
@@ -12,10 +15,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import ButtonMenu from '../MainContainer/Buttons/SideMenuButton/ButtonMenu.jsx';
-
 function SideMenu(props) {
 	const [ShowMenu, setShowMenu] = useState(false);
+
+	const { user } = useAuthContext();
 
 	return (
 		<div className='MenuandUser'>
@@ -60,18 +63,16 @@ function SideMenu(props) {
 							icon={faUserGroup}
 						></ButtonMenu>
 					</li>
-					{/* 
-			user.admin === true && (
-				<li className='menuItem'>Manejo de usuarios</li>
-			)	
-			*/}
-					<li className='menuItem'>
-						<ButtonMenu
-							route='usersmanagement'
-							title='Manejo de usuarios'
-							icon={faUserGear}
-						></ButtonMenu>
-					</li>
+					{user && user.user_type === 'admin' && (
+						<li className='menuItem'>
+							<ButtonMenu
+								route='usersmanagement'
+								title='Manejo de usuarios'
+								icon={faUserGear}
+							></ButtonMenu>
+						</li>
+					)}
+
 					<li className='menuHeader'>
 						<span>Otros</span>
 					</li>

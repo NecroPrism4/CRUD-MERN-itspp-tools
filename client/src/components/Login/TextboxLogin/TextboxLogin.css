@@ -16,6 +16,10 @@ input[type='password'] {
 	padding-left: 2em;
 }
 
+.cardInputs.invalidInput {
+	border: 1.5px solid red;
+}
+
 .cardInputs {
 	box-sizing: border-box;
 	background-color: #d9d9d9;

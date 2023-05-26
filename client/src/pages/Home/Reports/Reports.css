@@ -1,0 +1,12 @@
+.HomeChildContainer.Reports {
+	padding: 0 10px 0 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.ReportSection {
+	border-bottom: 2px dashed var(--primary-bg);
+	padding: 10px;
+	width: 95%;
+	justify-items: center;
+}

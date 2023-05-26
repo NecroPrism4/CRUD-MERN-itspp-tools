@@ -144,6 +144,7 @@ text {
 }
 .ShowLogin.RegisterContainer {
 	transform: translate(-160%, 50%);
+	opacity: 0;
 }
 
 .BackButton {
@@ -211,6 +212,7 @@ text {
 		position: unset;
 		bottom: unset;
 		left: unset;
+		opacity: 1;
 		background: var(--logo-color);
 		transform: none;
 	}
@@ -293,7 +295,6 @@ text {
 
 	.LoginDesignContainer .ShowLogin.solidBorder,
 	.ShowLogin.RegisterContainer {
-		display: absolute;
 		transform: translateX(-20vw);
 	}
 

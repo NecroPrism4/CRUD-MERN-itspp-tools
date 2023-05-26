@@ -1,7 +1,13 @@
+.HomeChildContainer.UsersManagement {
+	height: 100%;
+	overflow: auto;
+}
+
 .Users.tableContainer {
 	box-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
+	padding: 15px;
 }
 
 .Users.tableContainer .RefDiv {

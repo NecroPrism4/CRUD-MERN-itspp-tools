@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../config.js';
+import { useAuthContext } from '../hooks/useAuthContext.jsx';
 
 function usePopulateTable(
 	method,
@@ -16,6 +17,14 @@ function usePopulateTable(
 	const [tableData, setTableData] = useState([]);
 	const [hasMore, setHasMore] = useState(false);
 
+	const { user } = useAuthContext();
+	/* useEffect(() => {
+		if (!user) {
+			// Si no hay usuario, no se realiza la llamada a la API
+			return;
+		}
+	}, []); */
+
 	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
 	useEffect(() => {
 		setTableData([]);
@@ -27,6 +36,9 @@ function usePopulateTable(
 		setError(false);
 		let cancel;
 		axios({
+			headers: {
+				'x-access-token': user.token,
+			},
 			method: `${method}`,
 			url: `${API_URL}${api}`,
 			params: {

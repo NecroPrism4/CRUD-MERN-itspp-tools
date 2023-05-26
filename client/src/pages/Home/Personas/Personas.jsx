@@ -121,8 +121,7 @@ function Personas() {
 				PersonaForm,
 				PersonaFields
 			);
-			console.log(element);
-			/* const resData = await CreateReq('/api/personas/createPersona', element);
+			const resData = await CreateReq('/api/personas/createPersona', element);
 			console.log(resData);
 			if (resData.code == 'ERR_NETWORK') {
 				ModalAlert('error', '¡No se pudo conectar!', true);
@@ -139,7 +138,7 @@ function Personas() {
 				ModalAlert('success', '¡Guardado!', true);
 			} else {
 				ModalAlert('error', '¡No se pudo guardar!', true);
-			} */
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -155,48 +154,44 @@ function Personas() {
 			'Cancelar'
 		);
 		console.log(confirm);
-		if (confirm) {
-			const notes = await ConfirmModal(
-				'info',
-				'¿Desea agregar alguna nota?',
-				'ok',
-				'',
-				html,
-				'lending_remarks'
-			);
-			console.log(confirm);
-			const object = {
-				user_id: localStorage.getItem('user_id') || 1,
-				borrower_id: borrower_id,
-				items: items,
-				lending_remarks: notes || '',
-			};
 
-			if (confirm) {
-				console.log(confirm);
-				try {
-					const resData = await CreateReq(
-						'/api/lendings/createLending',
-						object
-					);
-					if (resData.code == 'ERR_NETWORK') {
-						ModalAlert('error', '¡No se pudo conectar!', true);
-						return;
-					}
-					if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
-						console.log(resData);
-						ModalAlert('success', '¡Guardado!', true);
-					} else {
-						ModalAlert('error', '¡No se pudo guardar!', true);
-					}
-					console.log(resData);
-				} catch (error) {
-					console.log(err);
-					ModalAlert('error', '¡Hubo un error!', true);
+		if (confirm) {
+			console.log(confirm);
+			try {
+				const notes = await ConfirmModal(
+					'info',
+					'¿Desea agregar alguna nota?',
+					'ok',
+					'',
+					html,
+					'lending_remarks'
+				);
+				console.log(notes);
+				const data = {
+					user_id: localStorage.getItem('user_id') || 1,
+					borrower_id: borrower_id,
+					items: items,
+					lending_remarks: notes || '',
+				};
+				console.log(data);
+
+				const resData = await CreateReq('/api/lendings/createLending', data);
+				if (resData.code == 'ERR_NETWORK') {
+					ModalAlert('error', '¡No se pudo conectar!', true);
+					return;
 				}
-			} else {
-				console.log(confirm);
+				if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
+					ModalAlert('success', '¡Guardado!', true);
+				} else {
+					ModalAlert('error', '¡No se pudo guardar!', true);
+				}
+				console.log(resData);
+			} catch (error) {
+				console.log(err);
+				ModalAlert('error', '¡Hubo un error!', true);
 			}
+		} else {
+			console.log(confirm);
 		}
 	};
 

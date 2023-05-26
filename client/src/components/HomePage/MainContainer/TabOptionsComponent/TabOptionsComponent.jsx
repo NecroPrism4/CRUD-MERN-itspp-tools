@@ -2,12 +2,16 @@ import './TabOptionsComponent.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../../../../config';
+import { useAuthContext } from '../../../../hooks/useAuthContext.jsx';
 
 function TabOptionsComponent({ api, handler, tabOption }) {
 	const [tabOptions, setTabOptions] = useState([]);
 
+	const { user } = useAuthContext();
+
 	useEffect(() => {
 		axios({
+			headers: { 'x-access-token': user.token },
 			method: 'get',
 			url: `${API_URL}${api}`,
 			params: {

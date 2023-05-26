@@ -36,14 +36,14 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 			return;
 		}
 		const resData = await UpdateReq('/api/personas/updatePersona', rowData);
-		if (resData.code == 'ERR_NETWORK') {
+		if (resData?.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
 		}
-		if (resData.borrower_id) {
+		if (resData?.borrower_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
-		} else if (resData.response && resData.response.status == 409) {
+		} else if (resData?.response && resData?.response.status == 409) {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡ID existente, verifique!', true, 2500);
 		} else {
@@ -209,7 +209,7 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 				<div className='InteractiveButtons Lendings'>
 					{rowData.lendings.length > 0 && (
 						<p>
-							<Link to={`../lendings/${rowData.lendings[0].lending_id}`}>
+							<Link to={`../lendings/${rowData.borrower_fullname}`}>
 								{rowData.lendings.length > 0 &&
 									`Prestamos pendientes: ${rowData.lendings.length}`}
 							</Link>

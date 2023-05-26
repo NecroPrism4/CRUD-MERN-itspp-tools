@@ -14,6 +14,7 @@
 .swal2-popup.swal2-toast
 	.swal2-success
 	[class^='swal2-success-circular-line'][class$='left'],
-.swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+.swal2-success-circular-line-left,
+.swal2-success-fix {
 	background: transparent !important;
 }

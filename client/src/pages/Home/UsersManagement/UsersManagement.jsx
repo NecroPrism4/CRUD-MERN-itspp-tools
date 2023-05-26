@@ -65,7 +65,7 @@ function UsersManagement() {
 	);
 
 	return (
-		<div className='HomeChildContainer'>
+		<div className='HomeChildContainer UsersManagement'>
 			<div className='Users TableHeader'>{/* <h1>Table Header</h1> */}</div>
 			<div
 				className={`Users tableContainer ShowTableAnim ${

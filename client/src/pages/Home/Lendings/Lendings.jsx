@@ -32,7 +32,9 @@ function Lendings() {
 	const [validInput, setvalidInput] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [isActive, setIsActive] = useState('false');
-	const [queryOption, setQueryOption] = useState('lending_id');
+	const [queryOption, setQueryOption] = useState(
+		id ? 'borrower_name' : 'lending_id'
+	);
 	const [query, setQuery] = useState(id);
 	const [datesToFilter, setDatesToFilter] = useState([]);
 
@@ -189,11 +191,11 @@ function Lendings() {
 						}`}
 					>
 						{tableData
-							.sort(
+							/* .sort(
 								(a, b) =>
 									new Date(b.lending_borrowdate) -
 									new Date(a.lending_borrowdate)
-							)
+							) */
 							.map((object) => {
 								if (tableData.length === tableData.lastIndexOf(object) + 1) {
 									return (
