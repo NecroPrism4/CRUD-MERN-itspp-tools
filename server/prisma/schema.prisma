@@ -82,6 +82,19 @@ model tab_users {
   lab_id           Int?
   lendings         tab_lendings[]
   lab             tab_labs?       @relation(fields: [lab_id], references: [lab_id])
+  history          tab_history[]
 
   @@index([lab_id])
+}
+
+model tab_history{
+  history_id Int @id @default(autoincrement()) @db.UnsignedInt
+  history_date DateTime @db.DateTime(0)
+  history_type String @db.VarChar(255)
+  history_description String @db.VarChar(255)
+  id_user Int @db.UnsignedInt
+
+  user tab_users @relation(fields: [id_user], references: [user_id])
+
+  @@index([id_user])
 }

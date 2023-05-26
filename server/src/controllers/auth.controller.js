@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
 			// Contraseña coincidente, el usuario está autenticado
 			//Correct password, user is authenticated
 			const token = jwt.sign({ id: user.user_id }, jwtSecret, {
-				expiresIn: '8s',
+				expiresIn: '8h',
 			});
 			return res.status(200).send({ ...user, token });
 		} else {
