@@ -1,5 +1,9 @@
-import { useState } from 'react';
 import './SideMenu.css';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { useAuthContext } from '../../../hooks/useAuthContext.jsx';
+import ButtonMenu from '../MainContainer/Buttons/SideMenuButton/ButtonMenu.jsx';
 
 import {
 	faAngleLeft,
@@ -12,10 +16,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import ButtonMenu from '../MainContainer/Buttons/SideMenuButton/ButtonMenu.jsx';
-
 function SideMenu(props) {
 	const [ShowMenu, setShowMenu] = useState(false);
+
+	const { user } = useAuthContext();
+
+	const handleLogout = () => {
+		dispatch({ type: 'LOGOUT' });
+	};
+
+	/* 	console.log(user); */
 
 	return (
 		<div className='MenuandUser'>
@@ -60,18 +70,16 @@ function SideMenu(props) {
 							icon={faUserGroup}
 						></ButtonMenu>
 					</li>
-					{/* 
-			user.admin === true && (
-				<li className='menuItem'>Manejo de usuarios</li>
-			)	
-			*/}
-					<li className='menuItem'>
-						<ButtonMenu
-							route='usersmanagement'
-							title='Manejo de usuarios'
-							icon={faUserGear}
-						></ButtonMenu>
-					</li>
+					{user && user.user_type === 'admin' && (
+						<li className='menuItem'>
+							<ButtonMenu
+								route='usersmanagement'
+								title='Manejo de usuarios'
+								icon={faUserGear}
+							></ButtonMenu>
+						</li>
+					)}
+
 					<li className='menuHeader'>
 						<span>Otros</span>
 					</li>
@@ -91,8 +99,10 @@ function SideMenu(props) {
 					alt='user'
 				/>
 				<div>
-					<p>NombreUsuario</p>
-					<span>Puesto Usuario </span>
+					<Link to={'profile'}>
+						<p>{user.user_name}</p>
+					</Link>
+					<span>{user.user_jobposition}Laboratorista</span>
 				</div>
 			</div>
 		</div>

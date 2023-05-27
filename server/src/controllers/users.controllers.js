@@ -35,28 +35,49 @@ export const getUsers = async (req, res) => {
 		});
 		res.send(users);
 	} catch (err) {
-		console.log(err);
 		res.status(500).json({ message: 'Error al obtener los usuarios' });
 	}
 };
 
 export const updateUser = async (req, res) => {
-	const oldUser_id = req.params.oldUser_id;
-	const newUser_id = req.data.newUser_id;
+	const user_id = parseInt(req.body.user_id) || null;
+	const new_user_id = parseInt(req.body.new_user_id) || null;
+	const user_name = req.body.user_name || '';
+	const user_lastname = req.body.user_lastname || '';
+	const user_email = req.body.user_email || '';
+	const user_password = req.body.user_password || '';
+	const user_type = req.body.user_type || '';
+	const user_jobposition = req.body.user_jobposition || '';
+	const lab_id = parseInt(req.body.lab_id) || null;
+
 	try {
-		const updateUser = prisma.tab_users.update({
+		const updateUser = await prisma.tab_users.update({
 			where: {
-				user_id: Number(oldUser_id),
+				user_id: user_id,
 			},
 			data: {
-				user_id: Number(newUser_id),
-				user_name: req.body.user_name,
-				user_lastname: req.body.user_lastname,
-				user_jobposition: req.body.user_jobposition,
-				user_email: req.body.user_email,
-				user_password: req.body.user_password,
-				user_type: req.body.user_type,
+				...(new_user_id ? { user_id: new_user_id } : {}),
+				...(user_name ? { user_name: user_name } : {}),
+				...(user_lastname ? { user_lastname: user_lastname } : {}),
+				...(user_email ? { user_email: user_email } : {}),
+				...(user_password ? { user_password: user_password } : {}),
+				...(user_type ? { user_type: user_type } : {}),
+				...(user_jobposition ? { user_jobposition: user_jobposition } : {}),
+				...(lab_id ? { lab_id: lab_id } : {}),
 			},
 		});
-	} catch (err) {}
+
+		await prisma.tab_lendings.updateMany({
+			where: { id_user: user_id },
+			data: { ...(new_user_id ? { user_id: new_user_id } : {}) },
+		});
+
+		res.send(updateUser);
+	} catch (err) {
+		if (err.code === 'P2002') {
+			res.status(409).send('El ID ya existe');
+		} else {
+			res.status(500).send('Internal server error');
+		}
+	}
 };

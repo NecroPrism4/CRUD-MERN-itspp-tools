@@ -1,18 +1,30 @@
 import './TextboxLogin.css';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function TextboxLogin(props) {
+function TextboxLogin({
+	icon,
+	type,
+	name,
+	id,
+	placeholder,
+	handler,
+	HandleValidity,
+	validity,
+}) {
 	return (
 		<div className='cardInputsContainer'>
-			{props.icon && (
-				<FontAwesomeIcon className='faIconsLogin' icon={props.icon} />
-			)}
+			{icon && <FontAwesomeIcon className='faIconsLogin' icon={icon} />}
 			<input
-				className='cardInputs'
-				type={props.type}
-				name={props.name}
-				id={props.id}
-				placeholder={props.placeholder}
+				className={`cardInputs ${
+					validity || validity != '' ? 'validInput' : 'invalidInput'
+				}`}
+				type={type}
+				name={name}
+				id={id}
+				placeholder={placeholder}
+				onChange={handler}
+				onBlur={HandleValidity}
 			></input>
 		</div>
 	);

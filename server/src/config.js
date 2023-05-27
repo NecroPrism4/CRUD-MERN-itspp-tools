@@ -12,3 +12,5 @@ export const corsOptions = {
 			: callback(new Error('Not allowed origin by CORS'));
 	},
 };
+
+export const jwtSecret = process.env.JWT_SECRET;

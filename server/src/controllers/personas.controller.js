@@ -37,10 +37,8 @@ export const getPersonas = async (req, res) => {
 					: {}),
 			},
 		});
-
 		res.send(personas);
 	} catch (error) {
-		console.error(error);
 		res.status(500).send('Internal server error');
 	}
 };
@@ -55,7 +53,85 @@ export const getPersonasTabOptions = async (req, res) => {
 		});
 		res.send(tabOptions);
 	} catch (error) {
-		console.error(error);
 		res.status(500).send('Internal server error');
+	}
+};
+
+export const updatePersona = async (req, res) => {
+	const borrower_id = parseInt(req.body.borrower_id) || null;
+	const new_borrower_id = parseInt(req.body.new_borrower_id) || null;
+	const borrower_name = req.body.borrower_name || '';
+	const borrower_lastname = req.body.borrower_lastname || '';
+	const borrower_type = req.body.borrower_type || '';
+	const borrower_career = req.body.borrower_career || '';
+	const borrower_notes = req.body.borrower_notes || '';
+
+	try {
+		const updateResponse = await prisma.tab_borrower.update({
+			where: { borrower_id: borrower_id },
+			data: {
+				...(new_borrower_id ? { borrower_id: new_borrower_id } : {}),
+				...(borrower_name ? { borrower_name: borrower_name } : {}),
+				...(borrower_lastname ? { borrower_lastname: borrower_lastname } : {}),
+				...(borrower_type ? { borrower_type: borrower_type } : {}),
+				...(borrower_career ? { borrower_career: borrower_career } : {}),
+				...(borrower_notes ? { borrower_notes: borrower_notes } : {}),
+			},
+		});
+
+		await prisma.tab_lendings.updateMany({
+			where: { id_borrower: borrower_id },
+			data: { ...(new_borrower_id ? { id_borrower: new_borrower_id } : {}) },
+		});
+
+		res.send(updateResponse);
+	} catch (err) {
+		if (err.code === 'P2002') {
+			res.status(409).send('El ID ya existe');
+		} else {
+			res.status(500).send('Internal server error');
+		}
+	}
+};
+
+export const createPersona = async (req, res) => {
+	const borrower_id = parseInt(req.body.borrower_id) || null;
+	const borrower_name = req.body.borrower_name || '';
+	const borrower_lastname = req.body.borrower_lastname || '';
+	const borrower_type = req.body.borrower_type || '';
+	const borrower_career = req.body.borrower_career || '';
+	const borrower_notes = req.body.borrower_notes || '';
+
+	try {
+		const getMaxExternalBorrowerId = async () => {
+			const maxBorrower = await prisma.tab_borrower.findFirst({
+				where: { borrower_type: 'Externo' },
+				orderBy: { borrower_id: 'desc' },
+				select: { borrower_id: true },
+			});
+			return maxBorrower.borrower_id != null && maxBorrower.borrower_id > 100000
+				? maxBorrower.borrower_id + 1
+				: 100000;
+		};
+		const newId = await getMaxExternalBorrowerId();
+		const createResponse = await prisma.tab_borrower.create({
+			data: {
+				...{
+					borrower_id: borrower_type === 'Externo' ? newId : borrower_id,
+				},
+				borrower_name: borrower_name,
+				borrower_lastname: borrower_lastname,
+				borrower_type: borrower_type,
+				borrower_career: borrower_career,
+				borrower_notes: borrower_notes,
+			},
+		});
+		res.send(createResponse);
+	} catch (err) {
+		if (err.code === 'P2002') {
+			res.status(409).send('El ID ya existe');
+		} else {
+			res.status(500).send('Internal server error');
+		}
 	}
 };

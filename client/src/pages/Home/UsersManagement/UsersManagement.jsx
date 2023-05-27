@@ -57,6 +57,7 @@ function UsersManagement() {
 		'lab_id',
 		'lab_name'
 	);
+
 	const { distincts: userTypeDistincts } = useGetDistincts(
 		'/api/users/getUserTypes',
 		'user_type',
@@ -64,10 +65,8 @@ function UsersManagement() {
 	);
 
 	return (
-		<div className='HomeChildContainer'>
-			<div className='Users TableHeader'>
-				<h1>Table Header</h1>
-			</div>
+		<div className='HomeChildContainer UsersManagement'>
+			<div className='Users TableHeader'>{/* <h1>Table Header</h1> */}</div>
 			<div
 				className={`Users tableContainer ShowTableAnim ${
 					tableData.length > 0 ? 'Active' : ''

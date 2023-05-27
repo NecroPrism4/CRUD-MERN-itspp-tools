@@ -95,19 +95,21 @@
 }
 
 .InteractiveButtons.Lendings {
-	display: grid;
-	grid-template-columns: auto auto;
+	display: flex;
 	justify-content: end;
 }
 
 .InteractiveButtons.Lendings button {
 	padding-top: 2px;
 	padding-bottom: 2px;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	display: flex;
 }
 
-.InteractiveButtons.Lendings div:last-child button:hover {
+.InteractiveButtons.Lendings .ConfirmReturn:hover {
 	background: var(--gradient-accent);
 }
+
 /* 
 .TableRow.Expand .Expandible {
 	animation: ShowExpandible 1.5s forwards;
@@ -134,4 +136,9 @@
 	.CenterRow div:nth-child(1) {
 		grid-row: 1;
 	}
+}
+
+.CancelButton:hover {
+	background: #ff2542 !important;
+	color: white !important;
 }

@@ -1,11 +1,14 @@
 import './LendingsTableRow.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useDateFormater from '../../../../../hooks/useDateFormater';
+import { UpdateReq } from '../../../../../apis/ApiReqests';
+import { useAuthContext } from '../../../../../hooks/useAuthContext';
+
+import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
+import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
 
 function LendingsTableRow({ data }) {
 	//Guarda los estados de las variables representadas en los componentes
@@ -14,6 +17,10 @@ function LendingsTableRow({ data }) {
 	const [isEditable, setIsEditable] = useState(false);
 	const [showMore, setShowMore] = useState(false); //This one is to expand the list of items insite the rows
 	const [rowData, setRowData] = useState(data);
+	const [edited, setEdited] = useState(false);
+	const [resData, setResData] = useState();
+
+	const { user } = useAuthContext();
 
 	//Se encarga de que las fechas de la base de datos sean más comprensibles para los humanos
 	//Takes care of making the dates from the database more comprehensible for humans
@@ -33,12 +40,82 @@ function LendingsTableRow({ data }) {
 		setRowData(
 			(prev) => (prev = { ...rowData, [field]: e.target.textContent })
 		);
+		setEdited(true);
 	}
+
+	//Maneja la solicitud de API para actualizar el registro en la base de datos
+	//Handles the api request to update the record in the database
+	const handleUpdateReq = async () => {
+		if (!edited) {
+			setEdited(false);
+			return;
+		}
+		const resData = await UpdateReq(
+			'/api/lendings/updateLending',
+			rowData,
+			user.token
+		);
+		if (resData?.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
+		if (resData?.lending_id) {
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			ModalAlert('success', '¡Guardado!', true);
+		} else {
+			ModalAlert('error', '¡No se pudo guardar!', true);
+		}
+	};
+
+	const handleReturnLending = async () => {
+		const resData = await UpdateReq(
+			'/api/lendings/returnLending',
+			{
+				lending_id: rowData.lending_id,
+				id_items: rowData.items.map((item) => item.items.item_id),
+			},
+			user.token
+		);
+		console.log(resData);
+		if (resData?.code == 'ERR_NETWORK') {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
+		if (resData?.returned) {
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			setResData(resData);
+			ModalAlert('success', '¡Hecho!', true);
+		} else {
+			ModalAlert('error', '¡Hubo un error!', true);
+		}
+	};
+
+	const handleCancelReturn = async () => {
+		const resData = await UpdateReq(
+			'/api/lendings/cancelReturnLending',
+			{
+				lending_id: rowData.lending_id,
+				id_items: rowData.items.map((item) => item.items.item_id),
+			},
+			user.token
+		);
+		if (resData.code == 'ERR_NETWORK' || resData?.response?.status > 300) {
+			ModalAlert('error', '¡No se pudo conectar!', true);
+			return;
+		}
+		if (!resData?.returned) {
+			setRowData((prev) => (prev = { ...rowData, ...resData }));
+			setResData(resData);
+			ModalAlert('info', 'Operación cancelada', true);
+		} else {
+			ModalAlert('error', '¡Hubo un error!', true);
+		}
+	};
 
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
-		setRowData((prev) => (prev = data));
+		setRowData((prev) => (prev = { ...prev, ...resData }));
 	}
 
 	//Maneja la funcionalidad de expandir la tarjeta de información
@@ -113,8 +190,12 @@ function LendingsTableRow({ data }) {
 						<p>{borrowFormatedDate}</p>
 					</div>
 					<div className='ReturnedDate'>
-						<h4>Devuelto: </h4>
-						<p>{returnedFormatedDate}</p>
+						{rowData.lending_returneddate && (
+							<>
+								<h4>Devuelto: </h4>
+								<p>{returnedFormatedDate}</p>
+							</>
+						)}
 					</div>
 
 					<div className='AuthorizedBy'>
@@ -137,18 +218,31 @@ function LendingsTableRow({ data }) {
 						{rowData.lending_remarks}
 					</p>
 				</div>
-				<div className='InteractiveButtons Lendings'>
-					<OnEditButtons
-						handleEditField={(value) => {
-							setIsEditable(value);
-						}}
-						isEditing={isEditable}
-						cancelEdit={handleCancelEdit}
-					/>
-					<div className='EditButtons Lendings'>
-						{rowData.returned ? null : <button>Confirmar Devolución</button>}
+				{user.user_type == 'normal' && (
+					<div className='InteractiveButtons Lendings'>
+						<div className='EditButtons Lendings'>
+							{!rowData.returned && !isEditable ? (
+								<button onClick={handleReturnLending} className='ConfirmReturn'>
+									Confirmar Devolución
+								</button>
+							) : null}
+							{rowData.returned && !data.returned ? (
+								<button className='CancelButton' onClick={handleCancelReturn}>
+									Cancelar devolución
+								</button>
+							) : null}
+						</div>
+
+						<OnEditButtons
+							handleUpdateReq={handleUpdateReq}
+							handleEditField={(value) => {
+								setIsEditable(value);
+							}}
+							isEditing={isEditable}
+							cancelEdit={handleCancelEdit}
+						/>
 					</div>
-				</div>
+				)}
 			</div>
 
 			<div

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../config.js';
+import { useAuthContext } from '../hooks/useAuthContext.jsx';
+import { ModalAlert } from '../components/Modals/Alerts/Alerts.jsx';
 
 function usePopulateTable(
 	method,
@@ -16,6 +18,14 @@ function usePopulateTable(
 	const [tableData, setTableData] = useState([]);
 	const [hasMore, setHasMore] = useState(false);
 
+	const { user, dispatch } = useAuthContext();
+	/* useEffect(() => {
+		if (!user) {
+			// Si no hay usuario, no se realiza la llamada a la API
+			return;
+		}
+	}, []); */
+
 	/* Every time we change the searchTerm(also named variable 'query') the table is reseted to show the coincidences*/
 	useEffect(() => {
 		setTableData([]);
@@ -27,6 +37,9 @@ function usePopulateTable(
 		setError(false);
 		let cancel;
 		axios({
+			headers: {
+				'x-access-token': user.token,
+			},
 			method: `${method}`,
 			url: `${API_URL}${api}`,
 			params: {
@@ -50,11 +63,18 @@ function usePopulateTable(
 				if (axios.isCancel(e)) return;
 				setLoading(false);
 				setError(true);
+				if (e.response?.status == 404) {
+					dispatch({ type: 'LOGOUT' });
+				}
+				if (e?.response?.status == 418) {
+					ModalAlert('error', '¡Sin laboratorio asigando!', false, 5000);
+					return console.clear();
+				}
 			});
 		return () => cancel();
 	}, [query, pageNumber, api, method, conditional, dateFilter, queryOption]);
 
-	return { loading, error, tableData, hasMore };
+	return { loading, error, tableData, hasMore, setTableData };
 }
 
 export default usePopulateTable;

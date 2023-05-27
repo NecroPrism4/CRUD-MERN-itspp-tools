@@ -1,9 +1,11 @@
 .SwalPopup {
 	background: var(--tertiary-bg) !important;
+	border-radius: 25px !important;
 }
 
 .SwalTitle {
 	color: var(--active-fg) !important;
+	font-size: 1.4em !important;
 }
 
 .SwalIcon,
@@ -12,6 +14,7 @@
 .swal2-popup.swal2-toast
 	.swal2-success
 	[class^='swal2-success-circular-line'][class$='left'],
-.swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+.swal2-success-circular-line-left,
+.swal2-success-fix {
 	background: transparent !important;
 }

@@ -1,7 +1,6 @@
 .FormRegister {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr 1fr 1fr;
 	width: 80%;
 	padding: 15px;
 	gap: 15px;
@@ -29,9 +28,20 @@
 	grid-column-start: 1;
 	grid-column-end: -1;
 }
+.FormRegister .cardInputsContainer:nth-of-type(5) {
+	grid-row-start: 4;
+	grid-column-start: 1;
+	grid-column-end: -1;
+}
+
+.FormRegister .cardInputsContainer:nth-of-type(6) {
+	grid-row-start: 5;
+	grid-column-start: 1;
+	grid-column-end: -1;
+}
 
 .FormRegister .btnLogin {
-	grid-row-start: 4;
+	grid-row-start: 6;
 	grid-column-start: 1;
 	grid-column-end: -1;
 	width: 70%;
