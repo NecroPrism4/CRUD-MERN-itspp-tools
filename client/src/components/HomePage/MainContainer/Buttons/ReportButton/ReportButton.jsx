@@ -1,6 +1,6 @@
 import './ReportButton.css';
 import { useState } from 'react';
-import { read, utils } from 'xlsx';
+import { utils, writeFile } from 'xlsx';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
 import { GetReq } from '../../../../../apis/ApiReqests';
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
@@ -27,6 +27,22 @@ function ReportButton({ title, img, api, query }) {
 		} catch (err) {
 			console.error(err);
 		}
+		var wb = utils.book_new();
+
+		var ws = utils.json_to_sheet(response.inventoryData);
+		utils.book_append_sheet(wb, ws, 'Inventario');
+
+		var ws2 = utils.json_to_sheet(response.PendingLendingsData);
+		utils.book_append_sheet(wb, ws2, 'Préstamos Pendientes');
+
+		var ws3 = utils.json_to_sheet(response.ReturnedLendingsData);
+		utils.book_append_sheet(wb, ws3, 'Préstamos Devueltos');
+
+		var ws4 = utils.json_to_sheet(response.pendingBorrowersData);
+		utils.book_append_sheet(wb, ws4, 'Deudores Pendientes');
+
+		writeFile(wb, 'reporte.xlsx');
+
 		setLoading(false);
 	};
 
