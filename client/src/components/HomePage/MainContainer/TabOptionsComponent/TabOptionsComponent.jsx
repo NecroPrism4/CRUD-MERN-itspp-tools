@@ -22,7 +22,7 @@ function TabOptionsComponent({ api, handler, tabOption }) {
 				setTabOptions(res.data);
 			})
 			.catch((e) => {
-				console.log(e);
+				alert(e);
 			});
 	}, [api]);
 

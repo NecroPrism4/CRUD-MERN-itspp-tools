@@ -23,6 +23,7 @@
 
 .itemAvailable {
 	position: relative;
+	text-align: end;
 }
 .itemAvailable::before {
 	scale: 0;

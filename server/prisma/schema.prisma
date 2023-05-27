@@ -77,7 +77,7 @@ model tab_users {
   user_lastname    String?        @db.VarChar(255)
   user_email       String         @unique(map: "user_email") @db.VarChar(255)
   user_password    String         @db.VarChar(255)
-  user_type        String?        @db.VarChar(255)
+  user_type        String?        @default("inactivo") @db.VarChar(255)
   user_jobposition String?        @db.VarChar(255)
   lab_id           Int?
   lendings         tab_lendings[]

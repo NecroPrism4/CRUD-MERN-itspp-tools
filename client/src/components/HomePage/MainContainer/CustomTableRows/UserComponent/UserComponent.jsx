@@ -83,6 +83,7 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 			e.target.textContent = value.replace(/\D/g, '');
 		}
 	};
+
 	const IDInputRef = useRef(null);
 
 	const roleOptions = [
@@ -98,6 +99,11 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		{ value: 'Civil', label: 'Civil' },
 		{ value: 'Industrial', label: 'Industrial' },
 	]; */
+
+	const labOptions = [
+		...labNameDistincts,
+		{ value: labNameDistincts.length + 1, label: 'No asignado' },
+	];
 
 	return (
 		<div
@@ -150,17 +156,21 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 						options={roleOptions}
 						handler={handleEditData}
 						disable={!isEditing}
-						defaultSelected={rowData.user_type}
+						defaultSelected={
+							rowData?.user_type ? rowData?.user_type : 'inactivo'
+						}
 						field={'user_type'}
 					/>
 				</div>
 				<div>
 					<p>lab: </p>
 					<SelectComponent
-						options={labNameDistincts && labNameDistincts}
+						options={labOptions && labOptions}
 						handler={handleEditData}
 						disable={!isEditing}
-						defaultSelected={rowData.lab_id}
+						defaultSelected={
+							rowData?.lab_id ? rowData?.lab_id : labNameDistincts.length + 1
+						}
 						field={'lab_id'}
 					/>
 				</div>

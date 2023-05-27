@@ -21,7 +21,8 @@
 		"react-responsive-carousel": "^3.2.23",
 		"react-router-dom": "6.4",
 		"rsuite": "^5.33.0",
-		"sweetalert2": "^11.4.8"
+		"sweetalert2": "^11.4.8",
+		"xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.28",

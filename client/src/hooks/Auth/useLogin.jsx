@@ -16,18 +16,16 @@ function useLogin() {
 				url: `${API_URL}/api/auth/login`,
 				data: data,
 			});
-			console.log(response);
 
 			if (response.status === 200) {
 				localStorage.setItem('user', JSON.stringify(response.data));
-				console.log(localStorage.getItem('user'));
+
 				dispatch({ type: 'LOGIN', payload: response.data });
 			}
 			setIsLoading(false);
 			return response;
 		} catch (err) {
 			setIsLoading(false);
-			console.error(err);
 			return err;
 		}
 	};

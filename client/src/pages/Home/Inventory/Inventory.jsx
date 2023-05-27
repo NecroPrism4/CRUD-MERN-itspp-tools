@@ -13,7 +13,7 @@ import {
 	ItemFields,
 } from '../../../components/Modals/FormDialogs/HtmlForms/ItemHtml';
 import { ModalAlert } from '../../../components/Modals/Alerts/Alerts';
-import { FormDialog } from '../../../components/Modals/FormDialogs/FormDialogs';
+import { ItemFormDialog } from '../../../components/Modals/FormDialogs/ItemFormDialog';
 import Error from '../../../components/HomePage/MainContainer/Error/Error';
 import Loading from '../../../components/HomePage/MainContainer/Loading/Loading.jsx';
 import InventoryTableRow from '../../../components/HomePage/MainContainer/CustomTableRows/InventoryTableRow/InventoryTableRow.jsx';
@@ -43,6 +43,7 @@ function Inventory() {
 
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
+
 	const { loading, error, tableData, hasMore } = usePopulateTable(
 		'get',
 		'/api/inventory/get',
@@ -51,6 +52,12 @@ function Inventory() {
 		queryOption,
 		query
 	);
+
+	useEffect(() => {
+		console.log('user', user);
+		console.log(tableData);
+		return () => {};
+	}, [tableData]);
 
 	//se ocupa del último elemento representado en la lista, por lo que una vez que choca con la parte visible del navegador, envía una señal para enviar otra solicitud al servidor
 	//Takes care of the las element rendered on the list so once it collides with the viewable part of the browser sends a signal to send another request to the server
@@ -81,9 +88,20 @@ function Inventory() {
 	//Handles the creation of a new item
 	const handleCreate = async () => {
 		try {
-			const element = await FormDialog('Nuevo Material', ItemForm, ItemFields);
-			const resData = await CreateReq('/api/inventory/createItem', element);
-			if (resData.code == 'ERR_NETWORK') {
+			const element = await ItemFormDialog(
+				'Nuevo Material',
+				ItemForm,
+				ItemFields
+			);
+			const resData = await CreateReq(
+				'/api/inventory/createItem',
+				element,
+				user.token
+			);
+			if (
+				resData?.code == 'ERR_NETWORK' ||
+				resData?.code == 'ERR_BAD_REQUEST'
+			) {
 				ModalAlert('error', '¡No se pudo conectar!', true);
 				return;
 			}
@@ -93,7 +111,7 @@ function Inventory() {
 				ModalAlert('error', '¡No se pudo guardar!', true);
 			}
 		} catch (err) {
-			console.log(err);
+			alert('Error');
 		}
 	};
 
@@ -112,15 +130,9 @@ function Inventory() {
 		}
 	};
 
-	const handleLendItems = () => {
+	/* const handleLendItems = () => {
 		console.log(selectedItems);
-	};
-
-	/* 	useEffect(() => {
-		console.log(showSelected);
-		console.log(selectedItems);
-		console.log(Boolean(selectedItems));
-	}, [showSelected, selectedItems]); */
+	}; */
 
 	//Arreglos de opciones que alimenta al componente de selección #SelectComponent
 	//Arrays of options that feed the #SelectComponent
@@ -226,7 +238,9 @@ function Inventory() {
 				<div style={{ height: '100px' }}></div>
 			</div>
 			{selectedItems.length > 0 && (
-				<button className='OnCreateButton LendButton' onClick={handleLendItems}>
+				<button
+					className='OnCreateButton LendButton' /* onClick={handleLendItems} */
+				>
 					<Link to={`../personas/${selectedItems}`}>Prestar Materiales</Link>
 				</button>
 			)}

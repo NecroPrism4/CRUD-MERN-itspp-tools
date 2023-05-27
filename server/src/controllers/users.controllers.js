@@ -35,21 +35,20 @@ export const getUsers = async (req, res) => {
 		});
 		res.send(users);
 	} catch (err) {
-		console.log(err);
 		res.status(500).json({ message: 'Error al obtener los usuarios' });
 	}
 };
 
 export const updateUser = async (req, res) => {
-	const user_id = parseInt(req.query.user_id) || null;
-	const new_user_id = parseInt(req.query.new_user_id) || null;
-	const user_name = req.query.user_name || '';
-	const user_lastname = req.query.user_lastname || '';
-	const user_email = req.query.user_email || '';
-	const user_password = req.query.user_password || '';
-	const user_type = req.query.user_type || '';
-	const user_jobposition = req.query.user_jobposition || '';
-	const lab_id = parseInt(req.query.lab_id) || null;
+	const user_id = parseInt(req.body.user_id) || null;
+	const new_user_id = parseInt(req.body.new_user_id) || null;
+	const user_name = req.body.user_name || '';
+	const user_lastname = req.body.user_lastname || '';
+	const user_email = req.body.user_email || '';
+	const user_password = req.body.user_password || '';
+	const user_type = req.body.user_type || '';
+	const user_jobposition = req.body.user_jobposition || '';
+	const lab_id = parseInt(req.body.lab_id) || null;
 
 	try {
 		const updateUser = await prisma.tab_users.update({
@@ -75,7 +74,6 @@ export const updateUser = async (req, res) => {
 
 		res.send(updateUser);
 	} catch (err) {
-		console.log(err);
 		if (err.code === 'P2002') {
 			res.status(409).send('El ID ya existe');
 		} else {

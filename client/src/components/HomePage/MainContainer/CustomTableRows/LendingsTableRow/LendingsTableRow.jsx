@@ -55,11 +55,11 @@ function LendingsTableRow({ data }) {
 			rowData,
 			user.token
 		);
-		if (resData.code == 'ERR_NETWORK') {
+		if (resData?.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
 		}
-		if (resData) {
+		if (resData?.lending_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
 		} else {
@@ -68,16 +68,20 @@ function LendingsTableRow({ data }) {
 	};
 
 	const handleReturnLending = async () => {
-		const resData = await UpdateReq('/api/lendings/returnLending', {
-			lending_id: rowData.lending_id,
-			id_items: rowData.items.map((item) => item.items.item_id),
-		});
-		if (resData.code == 'ERR_NETWORK') {
+		const resData = await UpdateReq(
+			'/api/lendings/returnLending',
+			{
+				lending_id: rowData.lending_id,
+				id_items: rowData.items.map((item) => item.items.item_id),
+			},
+			user.token
+		);
+		console.log(resData);
+		if (resData?.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
 		}
-		if (resData) {
-			console.log('if 1');
+		if (resData?.returned) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			setResData(resData);
 			ModalAlert('success', '¡Hecho!', true);
@@ -87,15 +91,19 @@ function LendingsTableRow({ data }) {
 	};
 
 	const handleCancelReturn = async () => {
-		const resData = await UpdateReq('/api/lendings/cancelReturnLending', {
-			lending_id: rowData.lending_id,
-			id_items: rowData.items.map((item) => item.items.item_id),
-		});
-		if (resData.code == 'ERR_NETWORK') {
+		const resData = await UpdateReq(
+			'/api/lendings/cancelReturnLending',
+			{
+				lending_id: rowData.lending_id,
+				id_items: rowData.items.map((item) => item.items.item_id),
+			},
+			user.token
+		);
+		if (resData.code == 'ERR_NETWORK' || resData?.response?.status > 300) {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
 		}
-		if (resData) {
+		if (!resData?.returned) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			setResData(resData);
 			ModalAlert('info', 'Operación cancelada', true);
@@ -209,20 +217,12 @@ function LendingsTableRow({ data }) {
 					>
 						{rowData.lending_remarks}
 					</p>
-				</div>{' '}
+				</div>
 				{user.user_type == 'normal' && (
 					<div className='InteractiveButtons Lendings'>
-						<OnEditButtons
-							handleUpdateReq={handleUpdateReq}
-							handleEditField={(value) => {
-								setIsEditable(value);
-							}}
-							isEditing={isEditable}
-							cancelEdit={handleCancelEdit}
-						/>
 						<div className='EditButtons Lendings'>
 							{!rowData.returned && !isEditable ? (
-								<button onClick={handleReturnLending}>
+								<button onClick={handleReturnLending} className='ConfirmReturn'>
 									Confirmar Devolución
 								</button>
 							) : null}
@@ -232,6 +232,15 @@ function LendingsTableRow({ data }) {
 								</button>
 							) : null}
 						</div>
+
+						<OnEditButtons
+							handleUpdateReq={handleUpdateReq}
+							handleEditField={(value) => {
+								setIsEditable(value);
+							}}
+							isEditing={isEditable}
+							cancelEdit={handleCancelEdit}
+						/>
 					</div>
 				)}
 			</div>

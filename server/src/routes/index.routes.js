@@ -26,6 +26,7 @@ import {
 } from '../controllers/personas.controller.js';
 import { getLabs } from '../controllers/labs.controller.js';
 import { loginUser, createUser } from '../controllers/auth.controller.js';
+import { getLabExportData } from '../controllers/export.controller.js';
 
 import { verifyToken, isAdmin, isNormal } from '../middleware/authJwt.js';
 
@@ -73,5 +74,8 @@ router.get('/api/labs/get', verifyToken, isAdmin, getLabs);
 //AUTH ROUTES
 router.post('/api/auth/login', loginUser);
 router.post('/api/auth/signup', createUser);
+
+//Export Data
+router.get('/api/export/laboratory', getLabExportData);
 
 export default router;

@@ -4,7 +4,6 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 function NonAthorized() {
 	const { dispatch } = useAuthContext();
 	const handleLogout = () => {
-		console.log('logout');
 		dispatch({
 			type: 'LOGOUT',
 		});

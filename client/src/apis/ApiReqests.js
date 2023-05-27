@@ -8,7 +8,7 @@ export const UpdateReq = async (api, data, token) => {
 		},
 		method: 'put',
 		url: `${API_URL}${api}`,
-		params: data,
+		data: data,
 	})
 		.then((res) => {
 			return res.data;
@@ -18,11 +18,33 @@ export const UpdateReq = async (api, data, token) => {
 		});
 };
 
-export const CreateReq = async (api, data) => {
+export const CreateReq = async (api, data, token) => {
 	return axios({
+		headers: {
+			'x-access-token': token,
+		},
 		method: 'post',
 		url: `${API_URL}${api}`,
-		params: data,
+		data: data,
+	})
+		.then((res) => {
+			return res.data;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+export const DeleteReq = async (api, token) => {};
+
+export const GetReq = async (api, query, token) => {
+	return await axios({
+		headers: {
+			'x-access-token': token,
+		},
+		method: 'get',
+		url: `${API_URL}${api}`,
+		params: query,
 	})
 		.then((res) => {
 			return res.data;

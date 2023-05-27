@@ -32,7 +32,6 @@ function useGetDistincts(api, index, name) {
 			.catch((e) => {
 				if (axios.isCancel(e)) return;
 				setError(true);
-				console.log(e);
 			});
 	}, [api]);
 

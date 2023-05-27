@@ -67,7 +67,6 @@ export const getLendingsCount = async (req, res) => {
 		});
 		res.send(lendingCount.toString());
 	} catch (error) {
-		console.log(error);
 		res.status(500).send('Internal server error');
 	}
 };
@@ -122,7 +121,6 @@ export const getLendings = async (req, res) => {
 		});
 		res.send(lendings);
 	} catch (error) {
-		console.log(error);
 		res.status(500).send('Internal server error');
 	}
 };
@@ -132,8 +130,8 @@ export const getLendingById = async (req, res) => {
 };
 
 export const returnLending = async (req, res) => {
-	const lending_id = parseInt(req.query.lending_id) || null;
-	const id_items = req.query.id_items || [];
+	const lending_id = parseInt(req.body.lending_id) || null;
+	const id_items = req.body.id_items || [];
 	const numItemIds = id_items.map((id) => parseInt(id));
 
 	try {
@@ -162,14 +160,13 @@ export const returnLending = async (req, res) => {
 			res.status(404).send('Item not found');
 		}
 	} catch (err) {
-		console.log(err);
 		res.status(500).send('Internal server error');
 	}
 };
 
 export const cancelReturnLending = async (req, res) => {
-	const lending_id = parseInt(req.query.lending_id) || null;
-	const id_items = req.query.id_items || [];
+	const lending_id = parseInt(req.body.lending_id) || null;
+	const id_items = req.body.id_items || [];
 	const numItemIds = id_items.map((id) => parseInt(id));
 
 	try {
@@ -198,14 +195,13 @@ export const cancelReturnLending = async (req, res) => {
 			res.status(404).send('Item not found');
 		}
 	} catch (err) {
-		console.log(err);
 		res.status(500).send('Internal server error');
 	}
 };
 
 export const updateLending = async (req, res) => {
-	const lending_id = parseInt(req.query.lending_id) || null;
-	const lending_remarks = req.query.lending_remarks || '';
+	const lending_id = parseInt(req.body.lending_id) || null;
+	const lending_remarks = req.body.lending_remarks || '';
 
 	try {
 		if (lending_id != null) {
@@ -222,7 +218,6 @@ export const updateLending = async (req, res) => {
 			res.status(404).send('Item not found');
 		}
 	} catch (err) {
-		console.log(err);
 		res.status(500).send('Internal server error');
 	}
 };
@@ -231,16 +226,15 @@ export const deleteLending = async (req, res) => {
 	try {
 		throw new Error('Not implemented');
 	} catch (err) {
-		console.log(err);
 		res.status(500).send('Internal server error: ' + err);
 	}
 };
 
 export const createLending = async (req, res) => {
-	const user_id = parseInt(req.query.user_id) || null;
-	const borrower_id = parseInt(req.query.borrower_id) || null;
-	const lending_remarks = req.query.lending_remarks || '';
-	const items = req.query.items.split(',').map((item) => parseInt(item)) || [];
+	const user_id = parseInt(req.body.user_id) || null;
+	const borrower_id = parseInt(req.body.borrower_id) || null;
+	const lending_remarks = req.body.lending_remarks || '';
+	const items = req.body.items.split(',').map((item) => parseInt(item)) || [];
 
 	try {
 		const newLending = await prisma.tab_lendings.create({
@@ -266,13 +260,11 @@ export const createLending = async (req, res) => {
 			})),
 		});
 
-		console.log(newLending);
 		res.send(newLending);
 	} catch (err) {
 		if (err.code === 'P2002') {
 			res.status(400).send('Lending already exists');
 		}
-		console.log(err);
 		res.status(500).send('Internal server error: ' + err);
 	}
 };

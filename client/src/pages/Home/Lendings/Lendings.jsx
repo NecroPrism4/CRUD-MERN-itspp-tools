@@ -33,7 +33,7 @@ function Lendings() {
 	const [pageNumber, setPageNumber] = useState(1);
 	const [isActive, setIsActive] = useState('false');
 	const [queryOption, setQueryOption] = useState(
-		id ? 'lending_id' : 'borrower_name'
+		id ? 'borrower_name' : 'lending_id'
 	);
 	const [query, setQuery] = useState(id);
 	const [datesToFilter, setDatesToFilter] = useState([]);
@@ -171,6 +171,7 @@ function Lendings() {
 							<SelectComponent
 								options={queryOptions}
 								handler={handleQueryOption}
+								defaultSelected={queryOption}
 							/>
 							<SearchBar
 								handler={handleSearch}

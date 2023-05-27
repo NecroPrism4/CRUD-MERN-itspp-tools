@@ -1,12 +1,20 @@
 .HomeChildContainer.Reports {
-	padding: 0 10px 0 10px;
+	padding: 10px 10px 0 10px;
 	display: flex;
 	flex-direction: column;
 }
 
+.HomeChildContainer.Reports h2 {
+	padding-left: 15px;
+}
+
 .ReportSection {
-	border-bottom: 2px dashed var(--primary-bg);
+	/* border-bottom: 2px dashed var(--primary-bg); */
 	padding: 10px;
-	width: 95%;
+	width: 100%;
 	justify-items: center;
+	display: grid;
+	gap: 20px;
+	overflow: auto;
+	padding: 30px 10px 30px 10px;
 }

@@ -13,7 +13,7 @@ import {
 	PersonaForm,
 	PersonaFields,
 } from '../../../components/Modals/FormDialogs/HtmlForms/PersonaHtml';
-import { FormDialog } from '../../../components/Modals/FormDialogs/FormDialogs';
+import { PersonaFormDialog } from '../../../components/Modals/FormDialogs/PersonaFormDialog';
 import { ModalAlert } from '../../../components/Modals/Alerts/Alerts';
 import { ConfirmModal } from '../../../components/Modals/ConfirmModal/ConfirmModal.jsx';
 import Error from '../../../components/HomePage/MainContainer/Error/Error.jsx';
@@ -96,7 +96,6 @@ function Personas() {
 			setPageNumber(1);
 			setQuery('');
 			setQueryOption(value);
-			console.log('if 1');
 		} else if (
 			value == 'borrower_id' &&
 			!onlyNumbers.test(query) &&
@@ -119,31 +118,33 @@ function Personas() {
 	//Handles the creation of a new borrower
 	const handleCreate = async () => {
 		try {
-			const element = await FormDialog(
+			const element = await PersonaFormDialog(
 				'Nuevo Prestatario',
 				PersonaForm,
 				PersonaFields
 			);
-			const resData = await CreateReq('/api/personas/createPersona', element);
+			const resData = await CreateReq(
+				'/api/personas/createPersona',
+				element,
+				user.token
+			);
+			console.log(user.token);
 			console.log(resData);
-			if (resData.code == 'ERR_NETWORK') {
-				ModalAlert('error', '¡No se pudo conectar!', true);
-				return;
-			}
-
-			if (resData.response.status && resData.response.status == 409) {
+			if (resData?.response?.status == 409) {
 				ModalAlert('error', '¡ID duplicado!', true);
 				return;
 			}
-
+			if (resData.code == 'ERR_NETWORK' || resData?.code == 'ERR_BAD_REQUEST') {
+				ModalAlert('error', '¡No se pudo conectar!', true);
+				return;
+			}
 			if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
-				console.log(resData);
 				ModalAlert('success', '¡Guardado!', true);
 			} else {
 				ModalAlert('error', '¡No se pudo guardar!', true);
 			}
 		} catch (err) {
-			console.log(err);
+			alert('Error');
 		}
 	};
 
@@ -156,10 +157,8 @@ function Personas() {
 			'Confirmar',
 			'Cancelar'
 		);
-		console.log(confirm);
 
 		if (confirm) {
-			console.log(confirm);
 			try {
 				const notes = await ConfirmModal(
 					'info',
@@ -169,14 +168,12 @@ function Personas() {
 					html,
 					'lending_remarks'
 				);
-				console.log(notes);
 				const data = {
 					user_id: localStorage.getItem('user_id') || 1,
 					borrower_id: borrower_id,
 					items: items,
 					lending_remarks: notes || '',
 				};
-				console.log(data);
 
 				const resData = await CreateReq('/api/lendings/createLending', data);
 				if (resData.code == 'ERR_NETWORK') {
@@ -188,13 +185,11 @@ function Personas() {
 				} else {
 					ModalAlert('error', '¡No se pudo guardar!', true);
 				}
-				console.log(resData);
 			} catch (error) {
-				console.log(err);
 				ModalAlert('error', '¡Hubo un error!', true);
 			}
 		} else {
-			console.log(confirm);
+			alert('error');
 		}
 	};
 
@@ -222,13 +217,11 @@ function Personas() {
 				<div className='Personas tableHeader'>
 					<h2>Prestatarios</h2>
 					<div className='Personas SearchOptions'>
-						{/* 		<div className='DivTabOpt'> */}
 						<TabOptionsComponent
 							handler={handleUserType}
 							api='/api/personas/getTabs'
 							tabOption='borrower_type'
 						/>
-						{/* 	</div> */}
 						<div className='SearchOptionsRigtside'>
 							<SelectComponent
 								options={queryOptions}

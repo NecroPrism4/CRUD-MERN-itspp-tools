@@ -18,31 +18,24 @@ function PrivateRoute({ element: Element, elementName }) {
 		user && (user.user_type == 'admin' || user.user_type == 'normal');
 
 	if (elementName == 'Home' && !user) {
-		console.log('if 1');
 		return <Navigate to='/login' replace />;
 	}
 	if (elementName == 'Home' && user && !validUser) {
-		console.log('if 2');
 		return <Navigate to='/nonAuthorized' replace />;
 	}
 	if (elementName == 'NonAuth' && !user) {
-		console.log('if 2');
 		return <Navigate to='/login' replace />;
 	}
 	if (elementName == 'NonAuth' && validUser) {
-		console.log('if 3');
 		return <Navigate to='/home' replace />;
 	}
 	if (elementName == 'NonAuth' && !user) {
-		console.log('if 4');
 		return <Navigate to='/login' replace />;
 	}
 	if (elementName == 'Login' && user && !validUser) {
-		console.log('if 5');
 		return <Navigate to='/nonAuthorized' replace />;
 	}
 	if (elementName == 'Login' && user && validUser) {
-		console.log('if 6');
 		return <Navigate to='/home' replace />;
 	}
 	return <Element />;

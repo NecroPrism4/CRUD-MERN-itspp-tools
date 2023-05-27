@@ -5,7 +5,7 @@ function getTheme() {
 	return localStorage.getItem('theme');
 }
 
-export function FormDialog(title, Form, Fields) {
+export function PersonaFormDialog(title, Form, Fields) {
 	return new Promise((resolve, reject) => {
 		Swal.fire({
 			title: title,
@@ -27,8 +27,11 @@ export function FormDialog(title, Form, Fields) {
 			preConfirm: () => {
 				const borrowerIdInput = document.getElementById('borrower_id');
 				const borrowerTypeInput = document.getElementById('borrower_type');
-				const borrowerIdValue = borrowerIdInput.value.trim();
-				const borrowerTypeValue = borrowerTypeInput.value;
+				const borrowerIdValue = borrowerIdInput?.value.trim();
+				const borrowerTypeValue = borrowerTypeInput?.value;
+
+				console.log(borrowerIdInput);
+				console.log(borrowerTypeInput);
 
 				if (borrowerTypeValue !== 'Externo' && !/^\d+$/.test(borrowerIdValue)) {
 					borrowerIdInput.setCustomValidity(
@@ -59,17 +62,6 @@ export function FormDialog(title, Form, Fields) {
 				confirmButton: 'SwalConfirmButton',
 				htmlContainer: 'SwalHtmlContainer',
 				cancelButton: 'SwalCancelButton',
-				/* closeButton: '...', */
-				/* 
-			inputLabel: '...',
-			validationMessage: '...',
-			actions: '...',
-			
-			denyButton: '...',
-			
-			loader: '...',
-			footer: '....',
-			timerProgressBar: '....', */
 			},
 		});
 	});

@@ -26,15 +26,15 @@ function LoginUserForm(props) {
 
 		const response = await login(userData);
 
-		console.log(response);
-
 		if (response?.code === 'ERR_NETWORK') {
 			ModalAlert('error', 'No hay conexión con el servidor', false, 2500);
 			return;
 		}
-		if (response?.response?.status === 401) {
+		if (
+			response?.response?.status === 401 ||
+			response?.response?.status === 500
+		) {
 			ModalAlert('error', response?.response?.data, false, 2500);
-			console.log(response.code);
 			return;
 		}
 		ModalAlert('success', 'Iniciando sesión');

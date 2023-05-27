@@ -48,12 +48,11 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 			rowData,
 			user.token
 		);
-		console.log(resData);
-		if (resData.code == 'ERR_NETWORK') {
+		if (resData?.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
 		}
-		if (resData) {
+		if (resData?.item_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
 		} else {
@@ -84,6 +83,8 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 		const plainText = e.clipboardData.getData('text/plain');
 		e.target.textContent = plainText;
 	};
+
+	console.log(rowData);
 
 	return (
 		<div
@@ -146,13 +147,26 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 						</p>
 					</div>
 				</div>
-				<h4
-					className='itemAvailable'
-					style={{ color: rowData.item_available ? '#00c69f' : '#e56552' }}
-					data-tooltip={rowData.item_available ? '' : 'Revise notas..'}
-				>
-					{rowData.item_available ? 'Disponible' : 'No Disponible'}
-				</h4>
+				<div>
+					<h4
+						className='itemAvailable'
+						style={{ color: rowData.item_available ? '#00c69f' : '#e56552' }}
+						data-tooltip={rowData.item_available ? '' : 'Revise notas..'}
+					>
+						{rowData.item_available ? 'Disponible' : 'No Disponible'}
+					</h4>
+					<div
+						style={{
+							display: 'flex',
+							gap: '5px',
+							justifyItems: 'flex-end',
+							flexDirection: 'row',
+						}}
+					>
+						<h5>Lab: </h5>
+						<p>{rowData?.lab?.lab_name}</p>
+					</div>
+				</div>
 			</div>
 
 			<div className={`Expandible ${expand || isEditable ? 'Show' : ''}`}>

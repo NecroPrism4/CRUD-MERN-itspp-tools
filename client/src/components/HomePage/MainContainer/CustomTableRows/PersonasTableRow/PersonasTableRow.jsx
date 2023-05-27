@@ -148,7 +148,6 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 						) : (
 							<h3>{rowData.borrower_fullname}</h3>
 						)}
-						{/* <div>{rowData.borrower_career}</div> */}
 						<SelectComponent
 							options={borrower_career_Options}
 							defaultSelected={rowData.borrower_career}

@@ -2,6 +2,7 @@ import './Dashboard.css';
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { SectionContext } from '../../../context/SectionContext';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import CustomSlider from '../../../components/HomePage/MainContainer/Sliders/CustomSlider';
 
@@ -13,6 +14,8 @@ function Dashboard() {
 		handleTitle('Bienvenid@');
 	}, []);
 
+	const { user } = useAuthContext();
+
 	return (
 		<div className='HomeChildContainer Dashboard'>
 			<div className='DashboardContainer'>
@@ -23,7 +26,11 @@ function Dashboard() {
 								<div className='imageTextContainer'>
 									<img src='https://t3.ftcdn.net/jpg/01/03/74/84/360_F_103748444_vY2FIbRx86d969BLEMbCQ610Pkx6m3OX.jpg' />
 									<div>
-										<h4>Registrar Prestamo</h4>
+										<h4>
+											{user.user_type == 'admin'
+												? 'Ir a inventario'
+												: 'Registrar Prestamo'}
+										</h4>
 									</div>
 								</div>
 							</button>
@@ -37,7 +44,11 @@ function Dashboard() {
 										src='https://s3-eu-central-1.amazonaws.com/eurosender-blog/wp-content/uploads/2017/04/19130136/returned-to-shipper-min.jpg'
 									/>
 									<div>
-										<h4>Devolución de prestamo</h4>
+										<h4>
+											{user.user_type == 'admin'
+												? 'Ir a prestamos'
+												: 'Devolución de prestamo'}
+										</h4>
 									</div>
 								</div>
 							</button>

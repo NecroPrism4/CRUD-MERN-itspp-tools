@@ -12,6 +12,7 @@ import Lendings from '../pages/Home/Lendings/Lendings.jsx';
 import Personas from '../pages/Home/Personas/Personas.jsx';
 import UsersManagement from '../pages/Home/UsersManagement/UsersManagement.jsx';
 import Reports from '../pages/Home/Reports/Reports.jsx';
+import ProfilePage from '../pages/Home/ProfilePage/ProfilePage.jsx';
 
 export const router = createBrowserRouter([
 	{
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
 				element: <AdminRoute element={UsersManagement} />,
 			},
 			{ path: 'reports', element: <Reports /> },
+			{ path: 'profile', element: <ProfilePage /> },
 		],
 	},
 	{ errorElement: <NotFound /> },

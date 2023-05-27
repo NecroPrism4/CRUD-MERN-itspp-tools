@@ -20,6 +20,9 @@ export const verifyToken = async (req, res, next) => {
 			where: { user_id: decoded.id },
 		});
 
+		req.query.userType = authorized.user_type;
+		req.query.userLabId = authorized.lab_id;
+
 		authorized ? next() : res.status(401).send({ message: 'No user found!' });
 	} catch (err) {
 		res.status(404).send({ message: 'No user found!' });
@@ -39,8 +42,6 @@ export const isAdmin = async (req, res, next) => {
 		const authorized = await prisma.tab_users.findUnique({
 			where: { user_id: decoded.id },
 		});
-
-		console.log(authorized.user_type);
 
 		authorized?.user_type == 'admin'
 			? next()

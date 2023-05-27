@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import './SideMenu.css';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useAuthContext } from '../../../hooks/useAuthContext.jsx';
 import ButtonMenu from '../MainContainer/Buttons/SideMenuButton/ButtonMenu.jsx';
@@ -18,11 +19,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function SideMenu(props) {
 	const [ShowMenu, setShowMenu] = useState(false);
 
-	const { user, dispatch } = useAuthContext();
+	const { user } = useAuthContext();
 
 	const handleLogout = () => {
 		dispatch({ type: 'LOGOUT' });
 	};
+
+	/* 	console.log(user); */
 
 	return (
 		<div className='MenuandUser'>
@@ -96,8 +99,10 @@ function SideMenu(props) {
 					alt='user'
 				/>
 				<div>
-					<p onClick={handleLogout}>NombreUsuario</p>
-					<span>Puesto Usuario </span>
+					<Link to={'profile'}>
+						<p>{user.user_name}</p>
+					</Link>
+					<span>{user.user_jobposition}Laboratorista</span>
 				</div>
 			</div>
 		</div>

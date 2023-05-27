@@ -18,7 +18,6 @@ function useSignup() {
 				url: `${API_URL}/api/auth/signup`,
 				data: data,
 			});
-			console.log(response);
 			if (!response.status != 200) {
 				setIsLoading(false);
 				setError(true);
@@ -27,7 +26,7 @@ function useSignup() {
 				setIsLoading(false);
 				setError(false);
 				localStorage.setItem('user', JSON.stringify(response.data));
-				console.log(localStorage.getItem('user'));
+
 				dispatch({ type: 'LOGIN', payload: response.data });
 			}
 			return response;
