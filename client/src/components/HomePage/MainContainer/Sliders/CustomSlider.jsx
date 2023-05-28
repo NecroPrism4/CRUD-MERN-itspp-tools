@@ -38,13 +38,13 @@ function CustomSlider() {
 			showThumbs={false}
 		>
 			<div className='imgDiv'>
+				<img src='https://i.ibb.co/61tG5jV/Gestor-de-laboratorio.png' />
+			</div>
+			<div className='imgDiv'>
 				<img src='https://www.puertopenasco.tecnm.mx/wp-content/uploads/2022/06/codigo-de-etica-e-integridad-1-1024x330.jpg' />
 			</div>
 			<div className='imgDiv'>
 				<img src='https://teziutlan.tecnm.mx/wp-content/uploads/SlideLibrePlastico.png' />
-			</div>
-			<div className='imgDiv'>
-				<img src='https://lh3.googleusercontent.com/zulAw5k73oWb9r4Nz2C842VxXOKEC8UIFmH8iPI0r1H9o-CkFoqeFe5LsciqfndGvnxljPQLs8t0WjOGlIfVLeis5depYzovIj4447Vz' />
 			</div>
 		</Carousel>
 	);

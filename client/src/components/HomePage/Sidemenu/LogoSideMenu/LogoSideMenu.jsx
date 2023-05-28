@@ -1,10 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import './LogoSideMenu.css';
 
 function LogoSideMenu() {
+	const navigate = useNavigate();
 	return (
 		<>
 			<div style={{ height: '30px' }}></div>
-			<div className='HomeLogoContainer'>
+			<div
+				className='HomeLogoContainer'
+				onClick={() => {
+					navigate('/home');
+				}}
+			>
 				<svg
 					width='778'
 					height='769'

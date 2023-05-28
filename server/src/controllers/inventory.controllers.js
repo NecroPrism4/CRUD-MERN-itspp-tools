@@ -192,3 +192,97 @@ export const createItem = async (req, res) => {
 		res.status(500).send('Internal server error');
 	}
 };
+
+export const deleteItem = async (req, res) => {
+	const item_id = parseInt(req.query.item_id) || null;
+
+	console.log(req.query);
+
+	try {
+		if (item_id) {
+			const deleteLendingHistoryResponse =
+				await prisma.lendingsToInventory.deleteMany({
+					where: { id_item: item_id },
+				});
+
+			const deleteLendingResponse = await prisma.tab_lendings.deleteMany({
+				where: {
+					items: {
+						every: {
+							id_item: item_id,
+						},
+					},
+				},
+			});
+
+			const deleteResponse = await prisma.tab_inventory.delete({
+				where: { item_id: item_id },
+			});
+
+			console.log(deleteLendingHistoryResponse);
+			console.log(deleteLendingResponse);
+			console.log(deleteResponse);
+
+			res.send(deleteResponse);
+		} else {
+			res.status(404).send('Item not found');
+		}
+	} catch (err) {
+		console.log(err);
+		if (err.code == 'P2025') {
+			res.status(404).send('Item not found');
+		}
+		res.status(500).send('Internal server error');
+	}
+};
+
+export const changeAvailability = async (req, res) => {
+	const item_id = parseInt(req.body.item_id) || null;
+	const item_available = req.body.item_available;
+
+	try {
+		const item = await prisma.tab_inventory.findUnique({
+			where: {
+				item_id: item_id,
+			},
+			include: {
+				lendings: {
+					select: {
+						lendings: {
+							select: {
+								lending_id: true,
+								returned: true,
+							},
+						},
+					},
+					where: {
+						lendings: {
+							returned: false,
+						},
+					},
+				},
+			},
+		});
+
+		if (item?.lendings?.length > 0) {
+			res.status(405).send('Este elemento esta asociado a un prestamo activo');
+		} else {
+			const updateAvail = await prisma.tab_inventory.update({
+				where: {
+					item_id: item_id,
+				},
+				data: {
+					item_available: !item_available,
+				},
+				select: {
+					item_available: true,
+				},
+			});
+			res.status(200).send(updateAvail);
+		}
+		console.log(item?.lendings?.length);
+	} catch (err) {
+		console.log(err);
+		res.status(500).send('Internal server error');
+	}
+};

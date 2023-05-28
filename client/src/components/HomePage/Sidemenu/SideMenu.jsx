@@ -100,7 +100,7 @@ function SideMenu(props) {
 					<Link to={'profile'}>
 						<p>{user.user_name}</p>
 					</Link>
-					<span>{user.user_jobposition}Laboratorista</span>
+					<span>{user.user_jobposition}</span>
 				</div>
 			</div>
 		</div>

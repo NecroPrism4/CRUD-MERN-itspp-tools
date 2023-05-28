@@ -38,6 +38,7 @@ function Inventory() {
 	const [query, setQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [showSelected, setShowSelected] = useState(false);
+	const [hideComponente, setHideComponente] = useState(false);
 
 	const { user } = useAuthContext();
 
@@ -140,104 +141,106 @@ function Inventory() {
 	];
 
 	return (
-		<div className='HomeChildContainer'>
-			<div className='ChildMaster'>
-				<div className='tableHeader SearchOptions'>
-					<h2>Materiales</h2>
-					<div className='SearchSelects'>
-						{selectedItems.length > 0 && (
-							<button
-								className={`RoundedRect LookSelected ${
-									showSelected ? 'Active' : ''
-								}`}
-								onClick={() => {
-									setShowSelected(!showSelected);
-								}}
-							>
-								Ver seleccionados
-							</button>
-						)}
-						<p>Buscar por</p>
-						<SelectComponent
-							options={availabityOptions}
-							handler={handleAvailability}
-						/>
-						<SelectComponent
-							options={queryOptions}
-							handler={handleQueryOption}
-						/>
-						<SearchBar
-							handler={handleSearch}
-							validInput={true}
-							visible={true}
-						/>
+		!hideComponente && (
+			<div className='HomeChildContainer'>
+				<div className='ChildMaster'>
+					<div className='tableHeader SearchOptions'>
+						<h2>Materiales</h2>
+						<div className='SearchSelects'>
+							{selectedItems.length > 0 && (
+								<button
+									className={`RoundedRect LookSelected ${
+										showSelected ? 'Active' : ''
+									}`}
+									onClick={() => {
+										setShowSelected(!showSelected);
+									}}
+								>
+									Ver seleccionados
+								</button>
+							)}
+							<p>Buscar por</p>
+							<SelectComponent
+								options={availabityOptions}
+								handler={handleAvailability}
+							/>
+							<SelectComponent
+								options={queryOptions}
+								handler={handleQueryOption}
+							/>
+							<SearchBar
+								handler={handleSearch}
+								validInput={true}
+								visible={true}
+							/>
+						</div>
 					</div>
-				</div>
 
-				<div className='TableScroll'>
-					<div
-						className={`tableContainer ShowTableAnim ${
-							tableData.length > 0 ? 'Active' : ''
-						}`}
-					>
-						{!showSelected &&
-							tableData.map((object) => {
-								if (tableData.length === tableData.lastIndexOf(object) + 1) {
-									return (
-										<div key={object.item_id} ref={lastElementRef}>
+					<div className='TableScroll'>
+						<div
+							className={`tableContainer ShowTableAnim ${
+								tableData.length > 0 ? 'Active' : ''
+							}`}
+						>
+							{!showSelected &&
+								tableData.map((object) => {
+									if (tableData.length === tableData.lastIndexOf(object) + 1) {
+										return (
+											<div key={object.item_id} ref={lastElementRef}>
+												<InventoryTableRow
+													data={object}
+													handleSelected={handleSelectedItem}
+													selectedItems={selectedItems}
+												/>
+											</div>
+										);
+									} else {
+										return (
 											<InventoryTableRow
+												key={object.item_id}
 												data={object}
 												handleSelected={handleSelectedItem}
 												selectedItems={selectedItems}
 											/>
-										</div>
-									);
-								} else {
-									return (
+										);
+									}
+								})}
+
+							{showSelected &&
+								tableData
+									.filter((object) => selectedItems.includes(object.item_id))
+									.map((object) => (
 										<InventoryTableRow
 											key={object.item_id}
 											data={object}
 											handleSelected={handleSelectedItem}
 											selectedItems={selectedItems}
 										/>
-									);
-								}
-							})}
+									))}
 
-						{showSelected &&
-							tableData
-								.filter((object) => selectedItems.includes(object.item_id))
-								.map((object) => (
-									<InventoryTableRow
-										key={object.item_id}
-										data={object}
-										handleSelected={handleSelectedItem}
-										selectedItems={selectedItems}
-									/>
-								))}
-
-						<div>{loading && <Loading />}</div>
-						<div>{error && <Error />}</div>
-						<div>
-							{!loading && !error && tableData.length < 1 && (
-								<Error noResults={tableData.length < 1} />
-							)}
+							<div>{loading && <Loading />}</div>
+							<div>{error && <Error />}</div>
+							<div>
+								{!loading && !error && tableData.length < 1 && (
+									<Error noResults={tableData.length < 1} />
+								)}
+							</div>
 						</div>
 					</div>
+					<div style={{ height: '100px' }}></div>
 				</div>
-				<div style={{ height: '100px' }}></div>
+				{selectedItems.length > 0 && (
+					<button
+						className='OnCreateButton LendButton' /* onClick={handleLendItems} */
+					>
+						<Link to={`../personas/${selectedItems}`}>Prestar Materiales</Link>
+					</button>
+				)}
+				{!error && user.user_type == 'normal' && (
+					<OnCreateButton handler={handleCreate} />
+				)}
 			</div>
-			{selectedItems.length > 0 && (
-				<button
-					className='OnCreateButton LendButton' /* onClick={handleLendItems} */
-				>
-					<Link to={`../personas/${selectedItems}`}>Prestar Materiales</Link>
-				</button>
-			)}
-			{!error && user.user_type == 'normal' && (
-				<OnCreateButton handler={handleCreate} />
-			)}
-		</div>
+		)
 	);
 }
 

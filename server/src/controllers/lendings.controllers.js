@@ -248,14 +248,6 @@ export const updateLending = async (req, res) => {
 	}
 };
 
-export const deleteLending = async (req, res) => {
-	try {
-		throw new Error('Not implemented');
-	} catch (err) {
-		res.status(500).send('Internal server error: ' + err);
-	}
-};
-
 export const createLending = async (req, res) => {
 	const user_id = parseInt(req.body.user_id) || null;
 	const borrower_id = parseInt(req.body.borrower_id) || null;
@@ -292,5 +284,51 @@ export const createLending = async (req, res) => {
 			res.status(400).send('Lending already exists');
 		}
 		res.status(500).send('Internal server error: ' + err);
+	}
+};
+
+export const deleteLending = async (req, res) => {
+	const lending_id = parseInt(req.query.lending_id) || null;
+	const id_items = req.query.items || [];
+
+	console.log(req.query);
+
+	try {
+		if (lending_id) {
+			const lendingItemRelation = await prisma.lendingsToInventory.deleteMany({
+				where: {
+					id_lending: lending_id,
+				},
+			});
+			console.log(lendingItemRelation);
+
+			const deleteResponse = await prisma.tab_lendings.delete({
+				where: {
+					lending_id: lending_id,
+				},
+				include: {
+					items: true,
+				},
+			});
+
+			id_items.forEach(async (item) => {
+				await prisma.tab_inventory.update({
+					where: {
+						item_id: parseInt(item),
+					},
+					data: { item_available: true },
+				});
+			});
+
+			res.send(deleteResponse);
+		} else {
+			res.status(404).send('Item not found');
+		}
+	} catch (err) {
+		console.log(err);
+		if (err.code === 'P2025') {
+			res.status(404).send('Lending not found');
+		}
+		res.status(500).send('Internal server error: ');
 	}
 };

@@ -230,7 +230,16 @@ function ProfilePage() {
 								}}
 							/>
 						</div>
-						<p>{rowData.user_jobposition}</p>
+						<Textbox
+							onPaste={handlePaste}
+							placeHolder={'Puesto de trabajo'}
+							field={'user_jobposition'}
+							defaultValue={rowData.user_jobposition}
+							handler={handleEditData}
+							HandleValidity={(e) => {
+								return;
+							}}
+						/>
 						<p>Nivel de acceso: {rowData.user_type}</p>
 					</div>
 				) : (
