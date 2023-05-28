@@ -5,7 +5,7 @@ function LogoSideMenu() {
 	const navigate = useNavigate();
 	return (
 		<>
-			<div style={{ height: '30px' }}></div>
+			<div style={{ height: '20px' }}></div>
 			<div
 				className='HomeLogoContainer'
 				onClick={() => {
@@ -66,7 +66,7 @@ function LogoSideMenu() {
 					</g>
 				</svg>
 			</div>
-			<div style={{ height: '30px' }} />
+			<div style={{ height: '20px' }} />
 		</>
 	);
 }

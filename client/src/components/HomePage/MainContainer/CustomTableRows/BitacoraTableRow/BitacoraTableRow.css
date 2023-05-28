@@ -1,0 +1,7 @@
+.Date {
+	font-style: italic;
+}
+
+.TableRow.Expand.BitacoraRow p {
+	word-break: normal;
+}

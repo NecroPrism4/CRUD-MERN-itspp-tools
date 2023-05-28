@@ -5,6 +5,7 @@ import { ThemeContext } from '../../context/ThemeContext.jsx';
 import { Outlet } from 'react-router-dom';
 import LogoSideMenu from '../../components/HomePage/Sidemenu/LogoSideMenu/LogoSideMenu.jsx';
 import SideMenu from '../../components/HomePage/Sidemenu/SideMenu.jsx';
+import RightAside from '../../components/HomePage/MainContainer/RightAside/RightAside.jsx';
 import UpperNav from '../../components/HomePage/MainContainer/UpperNav/UpperNav.jsx';
 
 function Home() {
@@ -21,8 +22,9 @@ function Home() {
 					<UpperNav />
 					<Outlet />
 				</div>
+
 				<div className='HomeRighSideContainer'>
-					<input type='text' placeholder='Buscar' />
+					<RightAside />
 				</div>
 			</div>
 		</>

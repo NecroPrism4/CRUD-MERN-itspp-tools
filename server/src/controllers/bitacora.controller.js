@@ -2,12 +2,21 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getBitacora = async (req, res) => {
-	const user_id = parseInt(req.query.user_id) || null;
+	const page = parseInt(req.query.page) || 1; // Establecer un valor predeterminado para page
+	const pageSize = parseInt(req.query.pageSize) || 10; // Establecer un valor predeterminado para pageSize
+	const offset = (page - 1) * pageSize; // Calcular el valor de offset
+	const user_id = parseInt(req.query.conditional) || null;
+	const user_type = req.query.userType || 'inactivo';
 
 	try {
 		const bitacora = await prisma.tab_history.findMany({
+			take: pageSize,
+			skip: offset,
+			orderBy: {
+				history_date: 'desc',
+			},
 			where: {
-				...(user_id ? { user_id: user_id } : {}),
+				...(user_id && user_type != 'admin' ? { id_user: user_id } : {}),
 			},
 			include: {
 				user: {
@@ -19,11 +28,28 @@ export const getBitacora = async (req, res) => {
 			},
 		});
 
-		console.log(bitacora);
-
 		res.status(200).send(bitacora);
 	} catch (err) {
-		console.log(err);
+		res.status(500).send('Internal server error');
+	}
+};
+
+export const getRecentBitacora = async (req, res) => {
+	const user_id = parseInt(req.query.user_id) || null;
+
+	try {
+		const userBitacora = await prisma.tab_history.findMany({
+			take: 5,
+			orderBy: {
+				history_date: 'desc',
+			},
+			where: {
+				...(user_id ? { id_user: user_id } : {}),
+			},
+		});
+
+		res.status(200).send(userBitacora);
+	} catch (err) {
 		res.status(500).send('Internal server error');
 	}
 };
@@ -43,8 +69,6 @@ export const createBitacora = async (req, res) => {
 				user_id: user_id,
 			},
 		});
-
-		console.log(createResponse);
 
 		res.send(createResponse);
 	} catch (err) {

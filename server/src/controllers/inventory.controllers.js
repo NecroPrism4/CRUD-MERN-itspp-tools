@@ -196,8 +196,6 @@ export const createItem = async (req, res) => {
 export const deleteItem = async (req, res) => {
 	const item_id = parseInt(req.query.item_id) || null;
 
-	console.log(req.query);
-
 	try {
 		if (item_id) {
 			const deleteLendingHistoryResponse =
@@ -219,16 +217,11 @@ export const deleteItem = async (req, res) => {
 				where: { item_id: item_id },
 			});
 
-			console.log(deleteLendingHistoryResponse);
-			console.log(deleteLendingResponse);
-			console.log(deleteResponse);
-
 			res.send(deleteResponse);
 		} else {
 			res.status(404).send('Item not found');
 		}
 	} catch (err) {
-		console.log(err);
 		if (err.code == 'P2025') {
 			res.status(404).send('Item not found');
 		}
@@ -280,9 +273,7 @@ export const changeAvailability = async (req, res) => {
 			});
 			res.status(200).send(updateAvail);
 		}
-		console.log(item?.lendings?.length);
 	} catch (err) {
-		console.log(err);
 		res.status(500).send('Internal server error');
 	}
 };

@@ -291,8 +291,6 @@ export const deleteLending = async (req, res) => {
 	const lending_id = parseInt(req.query.lending_id) || null;
 	const id_items = req.query.items || [];
 
-	console.log(req.query);
-
 	try {
 		if (lending_id) {
 			const lendingItemRelation = await prisma.lendingsToInventory.deleteMany({
@@ -300,7 +298,6 @@ export const deleteLending = async (req, res) => {
 					id_lending: lending_id,
 				},
 			});
-			console.log(lendingItemRelation);
 
 			const deleteResponse = await prisma.tab_lendings.delete({
 				where: {
@@ -325,7 +322,6 @@ export const deleteLending = async (req, res) => {
 			res.status(404).send('Item not found');
 		}
 	} catch (err) {
-		console.log(err);
 		if (err.code === 'P2025') {
 			res.status(404).send('Lending not found');
 		}

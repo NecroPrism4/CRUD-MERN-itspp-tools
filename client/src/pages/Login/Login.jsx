@@ -167,7 +167,7 @@ function Login() {
 					<h1 className='RegisterText'>¡Bienvenido!</h1>
 					<LoginUserForm btnValue='Iniciar Sesión'></LoginUserForm>
 					<button className='BackButton' onClick={handleRecoverPass}>
-						¿Olvido su contraseña?
+						¿Olvidó su contraseña?
 					</button>
 					<button className='BackButton' onClick={handleShow}>
 						¿No tiene cuenta?

@@ -1,0 +1,33 @@
+.HomeRighSideContainer .RoundedRect.SearchBar {
+}
+
+.RigthAsideContainer {
+	display: flex;
+	flex-direction: column;
+	padding-top: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 10px;
+	max-width: 350px;
+	overflow-y: auto;
+	color: var(--inactive-fg);
+	background: var(--secundary-bg);
+}
+
+.RigthAsideContainer input {
+	min-width: 250px;
+	justify-self: center;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.Bitacora {
+	overflow: auto;
+	height: 87vh;
+}
+
+.Bitacora .ScrollDiv {
+	display: grid;
+	gap: 10px;
+	overflow: auto;
+}

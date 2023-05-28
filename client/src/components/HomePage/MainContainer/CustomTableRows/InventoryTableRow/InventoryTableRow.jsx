@@ -88,7 +88,6 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 					{ item_id: rowData.item_id },
 					user.token
 				);
-				console.log(deleteResponse);
 				if (deleteResponse?.item_id) {
 					ModalAlert('success', '¡Eliminado!', true);
 					setHideComponent(true);
@@ -101,7 +100,6 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 				ModalAlert('info', '¡Operación cancelada!', true);
 			}
 		} catch (err) {
-			console.log(err);
 			ModalAlert('error', '¡Ocurrió un error!');
 		}
 	};
@@ -113,7 +111,6 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 				{ item_id: rowData.item_id, item_available: rowData.item_available },
 				user.token
 			);
-			console.log(response);
 			if (response?.item_id) {
 				setRowData((prev) => (prev = { ...rowData, ...response }));
 			} else if (response?.response.status == 405) {

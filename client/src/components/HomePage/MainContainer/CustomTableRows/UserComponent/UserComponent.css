@@ -62,11 +62,20 @@
 
 .UserCard .WeekBitacora {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 5px;
 	max-height: 0;
 	opacity: 0;
 	transition: all 1s ease;
+}
+
+.UserCard .WeekBitacora button {
+	height: fit-content;
+	width: fit-content;
+}
+
+.SeeProfile:hover {
+	background: var(--gradient-accent);
 }
 
 .UserCard .WeekBitacora.Expand {
@@ -75,7 +84,6 @@
 }
 
 .UserCard .WeekBitacora div {
-	background: var(--secundary-bg);
 	padding: 5px;
 	border-radius: 15px;
 }
@@ -83,6 +91,7 @@
 .UserCard .EditButtons {
 	display: flex;
 	justify-items: end;
+	align-items: center;
 }
 
 /* ExpandBar Area */
@@ -105,4 +114,14 @@
 .CardBody div select {
 	font-size: 1em !important;
 	padding: 0%;
+}
+
+.UserCard .RecentBita {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.UserCard .RecentBita div {
+	background: var(--secundary-bg);
 }

@@ -35,6 +35,7 @@ import {
 } from '../controllers/auth.controller.js';
 import {
 	getBitacora,
+	getRecentBitacora,
 	createBitacora,
 } from '../controllers/bitacora.controller.js';
 import { getLabExportData } from '../controllers/export.controller.js';
@@ -103,6 +104,7 @@ router.post('/api/auth/recover', recoverPassword);
 
 //BITACORA ROUTES
 router.get('/api/bitacora/get', verifyToken, getBitacora);
+/* router.get('/api/bitacora/getRecentBitacora', verifyToken, getRecentBitacora); */
 router.post('/api/bitacora/create', verifyToken, createBitacora);
 
 //Export Data

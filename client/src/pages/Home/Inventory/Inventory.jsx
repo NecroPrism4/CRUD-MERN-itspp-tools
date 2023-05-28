@@ -44,7 +44,6 @@ function Inventory() {
 
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
-
 	const { loading, error, tableData, hasMore } = usePopulateTable(
 		'get',
 		'/api/inventory/get',

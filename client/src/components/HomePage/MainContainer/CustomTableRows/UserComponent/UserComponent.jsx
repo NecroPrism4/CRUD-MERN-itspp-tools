@@ -1,13 +1,14 @@
 import './UserComponent.css';
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
 import { onlyNumbers } from '../../../../../helpers/regexes';
-
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
+import { ConfirmModal } from '../../../../Modals/ConfirmModal/ConfirmModal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -23,6 +24,32 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 	const [edited, setEdited] = useState(false);
 
 	const { user } = useAuthContext();
+
+	const navigate = useNavigate();
+
+	/*  const [recentBit, setRecentBit] = useState({}); */
+	/* 	const handleGetRecentBitacora = async () => {
+		try {
+			const recentBit = await GetReq(
+				'/api/bitacora/getRecentBitacora',
+				{ user_id: rowData.user_id },
+				user.user_id
+			);
+
+			console.log(recentBit);
+
+			if (recentBit?.response.status == 200) {
+				setRecentBit(recentBit?.data);
+			}
+		} catch (err) {
+			console.log(err);
+			ModalAlert('error', '¡No se pudo conectar!', true);
+		}
+	};
+
+	useEffect(() => {
+		handleGetRecentBitacora();
+	}, []); */
 
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
@@ -82,6 +109,12 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		if (!onlyNumbers.test(value)) {
 			e.target.textContent = value.replace(/\D/g, '');
 		}
+	};
+
+	const handleSeeProfile = () => {
+		/* navigate(`/profile/${rowData.user_id}`); */
+
+		ConfirmModal('info', '¡Próximamente!, Perfiles de usuario...', 'Ok');
 	};
 
 	const IDInputRef = useRef(null);
@@ -176,23 +209,24 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 				</div>
 			</div>
 
-			<div className='EditButtons'>
-				<OnEditButtons
-					handleEditField={(value) => {
-						setIsEditing(value);
-					}}
-					isEditing={isEditing}
-					cancelEdit={handleCancelEdit}
-					handleUpdateReq={handleUpdateReq}
-				/>
-			</div>
 			<div className={`WeekBitacora ${expand ? 'Expand' : ''}`}>
-				<h4>Bitácora reciente</h4>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
+				<div className='EditButtons'>
+					{isEditing ? (
+						''
+					) : (
+						<button className='SeeProfile' onClick={handleSeeProfile}>
+							Ver pefil
+						</button>
+					)}
+					<OnEditButtons
+						handleEditField={(value) => {
+							setIsEditing(value);
+						}}
+						isEditing={isEditing}
+						cancelEdit={handleCancelEdit}
+						handleUpdateReq={handleUpdateReq}
+					/>
+				</div>
 			</div>
 			<div
 				className={`ExpandBar ${expand || isEditing ? '' : 'Show'}`}
