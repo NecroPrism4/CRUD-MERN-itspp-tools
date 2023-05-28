@@ -1,6 +1,5 @@
 import './RegisterUserForm.css';
 import { useState } from 'react';
-import { AuthRequest } from '../../../apis/AuthApiRequest';
 import useSignup from '../../../hooks/Auth/useSignup';
 
 import { validEmail, validPassword } from '../../../helpers/regexes';

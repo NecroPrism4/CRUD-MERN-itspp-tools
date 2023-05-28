@@ -8,7 +8,6 @@ import { flattenObject } from '../../../../../helpers/flattenObjects';
 
 function ReportButton({ title, img, api, query }) {
 	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState([]);
 
 	const { user } = useAuthContext();
 
@@ -66,7 +65,7 @@ function ReportButton({ title, img, api, query }) {
 
 			writeFile(wb, `Reporte de ${title}.xlsx`);
 		} catch (err) {
-			console.error(err);
+			ModalAlert('error', 'Hubo un error!', false);
 		}
 
 		setLoading(false);

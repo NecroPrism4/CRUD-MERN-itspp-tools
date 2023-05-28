@@ -27,10 +27,6 @@ function CustomSlider() {
 		setData(data);
 	}, []); */
 
-	/* 	useEffect(() => {
-		console.log(data);
-	}, [data]); */
-
 	return (
 		<Carousel
 			autoPlay

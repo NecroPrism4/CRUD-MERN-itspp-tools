@@ -53,12 +53,6 @@ function Inventory() {
 		query
 	);
 
-	useEffect(() => {
-		console.log('user', user);
-		console.log(tableData);
-		return () => {};
-	}, [tableData]);
-
 	//se ocupa del último elemento representado en la lista, por lo que una vez que choca con la parte visible del navegador, envía una señal para enviar otra solicitud al servidor
 	//Takes care of the las element rendered on the list so once it collides with the viewable part of the browser sends a signal to send another request to the server
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
@@ -129,10 +123,6 @@ function Inventory() {
 			});
 		}
 	};
-
-	/* const handleLendItems = () => {
-		console.log(selectedItems);
-	}; */
 
 	//Arreglos de opciones que alimenta al componente de selección #SelectComponent
 	//Arrays of options that feed the #SelectComponent

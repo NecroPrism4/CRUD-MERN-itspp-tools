@@ -84,8 +84,6 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 		e.target.textContent = plainText;
 	};
 
-	console.log(rowData);
-
 	return (
 		<div
 			className='TableRow Expand'

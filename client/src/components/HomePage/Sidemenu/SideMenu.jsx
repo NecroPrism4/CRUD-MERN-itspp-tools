@@ -25,8 +25,6 @@ function SideMenu(props) {
 		dispatch({ type: 'LOGOUT' });
 	};
 
-	/* 	console.log(user); */
-
 	return (
 		<div className='MenuandUser'>
 			<button className='hideMenuButton'>

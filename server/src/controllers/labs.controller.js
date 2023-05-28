@@ -8,7 +8,6 @@ export const getLabs = async (req, res) => {
 		});
 		res.send(labs);
 	} catch (err) {
-		console.error(err);
 		res.status(500).json('Internal server error 500');
 	}
 };

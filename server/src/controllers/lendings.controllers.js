@@ -6,7 +6,14 @@ import { onlyNumbers } from '../helpers/regexes.js';
 
 //Como las funciones getLendings y getCountLendings, se basa en los mismos parámetros where, ahora es una función separada y se llama en ambas funciones
 //As the getLendings and getCountLendings functions, relys on the same where parameters, now its a separate function and called in both functions
-const buildWhereQuery = (conditional, queryOption, searchTerm, dateFilter) => {
+const buildWhereQuery = (
+	conditional,
+	queryOption,
+	searchTerm,
+	dateFilter,
+	userType,
+	userLabId
+) => {
 	let where = {
 		...(conditional != null ? { returned: { equals: conditional } } : {}),
 		...(queryOption === 'lending_id'
@@ -44,6 +51,17 @@ const buildWhereQuery = (conditional, queryOption, searchTerm, dateFilter) => {
 					},
 			  }
 			: {}),
+		...(userType == 'admin'
+			? {}
+			: {
+					items: {
+						some: {
+							items: {
+								item_lab_id: userLabId,
+							},
+						},
+					},
+			  }),
 	};
 	return where;
 };
@@ -53,12 +71,16 @@ export const getLendingsCount = async (req, res) => {
 	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
 	const dateFilter = req.query.dateFilter || []; // Establecer un valor predeterminado para searchTerm
+	const userType = req.query.userType || 'inactivo';
+	const userLabId = parseInt(req.query.userLabId) || null;
 
 	const where = buildWhereQuery(
 		conditional,
 		queryOption,
 		searchTerm,
-		dateFilter
+		dateFilter,
+		userType,
+		userLabId
 	);
 
 	try {
@@ -79,12 +101,16 @@ export const getLendings = async (req, res) => {
 	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
 	const dateFilter = req.query.dateFilter || []; // Establecer un valor predeterminado para searchTerm
+	const userType = req.query.userType || 'inactivo';
+	const userLabId = parseInt(req.query.userLabId) || null;
 
 	const where = buildWhereQuery(
 		conditional,
 		queryOption,
 		searchTerm,
-		dateFilter
+		dateFilter,
+		userType,
+		userLabId
 	);
 
 	try {

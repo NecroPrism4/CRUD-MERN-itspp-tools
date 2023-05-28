@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+import bcrypt from 'bcrypt';
 
 export const getUserTypes = async (req, res) => {
 	try {
@@ -50,6 +51,8 @@ export const updateUser = async (req, res) => {
 	const user_jobposition = req.body.user_jobposition || '';
 	const lab_id = parseInt(req.body.lab_id) || null;
 
+	const encryptedPassword = await bcrypt.hash(user_password, 10);
+
 	try {
 		const updateUser = await prisma.tab_users.update({
 			where: {
@@ -60,12 +63,22 @@ export const updateUser = async (req, res) => {
 				...(user_name ? { user_name: user_name } : {}),
 				...(user_lastname ? { user_lastname: user_lastname } : {}),
 				...(user_email ? { user_email: user_email } : {}),
-				...(user_password ? { user_password: user_password } : {}),
+				...(user_password ? { user_password: encryptedPassword } : {}),
 				...(user_type ? { user_type: user_type } : {}),
 				...(user_jobposition ? { user_jobposition: user_jobposition } : {}),
 				...(lab_id ? { lab_id: lab_id } : {}),
 			},
+			include: {
+				lab: {
+					select: {
+						lab_id: true,
+						lab_name: true,
+					},
+				},
+			},
 		});
+
+		delete updateUser.user_password;
 
 		await prisma.tab_lendings.updateMany({
 			where: { id_user: user_id },

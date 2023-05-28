@@ -76,7 +76,6 @@ function LendingsTableRow({ data }) {
 			},
 			user.token
 		);
-		console.log(resData);
 		if (resData?.code == 'ERR_NETWORK') {
 			ModalAlert('error', '¡No se pudo conectar!', true);
 			return;
@@ -201,7 +200,11 @@ function LendingsTableRow({ data }) {
 					<div className='AuthorizedBy'>
 						<h4>
 							Autorizó:{' '}
-							<span>{`${rowData.user.user_name} ${rowData.user.user_lastname} (${rowData.user.user_jobposition})`}</span>
+							<span>{`${rowData.user.user_name} ${rowData.user.user_lastname} ${
+								rowData?.user?.user_jobposition
+									? `(${rowData?.user?.user_jobposition})`
+									: ''
+							}`}</span>
 						</h4>
 					</div>
 				</div>

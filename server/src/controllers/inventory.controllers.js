@@ -10,11 +10,8 @@ export const getInventory = async (req, res) => {
 	const conditional = toBool(req.query.conditional); //Establecer valores booleanos a partir de el req string
 	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
-	const userType = req.query.userType || 'inactivo'; // Establecer un valor predeterminado para searchTerm
-	const userLabId = parseInt(req.query.userLabId) || null; // Establecer un valor predeterminado para searchTerm
-
-	console.log(userType);
-	console.log(userLabId);
+	const userType = req.query.userType || 'inactivo';
+	const userLabId = parseInt(req.query.userLabId) || null;
 
 	try {
 		const items = await prisma.tab_inventory.findMany({
@@ -71,7 +68,6 @@ export const getInventory = async (req, res) => {
 			res.status(418).send('Laboratorio no asignado');
 		}
 	} catch (error) {
-		console.log(error);
 		res.status(500).send('Internal server error');
 	}
 };
