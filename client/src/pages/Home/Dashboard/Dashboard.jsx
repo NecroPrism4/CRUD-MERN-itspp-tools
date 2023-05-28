@@ -3,6 +3,7 @@ import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { SectionContext } from '../../../context/SectionContext';
 import { useAuthContext } from '../../../hooks/useAuthContext';
+import { getNavigatorInfo } from '../../../utils/getUserInfo';
 
 import CustomSlider from '../../../components/HomePage/MainContainer/Sliders/CustomSlider';
 
@@ -12,6 +13,7 @@ function Dashboard() {
 	const { handleTitle } = useContext(SectionContext);
 	useEffect(() => {
 		handleTitle('Bienvenid@');
+		return () => {};
 	}, []);
 
 	const { user } = useAuthContext();

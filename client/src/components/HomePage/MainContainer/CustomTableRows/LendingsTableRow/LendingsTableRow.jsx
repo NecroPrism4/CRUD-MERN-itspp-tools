@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import useDateFormater from '../../../../../hooks/useDateFormater';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
+
+import { handleRegisterToBitacora } from '../../../../../apis/RecordToBitacora';
 import { DeleteReq } from '../../../../../apis/ApiReqests';
 
 import { ConfirmModal } from '../../../../Modals/ConfirmModal/ConfirmModal';
@@ -66,6 +68,15 @@ function LendingsTableRow({ data }) {
 		if (resData?.lending_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
+			await handleRegisterToBitacora(
+				'/api/bitacora/create',
+				{
+					history_type: 'Modificación',
+					history_description: `Se modificó el préstamo con ID: ${rowData.lending_id}`,
+					user_id: user.user_id,
+				},
+				user.token
+			);
 		} else {
 			ModalAlert('error', '¡No se pudo guardar!', true);
 		}
@@ -143,6 +154,15 @@ function LendingsTableRow({ data }) {
 				if (deleteResponse?.lending_id) {
 					ModalAlert('success', '¡Eliminado!', true);
 					setHideComponent(true);
+					await handleRegisterToBitacora(
+						'/api/bitacora/create',
+						{
+							history_type: 'Eliminación',
+							history_description: `Se eliminó el préstamo con ID: ${deleteResponse.lending_id}`,
+							user_id: user.user_id,
+						},
+						user.token
+					);
 				} else if (deleteResponse?.code == 'ERR_NETWORK') {
 					ModalAlert('error', '¡No se pudo conectar!', true);
 				} else {

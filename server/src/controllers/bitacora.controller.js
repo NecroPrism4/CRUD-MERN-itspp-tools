@@ -55,7 +55,6 @@ export const getRecentBitacora = async (req, res) => {
 };
 
 export const createBitacora = async (req, res) => {
-	const history_date = req.body.history_date || '';
 	const history_type = req.body.history_type || '';
 	const history_description = req.body.history_description || '';
 	const user_id = parseInt(req.body.user_id) || null;
@@ -63,10 +62,10 @@ export const createBitacora = async (req, res) => {
 	try {
 		const createResponse = await prisma.tab_history.create({
 			data: {
-				history_date: history_date,
+				history_date: new Date(),
 				history_type: history_type,
 				history_description: history_description,
-				user_id: user_id,
+				id_user: user_id,
 			},
 		});
 

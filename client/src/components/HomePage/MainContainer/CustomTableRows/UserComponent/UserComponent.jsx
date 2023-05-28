@@ -6,6 +6,7 @@ import SelectComponent from '../../Select/SelectComponent';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
+import { handleRegisterToBitacora } from '../../../../../apis/RecordToBitacora';
 import { onlyNumbers } from '../../../../../helpers/regexes';
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
 import { ConfirmModal } from '../../../../Modals/ConfirmModal/ConfirmModal';
@@ -78,6 +79,15 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		if (resData.user_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
+			await handleRegisterToBitacora(
+				'/api/bitacora/create',
+				{
+					history_type: 'Modificación',
+					history_description: `Modificó su perfil (${rowData.user_fullname}, ID: ${rowData.user_id})`,
+					user_id: user.user_id,
+				},
+				user.token
+			);
 		} else if (resData.response && resData.response.status == 409) {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡ID existente, verifique!', true, 2500);

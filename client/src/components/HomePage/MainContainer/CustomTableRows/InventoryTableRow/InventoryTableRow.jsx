@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { DeleteReq, UpdateReq } from '../../../../../apis/ApiReqests.js';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
+import { handleRegisterToBitacora } from '../../../../../apis/RecordToBitacora.js';
 import { ConfirmModal } from '../../../../Modals/ConfirmModal/ConfirmModal.jsx';
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons.jsx';
@@ -58,6 +59,15 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 		if (resData?.item_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
+			await handleRegisterToBitacora(
+				'/api/bitacora/create',
+				{
+					history_type: 'Modificación',
+					history_description: `Se modificó el item ${rowData.item_type}`,
+					user_id: user.user_id,
+				},
+				user.token
+			);
 		} else {
 			ModalAlert('error', '¡No se pudo guardar!', true);
 		}
@@ -91,6 +101,15 @@ function InventoryTableRow({ data, selectedItems, handleSelected }) {
 				if (deleteResponse?.item_id) {
 					ModalAlert('success', '¡Eliminado!', true);
 					setHideComponent(true);
+					await handleRegisterToBitacora(
+						'/api/bitacora/create',
+						{
+							history_type: 'Eliminación',
+							history_description: `Se eliminó el item ${rowData.item_type}`,
+							user_id: user.user_id,
+						},
+						user.token
+					);
 				} else if (deleteResponse?.code == 'ERR_NETWORK') {
 					ModalAlert('error', '¡No se pudo conectar!', true);
 				} else {

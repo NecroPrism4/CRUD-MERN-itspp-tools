@@ -1,4 +1,5 @@
 .EditButtons {
+	display: flex;
 	margin-left: auto;
 	z-index: 10;
 }

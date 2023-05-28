@@ -9,6 +9,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import { onlyNumbers } from '../../../helpers/regexes';
 import { CreateReq } from '../../../apis/ApiReqests';
+import { handleRegisterToBitacora } from '../../../apis/RecordToBitacora';
 
 import {
 	PersonaForm,
@@ -140,6 +141,21 @@ function Personas() {
 			}
 			if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
 				ModalAlert('success', '¡Guardado!', true);
+				await handleRegisterToBitacora(
+					'/api/bitacora/create',
+					{
+						history_type: 'Creación',
+						history_description:
+							'Nuevo prestatario: ' +
+							resData.borrower_fullname +
+							' con ID: ' +
+							resData.borrower_id +
+							', ' +
+							resData.borrower_type,
+						user_id: user.user_id,
+					},
+					user.token
+				);
 			} else {
 				ModalAlert('error', '¡No se pudo guardar!', true);
 			}
