@@ -49,6 +49,8 @@ function ProfilePage() {
 		setPassEdited(false);
 	}
 
+	console.log(user);
+
 	const handleUpdateReq = async () => {
 		if (!edited) {
 			setEdited(false);
@@ -82,6 +84,7 @@ function ProfilePage() {
 				rowData,
 				user.token
 			);
+			console.log(resData);
 			if (resData?.response?.status == 409) {
 				ModalAlert('error', '¡ID duplicado!', true);
 				handleCancelEdit();

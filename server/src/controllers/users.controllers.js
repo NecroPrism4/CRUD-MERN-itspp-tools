@@ -41,7 +41,6 @@ export const getUsers = async (req, res) => {
 				},
 			},
 		});
-		console.log(users);
 		res.send(users);
 	} catch (err) {
 		res.status(500).json({ message: 'Error al obtener los usuarios' });
@@ -58,8 +57,11 @@ export const updateUser = async (req, res) => {
 	const user_type = req.body.user_type || '';
 	const user_jobposition = req.body.user_jobposition || '';
 	const lab_id = parseInt(req.body.lab_id) || null;
+	const token = req.headers['x-access-token'];
 
 	const encryptedPassword = await bcrypt.hash(user_password, 10);
+
+	console.log(req.body);
 
 	try {
 		const updateUser = await prisma.tab_users.update({
@@ -87,6 +89,7 @@ export const updateUser = async (req, res) => {
 		});
 
 		delete updateUser.user_password;
+		updateUser.token = token;
 
 		console.log(updateUser);
 
