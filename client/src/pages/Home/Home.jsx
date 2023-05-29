@@ -20,7 +20,7 @@ function Home() {
 		<>
 			<div className='HomePrimaryContainer' data-theme={theme}>
 				<aside className={`SideMenuContainer ${shortSideMenu ? 'Short' : ''}`}>
-					<LogoSideMenu />
+					<LogoSideMenu isShort={shortSideMenu} />
 					<SideMenu handleSidebar={handleSidebar} isShort={shortSideMenu} />
 				</aside>
 				<div className='HomeMainContainer'>

@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import './LogoSideMenu.css';
 
-function LogoSideMenu() {
+function LogoSideMenu({ isShort }) {
 	const navigate = useNavigate();
+	console.log(isShort);
 	return (
 		<>
 			<div style={{ height: '20px' }}></div>
 			<div
-				className='HomeLogoContainer'
+				className={`HomeLogoContainer ${isShort ? 'Short' : ''}`}
 				onClick={() => {
 					navigate('/home');
 				}}
