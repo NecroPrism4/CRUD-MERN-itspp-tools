@@ -32,6 +32,7 @@ export const getUsers = async (req, res) => {
 				user_id: true,
 				user_name: true,
 				user_lastname: true,
+				user_fullname: true,
 				user_email: true,
 				user_type: true,
 				user_jobposition: true,

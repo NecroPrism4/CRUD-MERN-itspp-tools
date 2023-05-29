@@ -67,8 +67,6 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 			return;
 		}
 
-		console.log(rowData);
-
 		const resData = await UpdateReq(
 			'/api/users/updateUser',
 			rowData,
@@ -159,8 +157,9 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		>
 			<div className='CardHeader'>
 				<img
+					style={{ opacity: '.5' }}
 					className='UserPhoto'
-					src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'
+					src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
 					alt='user'
 				/>
 				<div className='UserNameArea'>

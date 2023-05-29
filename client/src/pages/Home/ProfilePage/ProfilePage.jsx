@@ -37,7 +37,7 @@ function ProfilePage() {
 		console.log(emailValidation);
 		console.log(passwordValidation);
 		console.log(password2Validation); */
-		console.log(user);
+		/* console.log(user); */
 	}, [/* emailValidation, passwordValidation, password2Validation */ user]);
 
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
@@ -56,7 +56,6 @@ function ProfilePage() {
 			delete rowData.user_password;
 			delete rowData.user_password2;
 		}
-
 		if (!passwordValidation || !password2Validation) {
 			ModalAlert('error', 'Contraseña no válida');
 			return handleCancelEdit();

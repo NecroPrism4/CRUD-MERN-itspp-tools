@@ -7,8 +7,6 @@ import { transporter } from '../helpers/mailer.js';
 import { randomPassword } from '../helpers/randPassword.js';
 
 export const loginUser = async (req, res) => {
-	console.log(req.body);
-
 	const user_email = req.body.user_email || '';
 	const user_password = req.body.user_password || '';
 
@@ -33,8 +31,6 @@ export const loginUser = async (req, res) => {
 			user_password,
 			user.user_password
 		);
-
-		console.log(isPasswordValid);
 
 		if (isPasswordValid) {
 			// Contraseña coincidente, el usuario está autenticado

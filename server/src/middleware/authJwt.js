@@ -16,7 +16,7 @@ export const verifyToken = async (req, res, next) => {
 		}
 
 		const decoded = jwt.verify(token, jwtSecret);
-		const authorized = await prisma.tab_users.findMany({
+		const authorized = await prisma.tab_users.findUnique({
 			where: { user_id: decoded.id },
 		});
 

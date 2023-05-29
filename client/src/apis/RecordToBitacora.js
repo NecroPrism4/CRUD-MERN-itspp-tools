@@ -13,8 +13,6 @@ export const handleRegisterToBitacora = async (api, data, token) => {
 			token
 		);
 
-		console.log(response);
-
 		/* if (response?.history_id) {
 			ModalAlert('success', 'Bitácora registrada');
 		} else if (response?.code === 'ERR_NETWORK') {
@@ -23,7 +21,6 @@ export const handleRegisterToBitacora = async (api, data, token) => {
 			ModalAlert('error', 'Hubo un error');
 		} */
 	} catch (err) {
-		console.log(err);
 		ModalAlert('error', 'Hubo un error en bitácora');
 	}
 };
