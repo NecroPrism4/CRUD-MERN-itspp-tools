@@ -55,10 +55,10 @@ function ReportButton({ title, img, api, query }) {
 			utils.book_append_sheet(wb, ws, 'Inventario');
 
 			var ws2 = utils.json_to_sheet(flattenedPendingLendingsData);
-			utils.book_append_sheet(wb, ws2, 'Préstamos Pendientes');
+			utils.book_append_sheet(wb, ws2, 'Préstamos Devueltos');
 
 			var ws3 = utils.json_to_sheet(flattenedReturnedLendingsData);
-			utils.book_append_sheet(wb, ws3, 'Préstamos Devueltos');
+			utils.book_append_sheet(wb, ws3, 'Préstamos Pendientes');
 
 			var ws4 = utils.json_to_sheet(response.pendingBorrowersData);
 			utils.book_append_sheet(wb, ws4, 'Deudores Pendientes');

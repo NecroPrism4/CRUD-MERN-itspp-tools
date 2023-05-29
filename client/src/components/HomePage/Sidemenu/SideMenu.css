@@ -37,6 +37,10 @@
 	background: transparent;
 }
 
+.hideMenuButton .ico.Rotate {
+	transform: rotate(180deg);
+}
+
 .hideMenuButton .ico {
 	border-radius: 50%;
 	display: flex;
@@ -48,6 +52,7 @@
 	font-size: 2em;
 	color: var(--primary-bg);
 	background: var(--gradient-accent);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .hideMenuButton:hover {
 	background: var(--gradient-accent);

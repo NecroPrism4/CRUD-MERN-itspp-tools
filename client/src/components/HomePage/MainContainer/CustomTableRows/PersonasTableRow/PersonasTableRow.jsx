@@ -233,16 +233,21 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 						</p>
 					)}
 					{user.user_type == 'normal' && (
-						<div>
-							<OnEditButtons
-								handleUpdateReq={handleUpdateReq}
-								handleEditField={(value) => {
-									setIsEditing(value);
-								}}
-								isEditing={isEditing}
-								cancelEdit={handleCancelEdit}
-							/>
-						</div>
+						<>
+							{/* 	<button className='DeleteButton' onClick={handleDelete}>
+								Eliminar
+							</button> */}
+							<div>
+								<OnEditButtons
+									handleUpdateReq={handleUpdateReq}
+									handleEditField={(value) => {
+										setIsEditing(value);
+									}}
+									isEditing={isEditing}
+									cancelEdit={handleCancelEdit}
+								/>
+							</div>
+						</>
 					)}
 				</div>
 			</div>

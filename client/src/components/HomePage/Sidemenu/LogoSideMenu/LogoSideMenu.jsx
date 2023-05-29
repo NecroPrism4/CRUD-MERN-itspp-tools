@@ -3,7 +3,7 @@ import './LogoSideMenu.css';
 
 function LogoSideMenu({ isShort }) {
 	const navigate = useNavigate();
-	console.log(isShort);
+
 	return (
 		<>
 			<div style={{ height: '20px' }}></div>
