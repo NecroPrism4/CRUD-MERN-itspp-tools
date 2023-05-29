@@ -6,8 +6,6 @@ import { jwtSecret } from '../config.js';
 // Desc: middleware para verificar el token JWT
 // Desc: middleware for verifying JWT token
 export const verifyToken = async (req, res, next) => {
-	console.log(req.body);
-
 	try {
 		const token = req.headers['x-access-token'];
 
@@ -18,7 +16,7 @@ export const verifyToken = async (req, res, next) => {
 		}
 
 		const decoded = jwt.verify(token, jwtSecret);
-		const authorized = await prisma.tab_users.findUnique({
+		const authorized = await prisma.tab_users.findMany({
 			where: { user_id: decoded.id },
 		});
 

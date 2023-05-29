@@ -17,22 +17,13 @@ function ProfilePage() {
 
 	const [isEditing, setIsEditing] = useState(false);
 	const [edited, setEdited] = useState(false);
-	const [rowData, setRowData] = useState({
-		...user,
-		user_password: '',
-		user_password2: '',
-	});
+	const [rowData, setRowData] = useState(user);
 
 	const [emailValidation, setEmailValidation] = useState(true);
 	const [passwordValidation, setPasswordValidation] = useState(true);
 	const [password2Validation, setPassword2Validation] = useState(true);
-	const [passEdited, setPassEdited] = useState(false);
 
 	function handleEditData(field, e) {
-		if (field == 'user_password' || field == 'user_password2') {
-			setPassEdited(true);
-		}
-
 		setRowData(
 			//Combina el campo editado con los datos anterioress
 			//Merges the edited field with the previous data
@@ -41,39 +32,50 @@ function ProfilePage() {
 		setEdited(true);
 	}
 
+	useEffect(() => {
+		/* console.log(edited);
+		console.log(emailValidation);
+		console.log(passwordValidation);
+		console.log(password2Validation); */
+		console.log(user);
+	}, [/* emailValidation, passwordValidation, password2Validation */ user]);
+
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {
 		setRowData((prev) => (prev = user));
 		setEdited(false);
-		setPassEdited(false);
 	}
-
-	console.log(user);
 
 	const handleUpdateReq = async () => {
 		if (!edited) {
-			setEdited(false);
 			return;
 		}
 
-		if (
-			!(
-				emailValidation &&
-				(!passEdited || (passwordValidation && password2Validation))
-			)
-		) {
-			handleCancelEdit();
-			if (rowData.user_password != rowData.user_password2) {
-				ModalAlert('error', 'Las contraseñas no coinciden');
-				return;
-			} else if (!validEmail) {
-				ModalAlert('error', 'Correo no válido');
-				return;
-			} else {
-				ModalAlert('error', 'Verifica los campos');
-				return;
-			}
+		if (!rowData.user_password && !rowData.user_password2) {
+			delete rowData.user_password;
+			delete rowData.user_password2;
+		}
+
+		if (!passwordValidation || !password2Validation) {
+			ModalAlert('error', 'Contraseña no válida');
+			return handleCancelEdit();
+		}
+		if (!emailValidation) {
+			ModalAlert('error', 'Correo no válido');
+			return handleCancelEdit();
+		}
+		if (rowData.user_password != rowData.user_password2) {
+			ModalAlert('error', 'Las contraseñas no coinciden');
+			return handleCancelEdit();
+		}
+		if (!validEmail) {
+			ModalAlert('error', 'Correo no válido');
+			return handleCancelEdit();
+		}
+		if (!validPassword) {
+			ModalAlert('error', 'Contraseña no válida');
+			return handleCancelEdit();
 		}
 
 		try {
@@ -84,7 +86,6 @@ function ProfilePage() {
 				rowData,
 				user.token
 			);
-			console.log(resData);
 			if (resData?.response?.status == 409) {
 				ModalAlert('error', '¡ID duplicado!', true);
 				handleCancelEdit();
@@ -96,16 +97,16 @@ function ProfilePage() {
 				return;
 			}
 			if (resData?.user_id) {
-				resData.user_password = '';
-				rowData.user_password2 = '';
+				delete resData.user_password;
+				delete rowData.user_password2;
 				setRowData((prev) => (prev = { ...rowData, ...resData }));
 				dispatch({ type: 'UPDATE_USER', payload: resData });
 				ModalAlert('success', '¡Guardado!', true);
-				dispatch({ type: 'UPDATE_USER', payload: resData });
 			} else {
 				ModalAlert('error', '¡No se pudo guardar!', true);
 				handleCancelEdit();
 			}
+			setEdited(false);
 		} catch (err) {
 			ModalAlert('error', '¡No se pudo guardar!', true);
 			handleCancelEdit();
@@ -153,7 +154,7 @@ function ProfilePage() {
 								onPaste={handlePaste}
 								placeHolder={'Nombre(s)'}
 								field={'user_name'}
-								defaultValue={rowData.user_name}
+								defaultValue={rowData?.user_name}
 								handler={handleEditData}
 								HandleValidity={(e) => {
 									return;
@@ -163,7 +164,7 @@ function ProfilePage() {
 								onPaste={handlePaste}
 								placeHolder={'Apellido(s)'}
 								field={'user_lastname'}
-								defaultValue={rowData.user_lastname}
+								defaultValue={rowData?.user_lastname}
 								handler={handleEditData}
 								HandleValidity={(e) => {
 									return;
@@ -177,11 +178,11 @@ function ProfilePage() {
 								onPaste={handlePaste}
 								placeHolder={'Email'}
 								field={'user_email'}
-								defaultValue={rowData.user_email}
+								defaultValue={rowData?.user_email}
 								handler={handleEditData}
 								HandleValidity={(e) => {
 									setEmailValidation(
-										validEmail.test(rowData.user_email) ? true : false
+										validEmail.test(rowData?.user_email) ? true : false
 									);
 								}}
 								validity={emailValidation}
@@ -198,8 +199,7 @@ function ProfilePage() {
 									handler={handleEditData}
 									HandleValidity={(e) => {
 										setPasswordValidation(
-											validPassword.test(rowData.user_password) ||
-												e.target.value == ''
+											validPassword.test(rowData?.user_password) ? true : false
 										);
 									}}
 									validity={emailValidation}
@@ -212,8 +212,7 @@ function ProfilePage() {
 									handler={handleEditData}
 									HandleValidity={(e) => {
 										setPassword2Validation(
-											validPassword.test(rowData.user_password) ||
-												e.target.value == ''
+											validPassword.test(rowData?.user_password2) ? true : false
 										);
 									}}
 									validity={emailValidation}
@@ -225,8 +224,8 @@ function ProfilePage() {
 							<Textbox
 								onPaste={handlePaste}
 								placeHolder={'ej. 12345'}
-								field={'user_id'}
-								defaultValue={rowData.user_id}
+								field={'new_user_id'}
+								defaultValue={rowData?.user_id}
 								handler={handleEditData}
 								HandleValidity={(e) => {
 									return;
@@ -243,22 +242,24 @@ function ProfilePage() {
 								return;
 							}}
 						/>
-						<p>Nivel de acceso: {rowData.user_type}</p>
+						<p>Nivel de acceso: {rowData?.user_type}</p>
 					</div>
 				) : (
 					<div className='ProfileInfo'>
-						<h3>{rowData.user_fullname}</h3>
+						<h3>{rowData?.user_fullname}</h3>
 
 						<h5>
 							<FontAwesomeIcon icon={faPaperPlane} />
-							<a href={`mailto:${rowData.user_email}`}>{rowData.user_email}</a>
+							<a href={`mailto:${rowData?.user_email}`}>
+								{rowData?.user_email}
+							</a>
 						</h5>
 
 						<div className='EmpNumb'>
-							<h5>Numero de empleado: </h5> <p>{rowData.user_id}</p>
+							<h5>Numero de empleado: </h5> <p>{rowData?.user_id}</p>
 						</div>
-						<p>{rowData.user_jobposition}</p>
-						<p>Nivel de acceso: {rowData.user_type}</p>
+						<p>{rowData?.user_jobposition}</p>
+						<p>Nivel de acceso: {rowData?.user_type}</p>
 					</div>
 				)}
 			</div>

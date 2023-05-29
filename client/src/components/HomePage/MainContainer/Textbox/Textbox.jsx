@@ -14,7 +14,7 @@ function Textbox({
 			className='Textbox'
 			type={type ? type : 'text'}
 			placeholder={placeHolder}
-			onBlur={(e) => {
+			onChange={(e) => {
 				handler(field, e.target.value);
 				HandleValidity(e);
 			}}

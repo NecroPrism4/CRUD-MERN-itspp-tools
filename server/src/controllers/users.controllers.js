@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from '../config.js';
 
 export const getUserTypes = async (req, res) => {
 	try {
@@ -57,11 +59,8 @@ export const updateUser = async (req, res) => {
 	const user_type = req.body.user_type || '';
 	const user_jobposition = req.body.user_jobposition || '';
 	const lab_id = parseInt(req.body.lab_id) || null;
-	const token = req.headers['x-access-token'];
 
 	const encryptedPassword = await bcrypt.hash(user_password, 10);
-
-	console.log(req.body);
 
 	try {
 		const updateUser = await prisma.tab_users.update({
@@ -78,7 +77,13 @@ export const updateUser = async (req, res) => {
 				...(user_jobposition ? { user_jobposition: user_jobposition } : {}),
 				...(lab_id ? { lab_id: lab_id } : {}),
 			},
-			include: {
+			select: {
+				user_id: true,
+				user_name: true,
+				user_lastname: true,
+				user_email: true,
+				user_type: true,
+				user_jobposition: true,
 				lab: {
 					select: {
 						lab_id: true,
@@ -88,18 +93,20 @@ export const updateUser = async (req, res) => {
 			},
 		});
 
-		delete updateUser.user_password;
-		updateUser.token = token;
+		if (new_user_id) {
+			await prisma.tab_lendings.updateMany({
+				where: { id_user: user_id },
+				data: { id_user: new_user_id },
+			});
+		}
 
-		console.log(updateUser);
-
-		await prisma.tab_lendings.updateMany({
-			where: { id_user: user_id },
-			data: { ...(new_user_id ? { user_id: new_user_id } : {}) },
+		const token = jwt.sign({ id: updateUser.user_id }, jwtSecret, {
+			expiresIn: '8h',
 		});
 
-		res.send(updateUser);
+		res.send({ ...updateUser, token });
 	} catch (err) {
+		console.log(err);
 		if (err.code === 'P2002') {
 			res.status(409).send('El ID ya existe');
 		} else {
