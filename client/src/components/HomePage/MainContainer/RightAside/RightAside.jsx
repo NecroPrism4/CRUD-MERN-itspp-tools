@@ -33,7 +33,7 @@ function RightAside() {
 				placeholder='<<Barra de Busqueda, Futura Implementación>>'
 			/>
 			<h3>Bitacora</h3>
-			<div className='Bitacora'>
+			<div className={`Bitacora ${tableData ? 'Active' : ''}`}>
 				<div className='ScrollDiv'>
 					{tableData.map((object) => {
 						if (tableData.length == tableData.lastIndexOf(object) + 1) {

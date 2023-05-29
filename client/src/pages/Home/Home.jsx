@@ -1,5 +1,5 @@
 import './Home.css';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../../context/ThemeContext.jsx';
 
 import { Outlet } from 'react-router-dom';
@@ -10,13 +10,18 @@ import UpperNav from '../../components/HomePage/MainContainer/UpperNav/UpperNav.
 
 function Home() {
 	const { theme } = useContext(ThemeContext);
+	const [shortSideMenu, setShortSideMenu] = useState(false);
+
+	const handleSidebar = () => {
+		setShortSideMenu(!shortSideMenu);
+	};
 
 	return (
 		<>
 			<div className='HomePrimaryContainer' data-theme={theme}>
-				<aside className='SideMenuContainer'>
+				<aside className={`SideMenuContainer ${shortSideMenu ? 'Short' : ''}`}>
 					<LogoSideMenu />
-					<SideMenu />
+					<SideMenu handleSidebar={handleSidebar} isShort={shortSideMenu} />
 				</aside>
 				<div className='HomeMainContainer'>
 					<UpperNav />

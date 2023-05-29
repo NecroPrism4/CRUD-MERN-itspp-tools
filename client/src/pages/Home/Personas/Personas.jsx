@@ -66,7 +66,7 @@ function Personas() {
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
 
 	//Maneja la consulta a la base de datos basada en el tipo de usuario
-	//Handles the query to the database based on the user_type
+	//Handles the query to the database based on the borrower_type
 	const handleUserType = (e) => {
 		setUserTypeQuery(['borrower_type', e.target.value]);
 		setPageNumber(1);

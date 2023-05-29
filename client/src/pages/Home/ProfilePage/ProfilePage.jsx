@@ -32,14 +32,6 @@ function ProfilePage() {
 		setEdited(true);
 	}
 
-	useEffect(() => {
-		/* console.log(edited);
-		console.log(emailValidation);
-		console.log(passwordValidation);
-		console.log(password2Validation); */
-		/* console.log(user); */
-	}, [/* emailValidation, passwordValidation, password2Validation */ user]);
-
 	//Maneja la función de cancelación de edición en los campos relevantes, por lo que vuelve al contenido de vistas previas
 	//Handles the cancel edit function to the relevant fields, so it gets back to the previews content
 	function handleCancelEdit() {

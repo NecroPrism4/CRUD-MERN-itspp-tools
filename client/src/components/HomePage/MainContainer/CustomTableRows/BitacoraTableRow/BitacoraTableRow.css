@@ -1,3 +1,7 @@
+.TableRow.Expand.BitacoraRow {
+	max-width: 300px;
+}
+
 .Date {
 	font-style: italic;
 }

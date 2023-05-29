@@ -88,11 +88,19 @@ li span::before {
 
 .menuUserSection {
 	display: grid;
-	grid-template-columns: 1fr 1.5fr;
+	grid-template-columns: 1fr 1.25fr;
 	grid-template-areas: 'img User';
 	padding: 20px 10px 15px 10px;
 	align-items: center;
 	color: var(--inactive-fg);
+}
+
+.menuUserSection.Short {
+	grid-template-columns: 1fr;
+}
+
+.menuUserSection .ImgA {
+	justify-self: center;
 }
 
 .menuUserSection a,

@@ -23,6 +23,9 @@ export const getUsers = async (req, res) => {
 	const page = parseInt(req.query.page) || 1; // Establecer un valor predeterminado para page
 	const pageSize = parseInt(req.query.pageSize) || 10; // Establecer un valor predeterminado para pageSize
 	const offset = (page - 1) * pageSize; // Calcular el valor de offset
+	const conditional = req.query.conditional || ''; // Establecer valore primarios de busqueda
+	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
+	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
 
 	try {
 		const users = await prisma.tab_users.findMany({
@@ -43,9 +46,21 @@ export const getUsers = async (req, res) => {
 					},
 				},
 			},
+			where: {
+				...(conditional == 'inactivo' ? { user_type: conditional } : {}),
+				...(conditional == 'activo' ? { user_type: { not: 'inactive' } } : {}),
+				...(queryOption === 'user_id' && searchTerm !== ''
+					? { [queryOption]: parseInt(searchTerm) }
+					: {}),
+				...(queryOption !== 'user_id'
+					? { [queryOption]: { contains: searchTerm } }
+					: {}),
+			},
 		});
+
 		res.send(users);
 	} catch (err) {
+		console.log(err);
 		res.status(500).json({ message: 'Error al obtener los usuarios' });
 	}
 };

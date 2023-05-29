@@ -16,19 +16,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function SideMenu(props) {
+function SideMenu({ handleSidebar, isShort }) {
 	const [ShowMenu, setShowMenu] = useState(false);
 
 	const { user } = useAuthContext();
 
-	const handleLogout = () => {
-		dispatch({ type: 'LOGOUT' });
-	};
-
 	return (
 		<div className='MenuandUser'>
 			<button className='hideMenuButton'>
-				<div className='ico'>
+				<div className='ico' onClick={handleSidebar}>
 					<FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
 				</div>
 			</button>
@@ -40,21 +36,21 @@ function SideMenu(props) {
 					<li className='menuItem'>
 						<ButtonMenu
 							route='dashboard'
-							title='Dashboard'
+							title={!isShort ? `Dashboard` : ``}
 							icon={faHouse}
 						></ButtonMenu>
 					</li>
 					<li className='menuItem'>
 						<ButtonMenu
 							route='inventory'
-							title='Inventario'
+							title={!isShort ? 'Inventario' : ``}
 							icon={faBoxOpen}
 						></ButtonMenu>
 					</li>
 					<li className='menuItem'>
 						<ButtonMenu
 							route='lendings'
-							title='Prestamos'
+							title={!isShort ? `Prestamos` : ``}
 							icon={faHandHolding}
 						></ButtonMenu>
 					</li>
@@ -64,7 +60,7 @@ function SideMenu(props) {
 					<li className='menuItem'>
 						<ButtonMenu
 							route='personas'
-							title='Personas'
+							title={!isShort ? 'Personas' : ``}
 							icon={faUserGroup}
 						></ButtonMenu>
 					</li>
@@ -72,7 +68,7 @@ function SideMenu(props) {
 						<li className='menuItem'>
 							<ButtonMenu
 								route='usersmanagement'
-								title='Manejo de usuarios'
+								title={!isShort ? 'Manejo de usuarios' : ``}
 								icon={faUserGear}
 							></ButtonMenu>
 						</li>
@@ -84,24 +80,28 @@ function SideMenu(props) {
 					<li className='menuItem'>
 						<ButtonMenu
 							route='reports'
-							title='Reportes'
+							title={!isShort ? 'Reportes' : ``}
 							icon={faClipboardList}
 						></ButtonMenu>
 					</li>
 				</ul>
 			</div>
 			<div className='divGap'></div>
-			<div className='menuUserSection'>
-				<img
-					src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'
-					alt='user'
-				/>
-				<div>
-					<Link to={'profile'}>
-						<p>{user.user_name}</p>
-					</Link>
-					<span>{user.user_jobposition}</span>
-				</div>
+			<div className={`menuUserSection ${isShort ? 'Short' : ''}`}>
+				<Link to={'profile'} className='ImgA'>
+					<img
+						src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'
+						alt='user'
+					/>
+				</Link>
+				{!isShort && (
+					<div>
+						<Link to={'profile'}>
+							<p>{user.user_name}</p>
+						</Link>
+						<span>{user.user_jobposition}</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);
