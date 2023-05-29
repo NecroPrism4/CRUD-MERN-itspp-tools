@@ -7,6 +7,8 @@ import { transporter } from '../helpers/mailer.js';
 import { randomPassword } from '../helpers/randPassword.js';
 
 export const loginUser = async (req, res) => {
+	console.log(req.body);
+
 	const user_email = req.body.user_email || '';
 	const user_password = req.body.user_password || '';
 
@@ -32,6 +34,8 @@ export const loginUser = async (req, res) => {
 			user.user_password
 		);
 
+		console.log(isPasswordValid);
+
 		if (isPasswordValid) {
 			// Contraseña coincidente, el usuario está autenticado
 			//Correct password, user is authenticated
@@ -46,6 +50,7 @@ export const loginUser = async (req, res) => {
 			return res.status(401).send('Usuario o contraseña incorrectos');
 		}
 	} catch (err) {
+		console.log(err);
 		res.status(500).send('Ocurrio un error interno');
 	}
 };

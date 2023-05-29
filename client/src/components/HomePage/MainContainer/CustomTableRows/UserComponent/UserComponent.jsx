@@ -67,6 +67,8 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 			return;
 		}
 
+		console.log(rowData);
+
 		const resData = await UpdateReq(
 			'/api/users/updateUser',
 			rowData,

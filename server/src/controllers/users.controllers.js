@@ -26,7 +26,14 @@ export const getUsers = async (req, res) => {
 		const users = await prisma.tab_users.findMany({
 			skip: offset,
 			take: pageSize,
-			include: {
+			select: {
+				user_id: true,
+				user_name: true,
+				user_lastname: true,
+				user_email: true,
+				user_type: true,
+				user_jobposition: true,
+				lab_id: true,
 				lab: {
 					select: {
 						lab_name: true,
@@ -34,6 +41,7 @@ export const getUsers = async (req, res) => {
 				},
 			},
 		});
+		console.log(users);
 		res.send(users);
 	} catch (err) {
 		res.status(500).json({ message: 'Error al obtener los usuarios' });
@@ -79,6 +87,8 @@ export const updateUser = async (req, res) => {
 		});
 
 		delete updateUser.user_password;
+
+		console.log(updateUser);
 
 		await prisma.tab_lendings.updateMany({
 			where: { id_user: user_id },
