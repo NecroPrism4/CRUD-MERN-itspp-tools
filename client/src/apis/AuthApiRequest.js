@@ -8,7 +8,7 @@ export const AuthRequest = async (api, data) => {
 		data: data,
 	})
 		.then((res) => {
-			return res.data;
+			return res;
 		})
 		.catch((err) => {
 			return err;

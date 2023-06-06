@@ -3,8 +3,11 @@ import { ThemeContext } from '../../context/ThemeContext';
 
 import './Login.css';
 
+import { AuthRequest } from '../../apis/AuthApiRequest';
+import { RecoverPass } from '../../components/Modals/FormDialogs/RecoverPass';
 import RegisterUserForm from '../../components/Login/RegisterUserForm/RegisterUserForm.jsx';
 import LoginUserForm from '../../components/Login/LoginUserForm/LoginUserForm.jsx';
+import { ModalAlert } from '../../components/Modals/Alerts/Alerts';
 
 import tecnmLogo from '../../assets/logoTecNM 1.png';
 import itsppLogo from '../../assets/logo itspp.png';
@@ -17,6 +20,31 @@ function Login() {
 		showLogin === 'ShowLogin'
 			? setShowLogin('HideLogin')
 			: setShowLogin('ShowLogin');
+	};
+
+	const handleRecoverPass = async () => {
+		const res = await RecoverPass();
+
+		try {
+			const response = await AuthRequest('/api/auth/recover', {
+				user_email: res,
+			});
+
+			if (response?.status === 200) {
+				ModalAlert(
+					'success',
+					'Se envió un correo con instrucciones',
+					false,
+					2500
+				);
+			} else if (response?.response?.status === 404) {
+				ModalAlert('error', 'Correo no valido o inexistente');
+			} else {
+				ModalAlert('error', 'Ocurrió un error');
+			}
+		} catch (err) {
+			ModalAlert('error', 'Error', '');
+		}
 	};
 
 	return (
@@ -138,6 +166,9 @@ function Login() {
 				<div className={`${showLogin} LoginContainer`}>
 					<h1 className='RegisterText'>¡Bienvenido!</h1>
 					<LoginUserForm btnValue='Iniciar Sesión'></LoginUserForm>
+					<button className='BackButton' onClick={handleRecoverPass}>
+						¿Olvidó su contraseña?
+					</button>
 					<button className='BackButton' onClick={handleShow}>
 						¿No tiene cuenta?
 					</button>

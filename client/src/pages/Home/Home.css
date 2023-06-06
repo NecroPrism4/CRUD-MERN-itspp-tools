@@ -8,7 +8,6 @@
 	display: flex;
 	flex-direction: column;
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-	/*backdrop-filter: blur(5px);*/
 	grid-template-rows: auto 1fr;
 	width: 50%;
 	height: 100%;
@@ -44,8 +43,9 @@
 	background: var(--secundary-bg);
 	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 	transform: translateX(100%);
-	height: 100%;
+	height: 100vh;
 	right: 0;
+	overflow: hidden;
 }
 .HomeRighSideContainer input {
 	width: auto;
@@ -84,6 +84,9 @@
 		transform: unset;
 		width: 300px;
 	}
+	.SideMenuContainer.Short {
+		width: 110px;
+	}
 	.ShowMenu {
 		display: none;
 	}
@@ -111,6 +114,10 @@
 	.SideMenuContainer {
 		width: 300px;
 	}
+	.SideMenuContainer.Short {
+		width: 100px;
+	}
+
 	.HomeMainContainer {
 		grid-area: main;
 	}

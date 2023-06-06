@@ -5,11 +5,11 @@ function getTheme() {
 	return localStorage.getItem('theme');
 }
 
-export function PersonaFormDialog(title, Form, Fields) {
+export function RecoverPass() {
 	return new Promise((resolve, reject) => {
 		Swal.fire({
-			title: title,
-			html: Form,
+			title: 'Ingrese su correo electrónico',
+			html: ` <input id="user_email" class="SwalInput" type="email" placeholder="Correo electrónico" required />`,
 			icon: 'info',
 			showCancelButton: true,
 			cancelButtonText: 'Cancelar',
@@ -25,27 +25,9 @@ export function PersonaFormDialog(title, Form, Fields) {
 			},
 
 			preConfirm: () => {
-				const borrowerIdInput = document.getElementById('borrower_id');
-				const borrowerTypeInput = document.getElementById('borrower_type');
-				const borrowerIdValue = borrowerIdInput?.value.trim();
-				const borrowerTypeValue = borrowerTypeInput?.value;
+				const user_email = document.getElementById('user_email');
 
-				if (borrowerTypeValue !== 'Externo' && !/^\d+$/.test(borrowerIdValue)) {
-					borrowerIdInput.setCustomValidity(
-						'Este campo debe contener solo números'
-					);
-					borrowerIdInput.classList.add('InputError');
-					return false;
-				}
-
-				borrowerIdInput.setCustomValidity('');
-				borrowerIdInput.classList.remove('error');
-				const formData = {};
-
-				Fields.forEach((element) => {
-					formData[element[0]] = document.getElementById(element[0]).value;
-				});
-				resolve(formData);
+				resolve(user_email.value);
 			},
 
 			customClass: {

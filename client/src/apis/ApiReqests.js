@@ -35,7 +35,22 @@ export const CreateReq = async (api, data, token) => {
 		});
 };
 
-export const DeleteReq = async (api, token) => {};
+export const DeleteReq = async (api, query, token) => {
+	return await axios({
+		headers: {
+			'x-access-token': token,
+		},
+		method: 'delete',
+		url: `${API_URL}${api}`,
+		params: query,
+	})
+		.then((res) => {
+			return res.data;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
 
 export const GetReq = async (api, query, token) => {
 	return await axios({

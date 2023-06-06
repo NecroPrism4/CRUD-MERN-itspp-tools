@@ -33,4 +33,7 @@
 	.HomeLogoContainer {
 		height: 90px;
 	}
+	.HomeLogoContainer.Short svg {
+		height: 100px;
+	}
 }

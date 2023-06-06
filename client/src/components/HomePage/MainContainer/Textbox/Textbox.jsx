@@ -1,12 +1,22 @@
 import './Textbox.css';
-function Textbox({ placeHolder, handler, field, defaultValue }) {
+function Textbox({
+	placeHolder,
+	handler,
+	field,
+	defaultValue,
+	type,
+	HandleValidity,
+	onPaste,
+}) {
 	return (
 		<input
+			onPaste={onPaste}
 			className='Textbox'
-			type='text'
+			type={type ? type : 'text'}
 			placeholder={placeHolder}
-			onBlur={(e) => {
+			onChange={(e) => {
 				handler(field, e.target.value);
+				HandleValidity(e);
 			}}
 			defaultValue={defaultValue}
 		></input>

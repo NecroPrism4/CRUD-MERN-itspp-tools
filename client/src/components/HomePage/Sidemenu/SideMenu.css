@@ -37,6 +37,14 @@
 	background: transparent;
 }
 
+.hideMenuButton.Rotate {
+	transform: rotate(180deg);
+}
+
+.MenuButton.hide {
+	justify-content: center;
+}
+
 .hideMenuButton .ico {
 	border-radius: 50%;
 	display: flex;
@@ -48,6 +56,7 @@
 	font-size: 2em;
 	color: var(--primary-bg);
 	background: var(--gradient-accent);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .hideMenuButton:hover {
 	background: var(--gradient-accent);
@@ -88,11 +97,19 @@ li span::before {
 
 .menuUserSection {
 	display: grid;
-	grid-template-columns: 1fr 1.5fr;
+	grid-template-columns: 1fr 1.25fr;
 	grid-template-areas: 'img User';
 	padding: 20px 10px 15px 10px;
 	align-items: center;
 	color: var(--inactive-fg);
+}
+
+.menuUserSection.Short {
+	grid-template-columns: 1fr;
+}
+
+.menuUserSection .ImgA {
+	justify-self: center;
 }
 
 .menuUserSection a,

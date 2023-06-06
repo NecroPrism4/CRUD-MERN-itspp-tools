@@ -142,3 +142,12 @@
 	background: #ff2542 !important;
 	color: white !important;
 }
+
+.Delete {
+	display: flex;
+}
+
+.DeleteButton:hover {
+	background: var(--error-fg);
+	color: white;
+}

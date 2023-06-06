@@ -5,6 +5,7 @@ import { UpdateReq } from '../../../../../apis/ApiReqests';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
 import { onlyNumbers } from '../../../../../helpers/regexes';
 
+import { handleRegisterToBitacora } from '../../../../../apis/RecordToBitacora';
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
@@ -49,6 +50,15 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 		if (resData?.borrower_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
+			await handleRegisterToBitacora(
+				'/api/bitacora/create',
+				{
+					history_type: 'Modificación',
+					history_description: `Se modificó el prestatario: ${rowData.borrower_fullname}, con ID: ${rowData.borrower_id}`,
+					user_id: user.user_id,
+				},
+				user.token
+			);
 		} else if (resData?.response && resData?.response.status == 409) {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡ID existente, verifique!', true, 2500);
@@ -137,12 +147,14 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 									field={'borrower_name'}
 									defaultValue={rowData.borrower_name}
 									handler={handleEditData}
+									HandleValidity={() => {}}
 								/>
 								<Textbox
 									placeHolder={'Apellido(s)'}
 									field={'borrower_lastname'}
 									defaultValue={rowData.borrower_lastname}
 									handler={handleEditData}
+									HandleValidity={() => {}}
 								/>
 							</div>
 						) : (
@@ -221,16 +233,21 @@ function PersonasTableRow({ data, keepExpand, lend, handleConfirmLending }) {
 						</p>
 					)}
 					{user.user_type == 'normal' && (
-						<div>
-							<OnEditButtons
-								handleUpdateReq={handleUpdateReq}
-								handleEditField={(value) => {
-									setIsEditing(value);
-								}}
-								isEditing={isEditing}
-								cancelEdit={handleCancelEdit}
-							/>
-						</div>
+						<>
+							{/* 	<button className='DeleteButton' onClick={handleDelete}>
+								Eliminar
+							</button> */}
+							<div>
+								<OnEditButtons
+									handleUpdateReq={handleUpdateReq}
+									handleEditField={(value) => {
+										setIsEditing(value);
+									}}
+									isEditing={isEditing}
+									cancelEdit={handleCancelEdit}
+								/>
+							</div>
+						</>
 					)}
 				</div>
 			</div>

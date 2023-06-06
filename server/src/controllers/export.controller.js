@@ -19,8 +19,12 @@ export const getLabExportData = async (req, res) => {
 				returned: false,
 				...(report_lab_id != null
 					? {
-							user: {
-								lab_id: report_lab_id,
+							items: {
+								some: {
+									items: {
+										item_lab_id: { equals: report_lab_id },
+									},
+								},
 							},
 					  }
 					: {}),
@@ -47,8 +51,12 @@ export const getLabExportData = async (req, res) => {
 				returned: true,
 				...(report_lab_id != null
 					? {
-							user: {
-								lab_id: report_lab_id,
+							items: {
+								some: {
+									items: {
+										item_lab_id: { equals: report_lab_id },
+									},
+								},
 							},
 					  }
 					: {}),
@@ -77,8 +85,12 @@ export const getLabExportData = async (req, res) => {
 						returned: false,
 						...(report_lab_id != null
 							? {
-									user: {
-										lab_id: report_lab_id,
+									items: {
+										some: {
+											items: {
+												item_lab_id: { equals: report_lab_id },
+											},
+										},
 									},
 							  }
 							: {}),
@@ -113,7 +125,6 @@ export const getLabExportData = async (req, res) => {
 
 		res.status(200).send(allData);
 	} catch (error) {
-		console.error(error);
 		res.status(500).send('Ocurrio un error interno');
 	}
 };

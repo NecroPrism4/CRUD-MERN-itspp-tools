@@ -37,7 +37,7 @@
 }
 
 .SwalCancelButton:hover {
-	background: var(--error-fg) !important;
+	background: var(--secundary-bg) !important;
 	color: var(--active-fg);
 }
 

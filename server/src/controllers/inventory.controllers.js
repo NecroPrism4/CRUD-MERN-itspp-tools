@@ -10,11 +10,8 @@ export const getInventory = async (req, res) => {
 	const conditional = toBool(req.query.conditional); //Establecer valores booleanos a partir de el req string
 	const queryOption = req.query.queryOption || ''; // Establecer un valor predeterminado para searchTerm
 	const searchTerm = req.query.searchTerm || ''; // Establecer un valor predeterminado para searchTerm
-	const userType = req.query.userType || 'inactivo'; // Establecer un valor predeterminado para searchTerm
-	const userLabId = parseInt(req.query.userLabId) || null; // Establecer un valor predeterminado para searchTerm
-
-	console.log(userType);
-	console.log(userLabId);
+	const userType = req.query.userType || 'inactivo';
+	const userLabId = parseInt(req.query.userLabId) || null;
 
 	try {
 		const items = await prisma.tab_inventory.findMany({
@@ -71,7 +68,6 @@ export const getInventory = async (req, res) => {
 			res.status(418).send('Laboratorio no asignado');
 		}
 	} catch (error) {
-		console.log(error);
 		res.status(500).send('Internal server error');
 	}
 };
@@ -192,6 +188,91 @@ export const createItem = async (req, res) => {
 			},
 		});
 		res.send(createResponse);
+	} catch (err) {
+		res.status(500).send('Internal server error');
+	}
+};
+
+export const deleteItem = async (req, res) => {
+	const item_id = parseInt(req.query.item_id) || null;
+
+	try {
+		if (item_id) {
+			const deleteLendingHistoryResponse =
+				await prisma.lendingsToInventory.deleteMany({
+					where: { id_item: item_id },
+				});
+
+			const deleteLendingResponse = await prisma.tab_lendings.deleteMany({
+				where: {
+					items: {
+						every: {
+							id_item: item_id,
+						},
+					},
+				},
+			});
+
+			const deleteResponse = await prisma.tab_inventory.delete({
+				where: { item_id: item_id },
+			});
+
+			res.send(deleteResponse);
+		} else {
+			res.status(404).send('Item not found');
+		}
+	} catch (err) {
+		if (err.code == 'P2025') {
+			res.status(404).send('Item not found');
+		}
+		res.status(500).send('Internal server error');
+	}
+};
+
+export const changeAvailability = async (req, res) => {
+	const item_id = parseInt(req.body.item_id) || null;
+	const item_available = req.body.item_available;
+
+	try {
+		const item = await prisma.tab_inventory.findUnique({
+			where: {
+				item_id: item_id,
+			},
+			include: {
+				lendings: {
+					select: {
+						lendings: {
+							select: {
+								lending_id: true,
+								returned: true,
+							},
+						},
+					},
+					where: {
+						lendings: {
+							returned: false,
+						},
+					},
+				},
+			},
+		});
+
+		if (item?.lendings?.length > 0) {
+			res.status(405).send('Este elemento esta asociado a un prestamo activo');
+		} else {
+			const updateAvail = await prisma.tab_inventory.update({
+				where: {
+					item_id: item_id,
+				},
+				data: {
+					item_available: !item_available,
+				},
+				select: {
+					item_available: true,
+				},
+			});
+			res.status(200).send(updateAvail);
+		}
 	} catch (err) {
 		res.status(500).send('Internal server error');
 	}

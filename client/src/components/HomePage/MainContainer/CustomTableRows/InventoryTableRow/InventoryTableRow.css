@@ -24,7 +24,14 @@
 .itemAvailable {
 	position: relative;
 	text-align: end;
+	cursor: pointer;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+.itemAvailable:hover {
+	color: var(--active-fg) !important;
+}
+
 .itemAvailable::before {
 	scale: 0;
 	content: attr(data-tooltip);

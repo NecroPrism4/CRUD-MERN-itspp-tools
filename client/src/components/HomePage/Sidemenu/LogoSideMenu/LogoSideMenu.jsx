@@ -1,10 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import './LogoSideMenu.css';
 
-function LogoSideMenu() {
+function LogoSideMenu({ isShort }) {
+	const navigate = useNavigate();
+
 	return (
 		<>
-			<div style={{ height: '30px' }}></div>
-			<div className='HomeLogoContainer'>
+			<div style={{ height: '20px' }}></div>
+			<div
+				className={`HomeLogoContainer ${isShort ? 'Short' : ''}`}
+				onClick={() => {
+					navigate('/home');
+				}}
+			>
 				<svg
 					width='778'
 					height='769'
@@ -59,7 +67,7 @@ function LogoSideMenu() {
 					</g>
 				</svg>
 			</div>
-			<div style={{ height: '30px' }} />
+			<div style={{ height: '20px' }} />
 		</>
 	);
 }

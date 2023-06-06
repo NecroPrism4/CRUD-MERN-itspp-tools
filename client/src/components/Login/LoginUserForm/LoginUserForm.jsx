@@ -1,8 +1,9 @@
 import './LoginUserForm.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { handleRegisterToBitacora } from '../../../apis/RecordToBitacora';
 import useLogin from '../../../hooks/Auth/useLogin';
 
+import { getNavigatorInfo } from '../../../utils/getUserInfo';
 import { ModalAlert } from '../../Modals/Alerts/Alerts';
 import ButtonLogin from '../ButtonLogin/ButtonLogin.jsx';
 import TextboxLogin from '../TextboxLogin/TextboxLogin.jsx';
@@ -38,6 +39,16 @@ function LoginUserForm(props) {
 			return;
 		}
 		ModalAlert('success', 'Iniciando sesión');
+
+		await handleRegisterToBitacora(
+			'/api/bitacora/create',
+			{
+				history_type: 'Inició sesión',
+				history_description: 'Ingresó al sistema desde: ' + getNavigatorInfo(),
+				user_id: response.data.user_id,
+			},
+			response.data.token
+		);
 	};
 
 	return (

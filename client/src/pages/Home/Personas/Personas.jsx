@@ -1,5 +1,6 @@
 import './Personas.css';
 import { useState, useEffect, useContext, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SectionContext } from '../../../context/SectionContext';
 import { useParams } from 'react-router-dom';
 import usePopulateTable from '../../../hooks/usePopulateTable';
@@ -8,6 +9,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import { onlyNumbers } from '../../../helpers/regexes';
 import { CreateReq } from '../../../apis/ApiReqests';
+import { handleRegisterToBitacora } from '../../../apis/RecordToBitacora';
 
 import {
 	PersonaForm,
@@ -35,6 +37,7 @@ function Personas() {
 	}, []);
 
 	const { items } = useParams();
+	const navigate = useNavigate();
 
 	//Variables que utiliza el hook personalizado que se encarga de pupular la tableview
 	//Varibles used by the personalized hook that is in charge of pupulating the tableview
@@ -63,7 +66,7 @@ function Personas() {
 	const lastElementRef = useInfinitScrolling(loading, hasMore, setPageNumber);
 
 	//Maneja la consulta a la base de datos basada en el tipo de usuario
-	//Handles the query to the database based on the user_type
+	//Handles the query to the database based on the borrower_type
 	const handleUserType = (e) => {
 		setUserTypeQuery(['borrower_type', e.target.value]);
 		setPageNumber(1);
@@ -128,8 +131,6 @@ function Personas() {
 				element,
 				user.token
 			);
-			console.log(user.token);
-			console.log(resData);
 			if (resData?.response?.status == 409) {
 				ModalAlert('error', '¡ID duplicado!', true);
 				return;
@@ -140,6 +141,21 @@ function Personas() {
 			}
 			if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
 				ModalAlert('success', '¡Guardado!', true);
+				await handleRegisterToBitacora(
+					'/api/bitacora/create',
+					{
+						history_type: 'Creación',
+						history_description:
+							'Nuevo prestatario: ' +
+							resData.borrower_fullname +
+							' con ID: ' +
+							resData.borrower_id +
+							', ' +
+							resData.borrower_type,
+						user_id: user.user_id,
+					},
+					user.token
+				);
 			} else {
 				ModalAlert('error', '¡No se pudo guardar!', true);
 			}
@@ -169,19 +185,25 @@ function Personas() {
 					'lending_remarks'
 				);
 				const data = {
-					user_id: localStorage.getItem('user_id') || 1,
+					user_id: user?.user_id,
 					borrower_id: borrower_id,
 					items: items,
 					lending_remarks: notes || '',
 				};
 
-				const resData = await CreateReq('/api/lendings/createLending', data);
+				const resData = await CreateReq(
+					'/api/lendings/createLending',
+					data,
+					user.token
+				);
 				if (resData.code == 'ERR_NETWORK') {
 					ModalAlert('error', '¡No se pudo conectar!', true);
 					return;
 				}
-				if (resData && resData.code !== 'ERR_BAD_RESPONSE') {
+				if (resData?.lending_id) {
 					ModalAlert('success', '¡Guardado!', true);
+
+					navigate('/home/personas', { replace: true });
 				} else {
 					ModalAlert('error', '¡No se pudo guardar!', true);
 				}
@@ -189,7 +211,7 @@ function Personas() {
 				ModalAlert('error', '¡Hubo un error!', true);
 			}
 		} else {
-			alert('error');
+			ModalAlert('error', '¡Hubo un error!', true);
 		}
 	};
 

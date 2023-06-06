@@ -32,7 +32,6 @@ function useSignup() {
 			return response;
 		} catch (err) {
 			setError(err);
-			console.error(err);
 		}
 	};
 

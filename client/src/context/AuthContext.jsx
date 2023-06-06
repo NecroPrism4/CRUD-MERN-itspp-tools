@@ -14,6 +14,18 @@ export const authReducer = (state, action) => {
 			return {
 				user: null,
 			};
+
+		case 'UPDATE_USER':
+			// Obtén el contenido actual del LocalStorage
+			const existingData = JSON.parse(localStorage.getItem('user'));
+			// Combinar el contenido existente con el payload
+			const mergedData = { ...existingData, ...action.payload };
+
+			localStorage.setItem('user', JSON.stringify(mergedData));
+			return {
+				user: action.payload,
+			};
+
 		default:
 			return state;
 	}

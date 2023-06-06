@@ -13,3 +13,11 @@
 .Users.tableContainer .RefDiv {
 	width: 100%;
 }
+
+.UserTabOptions.Personas.SearchOptions {
+	flex-wrap: nowrap;
+}
+
+.UserTabOptions.RollContainer {
+	width: inherit;
+}

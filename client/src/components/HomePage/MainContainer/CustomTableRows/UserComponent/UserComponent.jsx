@@ -1,13 +1,15 @@
 import './UserComponent.css';
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import OnEditButtons from '../../Buttons/OnEditButtons/OnEditButtons';
 import SelectComponent from '../../Select/SelectComponent';
 import { UpdateReq } from '../../../../../apis/ApiReqests';
 import { useAuthContext } from '../../../../../hooks/useAuthContext';
 
+import { handleRegisterToBitacora } from '../../../../../apis/RecordToBitacora';
 import { onlyNumbers } from '../../../../../helpers/regexes';
-
 import { ModalAlert } from '../../../../Modals/Alerts/Alerts.jsx';
+import { ConfirmModal } from '../../../../Modals/ConfirmModal/ConfirmModal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -23,6 +25,32 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 	const [edited, setEdited] = useState(false);
 
 	const { user } = useAuthContext();
+
+	const navigate = useNavigate();
+
+	/*  const [recentBit, setRecentBit] = useState({}); */
+	/* 	const handleGetRecentBitacora = async () => {
+		try {
+			const recentBit = await GetReq(
+				'/api/bitacora/getRecentBitacora',
+				{ user_id: rowData.user_id },
+				user.user_id
+			);
+
+			console.log(recentBit);
+
+			if (recentBit?.response.status == 200) {
+				setRecentBit(recentBit?.data);
+			}
+		} catch (err) {
+			console.log(err);
+			ModalAlert('error', '¡No se pudo conectar!', true);
+		}
+	};
+
+	useEffect(() => {
+		handleGetRecentBitacora();
+	}, []); */
 
 	//Maneja la función de edición de los campos relevantes
 	//Handles the edit function to the relevant fields
@@ -51,6 +79,15 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		if (resData.user_id) {
 			setRowData((prev) => (prev = { ...rowData, ...resData }));
 			ModalAlert('success', '¡Guardado!', true);
+			await handleRegisterToBitacora(
+				'/api/bitacora/create',
+				{
+					history_type: 'Modificación',
+					history_description: `Modificó su perfil (${rowData.user_fullname}, ID: ${rowData.user_id})`,
+					user_id: user.user_id,
+				},
+				user.token
+			);
 		} else if (resData.response && resData.response.status == 409) {
 			setRowData((prev) => prev);
 			ModalAlert('error', '¡ID existente, verifique!', true, 2500);
@@ -84,6 +121,12 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		}
 	};
 
+	const handleSeeProfile = () => {
+		/* navigate(`/profile/${rowData.user_id}`); */
+
+		ConfirmModal('info', '¡Próximamente!, Perfiles de usuario...', 'Ok');
+	};
+
 	const IDInputRef = useRef(null);
 
 	const roleOptions = [
@@ -114,8 +157,9 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 		>
 			<div className='CardHeader'>
 				<img
+					style={{ opacity: '.5' }}
 					className='UserPhoto'
-					src='https://static.wikia.nocookie.net/marveldatabase/images/c/c8/Wanda_Maximoff_%28Earth-199999%29_from_Doctor_Strange_in_the_Multiverse_of_Madness_Promo_001.jpg'
+					src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
 					alt='user'
 				/>
 				<div className='UserNameArea'>
@@ -176,23 +220,24 @@ function UserComponent({ data, labNameDistincts, userTypeDistincts }) {
 				</div>
 			</div>
 
-			<div className='EditButtons'>
-				<OnEditButtons
-					handleEditField={(value) => {
-						setIsEditing(value);
-					}}
-					isEditing={isEditing}
-					cancelEdit={handleCancelEdit}
-					handleUpdateReq={handleUpdateReq}
-				/>
-			</div>
 			<div className={`WeekBitacora ${expand ? 'Expand' : ''}`}>
-				<h4>Bitácora reciente</h4>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
-				<div>Prestamo hecho a hace 3 hora</div>
+				<div className='EditButtons'>
+					{isEditing ? (
+						''
+					) : (
+						<button className='SeeProfile' onClick={handleSeeProfile}>
+							Ver pefil
+						</button>
+					)}
+					<OnEditButtons
+						handleEditField={(value) => {
+							setIsEditing(value);
+						}}
+						isEditing={isEditing}
+						cancelEdit={handleCancelEdit}
+						handleUpdateReq={handleUpdateReq}
+					/>
+				</div>
 			</div>
 			<div
 				className={`ExpandBar ${expand || isEditing ? '' : 'Show'}`}
