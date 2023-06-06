@@ -37,7 +37,7 @@
 	background: transparent;
 }
 
-.hideMenuButton .ico.Rotate {
+.hideMenuButton.Rotate {
 	transform: rotate(180deg);
 }
 

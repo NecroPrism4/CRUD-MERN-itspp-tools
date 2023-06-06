@@ -23,11 +23,8 @@ function SideMenu({ handleSidebar, isShort }) {
 
 	return (
 		<div className='MenuandUser'>
-			<button className='hideMenuButton'>
-				<div
-					className={`ico ${isShort ? 'Rotate' : ''}`}
-					onClick={handleSidebar}
-				>
+			<button className={`hideMenuButton ${isShort ? 'Rotate' : ''}`}>
+				<div className={`ico`} onClick={handleSidebar}>
 					<FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
 				</div>
 			</button>
