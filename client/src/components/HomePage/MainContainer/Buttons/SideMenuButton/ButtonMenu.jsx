@@ -7,7 +7,7 @@ function ButtonMenu(props) {
 	return (
 		<>
 			<Link to={props.route}>
-				<div className='MenuButton'>
+				<div className={`MenuButton ${props.isShort ? 'short' : ''}`}>
 					<i className='menuButtonIcon'>
 						<FontAwesomeIcon icon={props.icon} />
 					</i>

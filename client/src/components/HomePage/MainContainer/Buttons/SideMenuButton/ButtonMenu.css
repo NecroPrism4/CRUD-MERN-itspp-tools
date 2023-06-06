@@ -8,6 +8,10 @@
 	font-size: 1.2em;
 }
 
+.MenuButton.short {
+	justify-content: center;
+}
+
 .MenuButton:hover {
 	background: var(--gradient-accent);
 	color: var(--active-fg);

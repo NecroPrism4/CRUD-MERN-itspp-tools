@@ -38,6 +38,7 @@ function SideMenu({ handleSidebar, isShort }) {
 							route='dashboard'
 							title={!isShort ? `Dashboard` : ``}
 							icon={faHouse}
+							isShort={isShort}
 						></ButtonMenu>
 					</li>
 					<li className='menuItem'>
@@ -45,6 +46,7 @@ function SideMenu({ handleSidebar, isShort }) {
 							route='inventory'
 							title={!isShort ? 'Inventario' : ``}
 							icon={faBoxOpen}
+							isShort={isShort}
 						></ButtonMenu>
 					</li>
 					<li className='menuItem'>
@@ -52,6 +54,7 @@ function SideMenu({ handleSidebar, isShort }) {
 							route='lendings'
 							title={!isShort ? `Prestamos` : ``}
 							icon={faHandHolding}
+							isShort={isShort}
 						></ButtonMenu>
 					</li>
 					<li className='menuHeader'>
@@ -62,6 +65,7 @@ function SideMenu({ handleSidebar, isShort }) {
 							route='personas'
 							title={!isShort ? 'Personas' : ``}
 							icon={faUserGroup}
+							isShort={isShort}
 						></ButtonMenu>
 					</li>
 					{user && user.user_type === 'admin' && (
@@ -70,6 +74,7 @@ function SideMenu({ handleSidebar, isShort }) {
 								route='usersmanagement'
 								title={!isShort ? 'Manejo de usuarios' : ``}
 								icon={faUserGear}
+								isShort={isShort}
 							></ButtonMenu>
 						</li>
 					)}
@@ -82,6 +87,7 @@ function SideMenu({ handleSidebar, isShort }) {
 							route='reports'
 							title={!isShort ? 'Reportes' : ``}
 							icon={faClipboardList}
+							isShort={isShort}
 						></ButtonMenu>
 					</li>
 				</ul>

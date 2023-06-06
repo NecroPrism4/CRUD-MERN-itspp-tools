@@ -41,6 +41,10 @@
 	transform: rotate(180deg);
 }
 
+.MenuButton.hide {
+	justify-content: center;
+}
+
 .hideMenuButton .ico {
 	border-radius: 50%;
 	display: flex;
