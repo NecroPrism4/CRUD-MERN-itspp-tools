@@ -1,20 +1,19 @@
-version: '3.9'
+version: "3"
 
 services:
-  db:
-    image: mysql:8
-    container_name: itspp_labs_db
-    mem_limit: 1024m
-    restart: always
-    environment:
-      MYSQL_DATABASE: itspp_labs_db
-      MYSQL_USER: nodeUser
-      MYSQL_PASSWORD: itspp
-      MYSQL_ROOT_PASSWORD: itspp
-      MYSQL_TCP_PORT: 3307
+  server:
+    build:
+      context: ./server
+      dockerfile: ./dockerfile.server
     ports:
-      - '3307:3307'
+      - "2000:3000"
     volumes:
-      - itspp_labs_db_data:/var/lib/mysql
-volumes:
-  itspp_labs_db_data:
+      - ./server:/app
+  client:
+    build:
+      context: ./client
+      dockerfile: ./dockerfile.client
+    ports:
+      - "3173:5173"
+    volumes:
+      - ./client:/app

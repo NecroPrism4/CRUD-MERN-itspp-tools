@@ -1,49 +1,49 @@
-import { useContext, useState } from 'react';
-import { ThemeContext } from '../../context/ThemeContext';
+import { useContext, useState } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
-import './Login.css';
+import "./Login.css";
 
-import { AuthRequest } from '../../apis/AuthApiRequest';
-import { RecoverPass } from '../../components/Modals/FormDialogs/RecoverPass';
-import RegisterUserForm from '../../components/Login/RegisterUserForm/RegisterUserForm.jsx';
-import LoginUserForm from '../../components/Login/LoginUserForm/LoginUserForm.jsx';
-import { ModalAlert } from '../../components/Modals/Alerts/Alerts';
+import { AuthRequest } from "../../apis/AuthApiRequest";
+import LoginUserForm from "../../components/Login/LoginUserForm/LoginUserForm.jsx";
+import RegisterUserForm from "../../components/Login/RegisterUserForm/RegisterUserForm.jsx";
+import { ModalAlert } from "../../components/Modals/Alerts/Alerts";
+import { RecoverPass } from "../../components/Modals/FormDialogs/RecoverPass";
 
-import tecnmLogo from '../../assets/logoTecNM 1.png';
-import itsppLogo from '../../assets/logo itspp.png';
+import itsppLogo from "../../assets/Logo_itspp.png";
+import tecnmLogo from "../../assets/logoTecNM 1.png";
 
 function Login() {
 	const { theme, handleTheme } = useContext(ThemeContext);
-	const [showLogin, setShowLogin] = useState('ShowLogin');
+	const [showLogin, setShowLogin] = useState("ShowLogin");
 
 	const handleShow = () => {
-		showLogin === 'ShowLogin'
-			? setShowLogin('HideLogin')
-			: setShowLogin('ShowLogin');
+		showLogin === "ShowLogin"
+			? setShowLogin("HideLogin")
+			: setShowLogin("ShowLogin");
 	};
 
 	const handleRecoverPass = async () => {
 		const res = await RecoverPass();
 
 		try {
-			const response = await AuthRequest('/api/auth/recover', {
+			const response = await AuthRequest("/api/auth/recover", {
 				user_email: res,
 			});
 
 			if (response?.status === 200) {
 				ModalAlert(
-					'success',
-					'Se envió un correo con instrucciones',
+					"success",
+					"Se envió un correo con instrucciones",
 					false,
 					2500
 				);
 			} else if (response?.response?.status === 404) {
-				ModalAlert('error', 'Correo no valido o inexistente');
+				ModalAlert("error", "Correo no valido o inexistente");
 			} else {
-				ModalAlert('error', 'Ocurrió un error');
+				ModalAlert("error", "Ocurrió un error");
 			}
 		} catch (err) {
-			ModalAlert('error', 'Error', '');
+			ModalAlert("error", "Error", "");
 		}
 	};
 
@@ -66,7 +66,7 @@ function Login() {
 								d='M0 4.99208e-06C0 4.99208e-06 1056.71 -6.24009e-06 1044.06 4.99208e-06C1037.4 1.09006e-05 943.864 285 1032.78 467C1145.87 656.5 1086.38 823.153 1051.06 1046.5C1002.81 1351.5 1151.94 1420.5 1101.5 1670C1051.06 1919.5 1015.61 1990.5 1051.06 2160H0V4.99208e-06Z'
 								fill='url(#paintSvg)'
 							/>
-							{theme === 'dark' ? (
+							{theme === "dark" ? (
 								<defs>
 									<linearGradient
 										id='paintSvg'
@@ -113,7 +113,7 @@ function Login() {
 							preserveAspectRatio='xMidYMid meet'
 							xmlns='http://www.w3.org/2000/svg'
 							onClick={handleTheme}
-							style={{ cursor: 'pointer' }}
+							style={{ cursor: "pointer" }}
 						>
 							<g id='LogoApp'>
 								<g id='logo-lines'>
@@ -141,7 +141,7 @@ function Login() {
 											Gest
 										</tspan>
 										<tspan x='330.375' y='87.888'>
-											r de{' '}
+											r de{" "}
 										</tspan>
 										<tspan x='0' y='187.888'>
 											laboratorio

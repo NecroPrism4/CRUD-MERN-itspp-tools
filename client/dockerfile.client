@@ -1,0 +1,9 @@
+FROM node:lts-bullseye-slim
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY ./package*.json ./
+RUN npm install
+
+CMD [ -d "node_modules" ] && npm run dev || npm ci && npm run dev
