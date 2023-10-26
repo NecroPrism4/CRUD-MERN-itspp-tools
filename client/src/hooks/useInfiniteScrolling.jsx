@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 const useInfinitScrolling = (loading, hasMore, setPageNumber) => {
 	const observer = useRef();

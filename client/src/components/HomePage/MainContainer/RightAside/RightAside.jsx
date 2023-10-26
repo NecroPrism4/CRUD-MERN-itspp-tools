@@ -1,12 +1,12 @@
-import './RightAside.css';
-import { useState } from 'react';
-import { useAuthContext } from '../../../../hooks/useAuthContext';
-import usePopulateTable from '../../../../hooks/usePopulateTable';
-import useInfinitScrolling from '../../../../hooks/useInfiniteScrolling';
+import { useState } from "react";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
+import useInfinitScrolling from "../../../../hooks/useInfiniteScrolling";
+import usePopulateTable from "../../../../hooks/usePopulateTable";
+import "./RightAside.css";
 
-import Error from '../Error/Error';
-import Loading from '../Loading/Loading';
-import BitacoraTableRow from '../CustomTableRows/BitacoraTableRow/BitacoraTableRow';
+import BitacoraTableRow from "../CustomTableRows/BitacoraTableRow/BitacoraTableRow";
+import Error from "../Error/Error";
+import Loading from "../Loading/Loading";
 
 function RightAside() {
 	const { user } = useAuthContext();
@@ -16,8 +16,8 @@ function RightAside() {
 	//Se encarga de las solicitudes http al servidor para completar la tabla
 	//Takes care of the http requests to the server to pupulate the table
 	const { loading, error, tableData, hasMore } = usePopulateTable(
-		'get',
-		'/api/bitacora/get',
+		"get",
+		"/api/bitacora/get",
 		pageNumber,
 		user?.user_id
 	);
@@ -33,7 +33,7 @@ function RightAside() {
 				placeholder='<<Barra de Busqueda, Futura Implementación>>'
 			/>
 			<h3>Bitacora</h3>
-			<div className={`Bitacora ${tableData ? 'Active' : ''}`}>
+			<div className={`Bitacora ${tableData ? "Active" : ""}`}>
 				<div className='ScrollDiv'>
 					{tableData.map((object) => {
 						if (tableData.length == tableData.lastIndexOf(object) + 1) {
